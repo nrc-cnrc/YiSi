@@ -1,0 +1,4 @@
+# Build/install directories
+bin/
+dep/
+obj/

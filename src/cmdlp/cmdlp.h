@@ -9,6 +9,7 @@
 
 #ifndef CMDLP_HPP
 #define CMDLP_HPP
+
 #include "util.h"
 #include <iostream>
 #include <string>
@@ -64,8 +65,14 @@ namespace cmdlp {
     {}
     virtual ~value_option() {}
     virtual void assign(const char* str) {
+      if (str == NULL) {
+        throw std::runtime_error("Nothing to read value from!");
+      }
       std::istringstream s(str);
-      s >> *value_m;
+      if (s >> *value_m) {
+      } else {
+        throw std::runtime_error("Failed to read value.");
+      }
     }
     virtual bool need_arg() const { return true; }
     virtual void describe(std::ostream& os) const {
@@ -124,104 +131,12 @@ namespace cmdlp {
     std::string summary() const { return std::string(); }
     
     template<typename arg_it_T = null_output_iterator,
-	     typename error_it_T = null_output_iterator>
+	           typename error_it_T = null_output_iterator>
     std::size_t parse(const int argc,
-		      const char** argv,
-		      arg_it_T&& arg_it = arg_it_T(),
-		      error_it_T&& error_it = error_it_T()) const {
-      static const char null_str = '\0';
-      std::size_t error_count = 0;
-      const char** first = argv;
-      const char** last = argv + argc;
-      while (first != last) {
-	const char* i = *first;
-	if (*i == '-') {
-	  // '-*' flag, long name or ignore-rest
-	  ++i;
-	  if (*i == '-') {
-	    // '--*' long name
-	    ++i;
-	    if (*i == '\0') {
-	      // '--' ignore-rest
-	      first = last;
-	      i = &null_str;
-	    } else {
-	      // '--+' long name
-	      ++first;
-	      auto it = names_m.find(i);
-	      if (it != names_m.end()) {
-		option* opt = it->second;
-		opt->observe();
-		if (opt->need_arg()) {
-		  try {
-		    opt->assign(*first);
-		  } catch(const std::exception& e) {
-		    *error_it = e.what();
-		    ++error_it;
-		    ++error_count;
-		  } // try
-		  ++first;
-		} // if
-	      } else {
-		std::ostringstream s;
-		s << "Unknown command line parameter: '--" << i << "'.";
-		*error_it = s.str().c_str();
-		++error_it;
-		++error_count;
-	      } // if
-	      i = *first;
-	    } // if
-	  } else {
-	    // '-*' flags
-	    if (*i == '\0') {
-	      // free argument
-	      *arg_it = *first;
-	      ++first;
-	      i = *first;
-	    } else {
-	      // '-+' one or more flags
-	      while (*i != '\0') {
-		auto it = flags_m.find(*i);
-		if (it != flags_m.end()) {
-		  ++i;
-		  option* opt = it->second;
-		  opt->observe();
-		  if (opt->need_arg()) {
-		    if (*i == '\0') {
-		      ++first;
-		      i = *first;
-		    } // if
-		    try {
-		      opt->assign(i);
-		    } catch (const std::exception& e) {
-		      *error_it = e.what();
-		      ++error_it;
-		      ++error_count;
-		    } // try
-		    i = &null_str;
-		  } // if
-		} else {
-		  std::ostringstream s;
-		  s << "Unknown command line parameter: '-" << *i << "'.";
-		  *error_it = s.str().c_str();
-		  ++error_it;
-		  ++error_count;
-		  ++i;
-		} // if
-	      } // while
-	      ++first;
-	      i = *first;
-	    } // if
-	  } //  if
-	} else {
-	  // free argument
-	  *arg_it = *first;
-	  ++first;
-	  i = *first;
-	} // if
-      } // while
-      return error_count;
-    }
+                      const char** argv,
+                      arg_it_T&& arg_it = arg_it_T(),
+                      error_it_T&& error_it = error_it_T()) const;
+
     template<typename opt_T>
     typename std::decay<opt_T>::type& add(opt_T&& opt) {
       typedef typename std::decay<opt_T>::type opt_type;
@@ -255,74 +170,162 @@ namespace cmdlp {
   
   namespace options_helper {
     template<typename me_T, typename parser_T>
-    inline void init_bases(me_T&, parser_T&) {
-
-    }
+    inline void init_bases(me_T&, parser_T&) {}
 
     template<typename me_T, typename parser_T, typename T, typename... Ts>
     inline void init_bases(me_T& me, parser_T& p) {
-
       static_cast<T&>(me).init(p);
-      options_helper::init_bases<me_T, parser_T, Ts...>(me, p);
-
+      init_bases<me_T, parser_T, Ts...>(me, p);
     }
-
   } // namespace options_helper
   
   template<typename... options_T>
   class options : public options_T... {
   public:
-    options(const int argc, const char** argv)
+    inline options(const int argc, const char** argv)
       : options_T()...
       , help(false)
       , summarize(false)
       , error_count_m(0)
       {
-	initialize(argc, argv);
+        initialize(argc, argv);
       }
-    options(const int argc, char** argv) 
-      : options_T()...
-      , help(false)
-      , summarize(false)
-      , error_count_m(0)
-      {
-	initialize(argc, (const char**) argv);
-      }
+    inline options(const int argc, char** argv) : options(argc, (const char**)argv) {}
     inline operator bool() const {
       return error_count_m == 0;
     }
-    void initialize(const int argc, const char** argv) {
+    inline void initialize(const int argc, const char** argv) {
       using namespace std;
       parser p;
-
-      options_helper::init_bases<options, cmdlp::parser, options_T...>(*this, p);
-
-      // p.add(make_switch(help))
-      // 	.name('h', "help")
-      // 	.desc("Prints the help message and exits normally.")
-      // 	;
-      // p.add(make_switch(summarize))
-      // 	.name("summarize")
-      // 	.desc("Prints a summary of the parameters as undestood "
-      // 	      "by the program before running the program.")
-      // 	;
-
+      options_helper::init_bases<options, parser, options_T...>(*this, p);
+      p.add(value_option<bool>(help))
+      	.name('h', "help")
+      	.desc("Prints the help message and exits normally.")
+      	;
+      p.add(value_option<bool>(summarize))
+      	.name("summarize")
+      	.desc("Prints a summary of the parameters as undestood "
+      	      "by the program before running the program.")
+      	;
       error_count_m = p.parse(argc, argv);
-
       if (error_count_m != 0 || help) {
-	cerr << endl << p.usage() << endl << endl << p.help() << endl;
+        cerr << endl << p.usage() << endl << endl << p.help() << endl;
       } if (summarize) {
-	cerr << endl << p.summary() << endl;
+        cerr << endl << p.summary() << endl;
       } else {
-	// keep calm and continue as usual
+	      // keep calm and continue as usual
       }
     }
-    bool help;
-    bool summarize;
+    bool help = false;
+    bool summarize = false;
   private:
     std::size_t error_count_m;
   }; // options
-
+  
+  
 } // namespace cmdlp
+
+
+template<typename arg_it_T, typename error_it_T>
+std::size_t cmdlp::parser::parse(const int argc, const char** argv, arg_it_T&& arg_it, error_it_T&& error_it) const {
+  static const char null_str = '\0';
+  std::size_t error_count = 0;
+  const char** first = argv;
+  const char** last = argv + argc;
+  while (first != last) {
+    const char* i = *first;
+    if (*i == '-') {
+      // '-*' flag, long name or ignore-rest
+      ++i;
+      if (*i == '-') {
+        // '--*' long name
+        ++i;
+        if (*i == '\0') {
+          // '--' ignore-rest
+          first = last;
+          i = &null_str;
+        } else {
+          // '--+' long name
+          ++first;
+          auto it = names_m.find(i);
+          if (it != names_m.end()) {
+            option* opt = it->second;
+            opt->observe();
+            if (opt->need_arg()) {
+              try {
+                opt->assign(*first);
+              } catch(const std::exception& e) {
+                *error_it = e.what();
+                ++error_it;
+                ++error_count;
+              } // try
+              ++first;
+            } // if
+          } else {
+            std::ostringstream s;
+            s << "Unknown command line parameter: '--" << i << "'.";
+            *error_it = s.str().c_str();
+            ++error_it;
+            ++error_count;
+          } // if
+          i = *first;
+        } // if
+      } else {
+        // '-*' flags
+        if (*i == '\0') {
+          // free argument
+          *arg_it = *first;
+          ++first;
+          i = *first;
+        } else {
+          // '-+' one or more flags
+          while (*i != '\0') {
+            auto it = flags_m.find(*i);
+            if (it != flags_m.end()) {
+              ++i;
+              option* opt = it->second;
+              opt->observe();
+              if (opt->need_arg()) {
+                if (*i == '\0') {
+                  ++first;
+                  if (first == last) {
+                    i = NULL;
+                  } else {
+                    i = *first;
+                  }
+                } // if
+                try {
+                  opt->assign(i);
+                } catch (const std::exception& e) {
+                  *error_it = e.what();
+                  ++error_it;
+                  ++error_count;
+                } // try
+                i = &null_str;
+              } // if
+            } else {
+              std::ostringstream s;
+              s << "Unknown command line parameter: '-" << *i << "'.";
+              *error_it = s.str().c_str();
+              ++error_it;
+              ++error_count;
+              ++i;
+            } // if
+          } // while
+          if (first != last) {
+            ++first;
+            i = *first;
+          }
+        } // if
+      } //  if
+    } else {
+      // free argument
+      *arg_it = *first;
+      ++first;
+      i = *first;
+    } // if
+  } // while
+  return error_count;
+}
 
 #endif

@@ -56,6 +56,7 @@ scripts : ../bin/.STAMP
 	@ln -sf ../src/scripts/resolve_yisicmd.sh ../bin/.
 	@echo YISIBIN=$(p)/../bin > ../bin/run_pp+yisi.sh && cat scripts/run_pp+yisi.sh >> ../bin/run_pp+yisi.sh
 	@echo YISIBIN=$(p)/../bin > ../bin/run_yisi.sh && cat scripts/run_yisi.sh >> ../bin/run_yisi.sh
+	@chmod a+x ../bin/*.sh
 
 ../obj/srlmate.jar : *.java
 	@mkdir -pv ../obj/java

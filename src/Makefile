@@ -22,8 +22,10 @@
 #   export MATEPLUS_HOME=~/u/sandboxes/mateplus
 MATEPLUS_HOME ?= ~/u/tools/MATE/mateplus-master/src
 
-CXXFLAGS+=-Wall -pedantic -std=c++11 -g -O3 -I/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/include -I/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/include/linux
-LDFLAGS+=-L/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/jre/lib/amd64/server
+JAVA_HOME ?= /space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131
+
+CXXFLAGS+=-Wall -pedantic -std=c++11 -g -O3 -I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux
+LDFLAGS+=-L${JAVA_HOME}/jre/lib/amd64/server
 LIBRARIES+=-ljvm
 JFLAGS+=-cp ${MATEPLUS_HOME}/mateplus.jar
 

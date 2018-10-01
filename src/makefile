@@ -3,6 +3,7 @@
 # Makefile
 #
 # Authors: Jackie Lo
+#
 # Acknowledgement:
 #
 #   The skeleton of this makefile was cloned from
@@ -10,7 +11,7 @@
 #   https://github.com/masaers/cmdlp
 #
 #   Thanks Markus!
-#   Consider cloning the original repository if you like it.
+#   Consider cloning the original repository if you like cmdlp.
 #
 # ========================================================================
 #
@@ -37,8 +38,11 @@ TEST_NAMES=cmdlp_test srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_
 # List of binaries that needs to be built
 BIN_NAMES=$(PROG_NAMES) $(TEST_NAMES)
 
+SRC_OBJS=$(patsubst %.cpp,../obj/%.o,$(wildcard *.cpp))
+CMDLP_OBJS=$(patsubst cmdlp/%.cpp,../obj/%.o,$(wildcard cmdlp/*.cpp))
+
 # Object files are c++ sources that do not result in stand alone binaries
-OBJECTS=$(patsubst %.cpp,../obj/%.o,$(filter-out $(BIN_NAMES:%=%.cpp),$(wildcard *.cpp)))
+OBJECTS=$(filter-out $(addprefix ../obj/,$(BIN_NAMES:%=%.o)),$(SRC_OBJS) $(CMDLP_OBJS))
 
 #
 # Targets
@@ -77,7 +81,11 @@ test : $(TEST_NAMES:%=../test/%.out)
 ../bin/% : ../obj/%.o $(OBJECTS) ../bin/.STAMP
 	$(CXX) $(LDFLAGS) $< $(OBJECTS) $(LIBRARIES) -o $@ 
 
-../obj/%.o : %.cpp ../obj/.STAMP ../dep/.STAMP
+$(SRC_OBJS): ../obj/%.o : %.cpp ../obj/.STAMP ../dep/.STAMP
+
+$(CMDLP_OBJS): ../obj/%.o : cmdlp/%.cpp ../obj/.STAMP ../dep/.STAMP
+
+../obj/%.o :
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -MM -MT '$@' $< > $(@:../obj/%.o=../dep/%.d)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -c $< -o $@ -ljvm
 

@@ -1,3 +1,12 @@
+/**
+   This command-line option library was cloned from
+
+   https://github.com/masaers/cmdlp
+
+   Thanks Markus!
+   Consider cloning the original repository if you like it.
+ */
+
 #ifndef CMDLP_HPP
 #define CMDLP_HPP
 #include "util.h"
@@ -8,14 +17,6 @@
 #include <vector>
 #include <algorithm>
 
-/**
-   This command-line option library was cloned from
-
-   https://github.com/masaers/cmdlp
-
-   Thanks Markus!
-   Consider cloning the original repository if you like it.
- */
 namespace cmdlp {
   class parser;
 

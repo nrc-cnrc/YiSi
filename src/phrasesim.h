@@ -14,7 +14,7 @@
 #ifndef PHRASESIM_H
 #define PHRASESIM_H
 
-#include "cmdlp.h"
+#include "cmdlp/cmdlp.h"
 #include "lexsim.h"
 #include "lexweight.h"
 #include "maxmatching.h"

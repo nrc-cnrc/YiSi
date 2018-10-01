@@ -12,7 +12,7 @@
 #include "srlmate.h"
 #include "srlutil.h"
 #include "util.h"
-#include "cmdlp.h"
+//#include "cmdlp.h"
 
 #include <fstream>
 #include <sstream>

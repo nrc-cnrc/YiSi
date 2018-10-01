@@ -17,10 +17,15 @@
 # Settings
 #
 
+# Override the value of MATEPLUS_HOME with a command line definition, or
+# consider defining MATEPLUS_HOME in your .profile, for example:
+#   export MATEPLUS_HOME=~/u/sandboxes/mateplus
+MATEPLUS_HOME ?= ~/u/tools/MATE/mateplus-master/src
+
 CXXFLAGS+=-Wall -pedantic -std=c++11 -g -O3 -I/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/include -I/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/include/linux
 LDFLAGS+=-L/space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131/jre/lib/amd64/server
 LIBRARIES+=-ljvm
-JFLAGS+=-cp ~/u/tools/MATE/mateplus-master/src/mateplus.jar
+JFLAGS+=-cp ${MATEPLUS_HOME}/mateplus.jar
 
 PROG_NAMES=
 TEST_NAMES=cmdlp_test srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test lexweight_test lw_count phrasesim_test srlmate_test srl_test srlutil_test yisiscorer_test testbin yisi

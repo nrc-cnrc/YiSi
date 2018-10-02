@@ -2,3 +2,7 @@
 bin/
 dep/
 obj/
+
+test/*.out
+test/.STAMP
+test/.ERROR

@@ -1,12 +1,20 @@
 /**
+ * @file srlutil.h
+ * @brief SRL utility functions
+ *
  * @author Jackie Lo
- * @file srlutil.h SRL utility functions.
  *
+ * Class definition of srl utility classes:
+ *    - srlmodel_t (abstract base class of different semantic role labelers)
+ *    - srlread_t
+ *    - srltok_t
+ * and the declaration of some utility functions working on srl.
  *
- * COMMENTS:
- *
- * The declaration of some utility class and funcions working on srl.
- *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef SRLUTIL_H

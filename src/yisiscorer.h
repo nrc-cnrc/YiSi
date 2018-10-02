@@ -1,13 +1,17 @@
 /**
+ * @file yisiscorer.h
+ * @brief YiSi scorer
+ *
  * @author Jackie Lo
- * @file yisiscorer.h yisi scorer.
  *
- *
- * COMMENTS:
- *
- * Class definition of yisi scorer classes:
+ * Class definition of YiSi scorer class:
  *    - yisiscorer_t 
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef YISISCORER_H

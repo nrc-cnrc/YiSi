@@ -1,12 +1,17 @@
 /**
+ * @file maxmatching.h
+ * @brief Maximum bipartite matching
+ *
  * @author Jackie Lo
- * @file maxmatching.h 
- *
- *
- * COMMENTS:
  *
  * Class definition of maximum bipartite matching algorithm:
  *    - maxmatching_t
+ *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef MAXMATCHING_H

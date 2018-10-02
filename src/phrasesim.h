@@ -1,14 +1,18 @@
 /**
+ * @file phrasesim.h
+ * @brief Phrasal similarity
+ *
  * @author Jackie Lo
- * @file phrasesim.h phrasal similarity.
- *
- *
- * COMMENTS:
  *
  * Class definition of phrasal similarity classes:
  *    - phrasesim_options (command line options for phrasesim)
  *    - phrasesim_t 
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef PHRASESIM_H

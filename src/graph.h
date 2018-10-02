@@ -1,24 +1,22 @@
 /**
+ * @file graph.h
+ * @brief Generic graph API for general purpose.
+ *
  * @author Jackie Lo
- * @file graph.h Generic graph api for general purpose.
  *
- *
- * COMMENTS:
- *
- * Class definition of three classes:
+ * Class definition of three general purpose graph classes:
  *    - node_t
  *    - edge_t
  *    - graph_t
  *
- * These classes are designed for general graph purpose.
- * ATTENTION: This graph class is not the same as the yisigraph class! Please read yisigraph.h, 
- *            if you are looking for the definition of yisigraph.
+ * ATTENTION: This graph class is not the same as the yisigraph class!
+ *    Please see yisigraph.h if you are looking for the definition of yisigraph.
  *
- * Technologies langagieres interactives / Interactive Language Technologies
- * Inst. de technologie de l'information / Institute for Information Technology
- * Conseil national de recherches Canada / National Research Council Canada
- * Copyright 2005, Sa Majeste la Reine du Chef du Canada /
- * Copyright 2005, Her Majesty in Right of Canada
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef GRAPH_H

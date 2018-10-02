@@ -1,9 +1,8 @@
 /**
+ * @file lexsim.h
+ * @brief Lexical similarity
+ *
  * @author Jackie Lo
- * @file lexsim.h lexical similarity.
- *
- *
- * COMMENTS:
  *
  * Class definition of lexical similarity classes:
  *    - lexsim_t (wrapper class)
@@ -14,8 +13,13 @@
  *    - lexsimemapw2v_t (emapw2v lex sim model: crosslingual)
  *    - lexsimbiw2v_t (biw2v lex sim model: crosslingual)
  *    - lexsimdcv_t (discrete context vector lex sim model)
- * and the declaration of some utility funcions working on it.
+ * and the declaration of some utility functions working on it.
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef LEXSIM_H

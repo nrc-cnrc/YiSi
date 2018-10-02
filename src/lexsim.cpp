@@ -1,12 +1,11 @@
 /**
+ * @file lexsim.cpp
+ * @brief Lexical similarity
+ *
  * @author Jackie Lo
- * @file lexsim.cpp lexical similarity  
- *
- *
- * COMMENTS:
  *
  * Class implementation for the classes:
- *    - lexsimexact_t (simiple exact match lex sim model)
+ *    - lexsimexact_t (simple exact match lex sim model)
  *    - lexsimibm_t (ibm1 lex sim model)
  *    - lexsimw2v_t (w2v lex sim model)
  *    - lexsimemapw2v_t (emap lex sim model for YiSi-2)
@@ -14,6 +13,11 @@
  *    - lexsim_t (wrapper class)
  * and the definitions of some utility functions working on it.
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #include "lexsim.h"

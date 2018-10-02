@@ -1,15 +1,20 @@
 /**
+ * @file lexweight.cpp
+ * @brief Lexical weight
+ *
  * @author Jackie Lo
- * @file lexweight.cpp lexical weight  
- *
- *
- * COMMENTS:
  *
  * Class implementation for the classes:
+ *    - lexweightmodel_t (abstract base class of different lex weight models)
  *    - lexweightfile_t (read lexical weight model from file)
  *    - lexweightlearn_t (estimate lexical weight from either a range of ranges of tokens or a file)
  *    - lexweight_t (wrapper class)
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #include "lexweight.h"

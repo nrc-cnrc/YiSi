@@ -1,14 +1,19 @@
 /**
+ * @file srl.cpp
+ * @brief Semantic role labelers (SRL)
+ *
  * @author Jackie Lo
- * @file srl.cpp semantic role labelers.
- *
- *
- * COMMENTS:
  *
  * Class implementation for the srl classes:
  *    - srl_t (wrapper class)
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
+
 #include "srlgraph.h"
 #include "srlutil.h"
 #include "srlmate.h"

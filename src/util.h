@@ -1,13 +1,19 @@
 /**
- * @author Jackie Lo
  * @file util.h
- *
  * @brief Declarations of some utility functions and global constants.
  *
+ * @author Jackie Lo
+ *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef UTIL_H
 #define UTIL_H
+
 #include <sstream>
 #include <vector>
 #include <fstream>

@@ -1,8 +1,14 @@
 /**
- * @author Jackie Lo
  * @file yisiscorer_test.cpp
- * @brief Unit test of yisiscorer.
+ * @brief Unit test for yisiscorer.
  *
+ * @author Jackie Lo
+ *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #include <iostream>

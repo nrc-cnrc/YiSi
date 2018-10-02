@@ -1,8 +1,14 @@
 /**
- * @author Jackie Lo
- * @file lexsim_test.cc
- * @brief Unit test of srlgraph.
+ * @file biw2v_test.cpp
+ * @brief Unit test for biw2v lexsim.
  *
+ * @author Jackie Lo
+ *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #include "lexsim.h"
@@ -21,7 +27,7 @@ int main(int argc, char* argv[])
   lexsim_t w2vtxt("biw2v", argv[1], argv[2]);
 
   while (true) {
-    cout << "Intput two string:" <<endl;
+    cout << "Input two strings:" <<endl;
     string s1;
     string s2;
     cin >> s1;

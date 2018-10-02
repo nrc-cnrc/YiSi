@@ -1,14 +1,21 @@
 /**
+ * @file srlmate.h
+ * @brief SRL MATE
+ *
  * @author Jackie Lo
- * @file srlmate.h SRL MATE.
  *
+ * Class definition of:
+ *    - srlmate (wrapper class for MATE srl tool)
  *
- * COMMENTS:
- *
- * Class definition of srlmate (wrapper class for MATE srl tool)
- * ***IMPORTANT***: the path for the constructor here is the config file of MATE for the specific language.
+ * ***IMPORTANT***: the path for the constructor here is the config file of MATE
+ * for the specific language.
  * Please edit the config file in MATE correctly for calling the right model.
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef SRLMATE_H

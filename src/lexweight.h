@@ -1,9 +1,8 @@
 /**
+ * @file lexweight.h
+ * @brief Lexical weight
+ *
  * @author Jackie Lo
- * @file lexweight.h lexical weight.
- *
- *
- * COMMENTS:
  *
  * Class definition of lexical weight classes:
  *    - lexweight_t (wrapper class)
@@ -11,8 +10,13 @@
  *    - lexweightuniform_t (simple uniform lexical weight)
  *    - lexweightfile_t (read lexical weight model from file)
  *    - lexweightlearn_t (estimate lexical weight from either a range of ranges of tokens or a file)
- * and the declaration of some utility funcions working on it.
+ * and the declaration of some utility functions working on it.
  *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
  */
 
 #ifndef LEXWEIGHT_H

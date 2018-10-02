@@ -1,3 +1,16 @@
+#!/bin/bash
+
+# @file resolve_yisicmd.sh
+# @brief Convert YiSi config file to YiSi command arguments.
+#
+# @author Jackie Lo
+#
+# Traitement multilingue de textes / Multilingual Text Processing
+# Centre de recherche en technologies numériques / Digital Technologies Research Centre
+# Conseil national de recherches Canada / National Research Council Canada
+# Copyright 2018, Sa Majeste la Reine du Chef du Canada /
+# Copyright 2018, Her Majesty in Right of Canada
+
 source $1
 
 if [[ $reffile != "" ]]; then

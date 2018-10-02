@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# @file filter_empty_long.py
+# @brief Filter out long sentence pairs (length > 1000 on either side).
+#
+# @author Jackie Lo
+#
+# Traitement multilingue de textes / Multilingual Text Processing
+# Centre de recherche en technologies numériques / Digital Technologies Research Centre
+# Conseil national de recherches Canada / National Research Council Canada
+# Copyright 2018, Sa Majeste la Reine du Chef du Canada /
+# Copyright 2018, Her Majesty in Right of Canada
+
 import sys
 
 SRC=open(sys.argv[1],"r").readlines()

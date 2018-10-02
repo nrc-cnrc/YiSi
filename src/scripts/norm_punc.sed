@@ -1,5 +1,16 @@
 #!/bin/sed -f
 
+# @file norm_punc.sed
+# @brief Normalize punctuation and other non-standard characters.
+#
+# @author Jackie Lo
+#
+# Traitement multilingue de textes / Multilingual Text Processing
+# Centre de recherche en technologies numériques / Digital Technologies Research Centre
+# Conseil national de recherches Canada / National Research Council Canada
+# Copyright 2018, Sa Majeste la Reine du Chef du Canada /
+# Copyright 2018, Her Majesty in Right of Canada
+
 # Alternative numerals
 s/０/0/g
 s/１/1/g

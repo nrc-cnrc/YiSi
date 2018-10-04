@@ -1,12 +1,10 @@
 /**
- * @author Jackie Lo
- * @file cmdlp_test.cpp Unit test for cmdlp class.
- *
- *
- * COMMENTS:
- *
- * Unit test of the command line parser class.
- *
+   Unit test for the command-line option library, which was cloned from
+
+   https://github.com/masaers/cmdlp
+
+   Thanks Markus!
+   Consider cloning the original repository if you like it.
  */
 
 #include "cmdlp.h"
@@ -18,7 +16,7 @@ int main(const int argc, const char** argv) {
   int alpha = 10;
   bool flag;
   bool neg_flag = true;
-  char* path;
+  string path;
 
   cmdlp::parser p;
   p.add(cmdlp::value_option<int>(alpha))
@@ -39,11 +37,11 @@ int main(const int argc, const char** argv) {
     .name('F')
     .name("FLAG")
     ;
-  p.add(cmdlp::value_option<char*>(path))
+  p.add(cmdlp::value_option<string>(path))
     .desc("The path name.")
     .name('p', "path")
     .name("PATH")
-    .fallback()
+    .fallback("a_path")
     ;
   
     

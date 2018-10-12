@@ -34,6 +34,10 @@ int main(const int argc, const char* argv[])
     vector<string> sents;
     
     ifstream IN("test_es.txt");
+    if (IN.fail() or IN.bad()) {
+       cerr << "ERROR: Failed to open: test_es.txt. Exiting..." << endl;
+       exit(1);
+    }
     while (!IN.eof()){
       string line;
       getline(IN, line);
@@ -50,6 +54,10 @@ int main(const int argc, const char* argv[])
     srl_t parser(argv[1], argv[2]);
     vector<string> sents;
     ifstream IN(argv[3]);
+    if (IN.fail() or IN.bad()) {
+       cerr << "ERROR: Failed to open:" << argv[3] << ". Exiting..." << endl;
+       exit(1);
+    }
     while(!IN.eof()){
       string line;
       getline(IN, line);

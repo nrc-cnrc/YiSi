@@ -16,7 +16,9 @@
 
 #include "srlgraph.h"
 #include "srlutil.h"
+#ifdef WITH_SRLMATE
 #include "srlmate.h"
+#endif
 #include "srl.h"
 
 using namespace yisi;
@@ -29,8 +31,10 @@ srl_t::srl_t(){
 srl_t::srl_t(const string name, const string path){
   if (name == "read"){
     srl_p = new srlread_t(path);
+#ifdef WITH_SRLMATE
   } else if (name == "mate"){
     srl_p = new srlmate_t(path);
+#endif
   } else if (name == ""){
     srl_p = new srltok_t();
   } else {

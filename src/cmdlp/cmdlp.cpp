@@ -1,10 +1,12 @@
 /**
-   This command-line option library was cloned from
+   This command-line option library was cloned from:
 
-   https://github.com/masaers/cmdlp
+   https://github.com/masaers/cmdlp (v0.1 tag, plus our small patch)
 
    Thanks Markus!
    Consider cloning the original repository if you like it.
+
+   Copyright (c) 2018 Markus S. Saers
  */
 #include "cmdlp.h"
 

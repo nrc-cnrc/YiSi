@@ -32,32 +32,32 @@ struct eval_options{
   std::string docscore_file_m;
   std::string mode_m;
   
-  void init(cmdlp::parser& p){   
-    p.add(cmdlp::value_option<std::string>(ref_file_m))
+  void init(com::masaers::cmdlp::parser& p){
+    p.add(com::masaers::cmdlp::value_option<std::string>(ref_file_m))
       .desc("filenames of references separated by ':'")
       .name("ref-file")
       ;
-    p.add(cmdlp::value_option<std::string>(hyp_file_m))
+    p.add(com::masaers::cmdlp::value_option<std::string>(hyp_file_m))
       .fallback("")
       .desc("filename of hypothesis")
       .name("hyp-file")
       ;
-    p.add(cmdlp::value_option<std::string>(inp_file_m))
+    p.add(com::masaers::cmdlp::value_option<std::string>(inp_file_m))
       .fallback("")
       .desc("filename of inp")
       .name("inp-file")
       ;
-    p.add(cmdlp::value_option<std::string>(sntscore_file_m))
+    p.add(com::masaers::cmdlp::value_option<std::string>(sntscore_file_m))
       .fallback("")
       .desc("filename of sentence score output (default: $hyp-file.scores)")
       .name("sntscore-file")
       ;
-    p.add(cmdlp::value_option<std::string>(docscore_file_m))
+    p.add(com::masaers::cmdlp::value_option<std::string>(docscore_file_m))
       .fallback("")
       .desc("filename of document score output (default: $sntscore-file.doc")
       .name("docscore-file")
       ;
-    p.add(cmdlp::value_option<std::string>(mode_m))
+    p.add(com::masaers::cmdlp::value_option<std::string>(mode_m))
       .fallback("yisi")
       .desc("output mode of yisi [yisi(default): print score only|features: print feature weights and scores separated by white space ]")
       .name("mode")
@@ -68,7 +68,7 @@ struct eval_options{
 // main
 int main(const int argc, const char* argv[])
 {
-  typedef cmdlp::options<eval_options, yisi_options, phrasesim_options> options_type;
+  typedef com::masaers::cmdlp::options<eval_options, yisi_options, phrasesim_options> options_type;
   
   options_type opt(argc,argv);
   

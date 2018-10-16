@@ -29,7 +29,7 @@ using namespace yisi;
 int main(const int argc, const char* argv[])
 {
 
-  typedef cmdlp::options<yisi_options, phrasesim_options> options_type;
+  typedef com::masaers::cmdlp::options<yisi_options, phrasesim_options> options_type;
 
   options_type opt(argc,argv);
 

@@ -47,62 +47,62 @@ namespace yisi {
 
     int n_m;
 
-    void init(cmdlp::parser& p){
+    void init(com::masaers::cmdlp::parser& p){
 
-      p.add(cmdlp::value_option<std::string>(lexsim_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(lexsim_name_m))
 	.fallback("exact")
 	.desc("name of lex sim model: [exact(default)|ibm1|w2v|ibmw2v]")
 	.name("lexsim-name")
 	;
-      p.add(cmdlp::value_option<std::string>(outlexsim_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(outlexsim_path_m))
 	.fallback("")
 	.desc("path to lex sim model file in output language")
 	.name("outlexsim-path")
 	;
-      p.add(cmdlp::value_option<std::string>(inplexsim_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(inplexsim_path_m))
         .fallback("")
         .desc("path to lex sim model file in input language")
         .name("inplexsim-path")
         ;
-      p.add(cmdlp::value_option<std::string>(inplexweight_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(inplexweight_name_m))
 	.fallback("uniform")
 	.desc("name of input lex weight model: [uniform(default)|file|learn]")
 	.name("inplexweight-name")
 	;
-      p.add(cmdlp::value_option<std::string>(inplexweight_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(inplexweight_path_m))
 	.fallback("")
 	.desc("[file: path to input lex weight model file|learn: monolingual corpus in input language to learn]")
 	.name("inplexweight-path")
 	;
-      p.add(cmdlp::value_option<std::string>(reflexweight_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(reflexweight_name_m))
         .fallback("uniform")
         .desc("name of lex weight model: [uniform(default)|file|learn]")
         .name("lexweight-name")
         .name("reflexweight-name")
 	;
-      p.add(cmdlp::value_option<std::string>(reflexweight_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(reflexweight_path_m))
         .fallback("")
         .desc("path to lex weight model file [name option: file] or monolingual corpus in reference language to learn [name option: learn]")
 	.name("lexweight-path")
 	.name("reflexweight-path")
 	;
-      p.add(cmdlp::value_option<std::string>(hyplexweight_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(hyplexweight_name_m))
 	.fallback("")
 	.desc("name of hypotheses lex weight model: [uniform|file|learn] (default: same as reflexweight-name")
 	.name("hyplexweight-name")
 	;
-      p.add(cmdlp::value_option<std::string>(hyplexweight_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(hyplexweight_path_m))
 	.fallback("")
 	.desc("path to lex weight model file [name option: file] or monolingual corpus in hypothesis language to learn [name option: learn]")
         .name("hyplexweight-path")
 	;
-      p.add(cmdlp::value_option<std::string>(phrasesim_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(phrasesim_name_m))
 	.fallback("nwpr")
 	.desc("name of phrase sim model: [nwpf: n-gram idf-weighted precision/recall]")
 	.name("psname")
 	.name("phrasesim-name")
 	;
-      p.add(cmdlp::value_option<int>(n_m))
+      p.add(com::masaers::cmdlp::value_option<int>(n_m))
 	.fallback(0)
 	.desc("n-gram size")
 	.name("ngram-size")

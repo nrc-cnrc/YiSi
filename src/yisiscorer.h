@@ -42,18 +42,18 @@ namespace yisi {
     double alpha_m;
     double beta_m;
         
-    void init(cmdlp::parser& p){
-      p.add(cmdlp::value_option<std::string>(inpsrl_name_m))
+    void init(com::masaers::cmdlp::parser& p){
+      p.add(com::masaers::cmdlp::value_option<std::string>(inpsrl_name_m))
 	.fallback("")
 	.desc("name of inp srl: [read|mate]")
 	.name("inpsrl-name")
 	;
-      p.add(cmdlp::value_option<std::string>(inpsrl_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(inpsrl_path_m))
 	.fallback("")
 	.desc("[read:path to assert formated parse of input sentences|mate: full path and filename of lang.mplsconfig]")
 	.name("inpsrl-path")
 	;
-      p.add(cmdlp::value_option<std::string>(outsrl_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(outsrl_name_m))
         .fallback("")
         .desc("name of out srl: [read|mate]")
         .name("outsrl-name")
@@ -61,7 +61,7 @@ namespace yisi {
 	.name("hypsrl-name")
         .name("srl-name")
         ;
-      p.add(cmdlp::value_option<std::string>(outsrl_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(outsrl_path_m))
         .fallback("")
         .desc("[read:path to assert formated parse output|mate: full path and file name of lang.mplsconfig]")
         .name("outsrl-path")
@@ -69,27 +69,27 @@ namespace yisi {
 	.name("hypsrl-paht")
         .name("srl-path")
         ;
-      p.add(cmdlp::value_option<std::string>(labelconfig_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(labelconfig_path_m))
 	.fallback("")
         .desc("path to yisi srl role label config")
         .name("labelconfig-path")
         ;
-      p.add(cmdlp::value_option<std::string>(weightconfig_path_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(weightconfig_path_m))
         .fallback("")
         .desc("path to yisi srl role label config (default:<empty string> to use yisi unsupervised estimation of weight")
         .name("weightconfig-path")
         ;
-      p.add(cmdlp::value_option<std::string>(frameweight_name_m))
+      p.add(com::masaers::cmdlp::value_option<std::string>(frameweight_name_m))
         .fallback("coverage")
         .desc("name of frame weight function: [uniform|coverage(default)]")
         .name("frameweight-name")
         ;
-      p.add(cmdlp::value_option<double>(beta_m))
+      p.add(com::masaers::cmdlp::value_option<double>(beta_m))
 	.fallback(0.0)
 	.desc("beta value of yisi [0.0(default)]")
 	.name("beta")
 	;
-      p.add(cmdlp::value_option<double>(alpha_m))
+      p.add(com::masaers::cmdlp::value_option<double>(alpha_m))
         .fallback(0.5)
         .desc("ratio of precision & recall in YiSi")
         .name("alpha")

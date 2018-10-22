@@ -1,7 +1,7 @@
 # ========================================================================
 # Makefile for the command-line option library, which was cloned from:
 #
-# https://github.com/masaers/cmdlp (v0.1 tag)
+# https://github.com/masaers/cmdlp (v0.2 tag)
 #
 # Authors: Markus Saers <masaers@gmail.com>
 #

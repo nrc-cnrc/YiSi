@@ -1,7 +1,7 @@
 # ========================================================================
 # Makefile
 #
-# Authors: Jackie Lo
+# Authors: Jackie Lo and Darlene Stewart
 #
 # Acknowledgement:
 #
@@ -10,7 +10,6 @@
 #   https://github.com/masaers/cmdlp
 #
 #   Thanks Markus!
-#   Consider cloning the original repository if you like cmdlp.
 #
 # ========================================================================
 #
@@ -48,7 +47,7 @@ JFLAGS += -cp ${MATEPLUS_PATH}
 
 PROG_NAMES :=
 TEST_NAMES := cmdlp_test srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
-	      lexweight_test lw_count phrasesim_test srl_test srlutil_test \
+	      lexweight_test lw_count phrasesim_test srl_test srlutil_test util_test \
 	      yisiscorer_test yisi testbin
 
 ifdef WITH_SRLMATE

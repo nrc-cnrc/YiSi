@@ -24,7 +24,7 @@
 
 namespace yisi{
   std::vector<std::string> tokenize(std::string sent, char d=' ', bool keep_empty=false);
-  std::string join(std::vector<std::string> tokens, std::string d=" ");
+  std::string join(const std::vector<std::string> tokens, const std::string d=" ");
   std::vector<std::string> read_file(std::string filename);
   void open_ofstream(std::ofstream& fout, std::string filename);
   std::string lowercase(std::string token);

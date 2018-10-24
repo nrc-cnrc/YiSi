@@ -26,27 +26,26 @@ using namespace yisi;
 // main
 int main(const int argc, const char* argv[])
 {
+   typedef com::masaers::cmdlp::options<phrasesim_options> options_type;
 
-  typedef com::masaers::cmdlp::options<phrasesim_options> options_type;
+   options_type opt(argc,argv);
+   if (! opt) {
+      return opt.exit_code();
+   }
 
-  options_type opt(argc,argv);
+   phrasesim_t<options_type> phrasesim(opt);
 
-  phrasesim_t<options_type> phrasesim(opt);
-  
-  vector<string> s1;
-  s1.push_back("France");
-  vector<string> s2;
-  s2.push_back("Italy");
-  vector<string> s3;
-  s3.push_back("French");
-  s3.push_back("president");
-  vector<string> s4;
-  s4.push_back("Italian");
-  s4.push_back("president");
-  auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
-  auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
-  cout <<"The similarity of 'France' and 'Italy' is: (" << p1.first <<","<< p1.second<<")"<<endl;
-  cout <<"The similarity of 'French president' and 'Italian president' is: (" << p2.first <<","<<p2.second<<")" <<endl;
+   vector<string> s1{"France"};
+   vector<string> s2{"Italy"};
+   vector<string> s3{"French", "president"};
+   vector<string> s4{"Italian", "president"};
 
+   auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
+   auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
+
+   cout << "The similarity of 'France' and 'Italy' is: ("
+        << p1.first << "," << p1.second << ")" << endl;
+   cout <<  "The similarity of 'French president' and 'Italian president' is: ("
+        << p2.first << "," << p2.second << ")" << endl;
 }
 

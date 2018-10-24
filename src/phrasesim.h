@@ -33,83 +33,88 @@
 
 namespace yisi {
 
-  struct phrasesim_options {
-    std::string lexsim_name_m;
-    std::string outlexsim_path_m;
-    std::string inplexsim_path_m;
-    std::string inplexweight_name_m;
-    std::string inplexweight_path_m;
-    std::string reflexweight_name_m;
-    std::string reflexweight_path_m;
-    std::string hyplexweight_name_m;
-    std::string hyplexweight_path_m;
-    std::string phrasesim_name_m;
+   struct phrasesim_options {
+      std::string lexsim_name_m;
+      std::string outlexsim_path_m;
+      std::string inplexsim_path_m;
+      std::string inplexweight_name_m;
+      std::string inplexweight_path_m;
+      std::string reflexweight_name_m;
+      std::string reflexweight_path_m;
+      std::string hyplexweight_name_m;
+      std::string hyplexweight_path_m;
+      std::string phrasesim_name_m;
 
-    int n_m;
+      int n_m;
 
-    void init(com::masaers::cmdlp::parser& p){
+      void init(com::masaers::cmdlp::parser& p) {
+         using namespace com::masaers::cmdlp;
 
-      p.add(com::masaers::cmdlp::value_option<std::string>(lexsim_name_m))
-	.fallback("exact")
-	.desc("name of lex sim model: [exact(default)|ibm1|w2v|ibmw2v]")
-	.name("lexsim-name")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(outlexsim_path_m))
-	.fallback("")
-	.desc("path to lex sim model file in output language")
-	.name("outlexsim-path")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(inplexsim_path_m))
-        .fallback("")
-        .desc("path to lex sim model file in input language")
-        .name("inplexsim-path")
-        ;
-      p.add(com::masaers::cmdlp::value_option<std::string>(inplexweight_name_m))
-	.fallback("uniform")
-	.desc("name of input lex weight model: [uniform(default)|file|learn]")
-	.name("inplexweight-name")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(inplexweight_path_m))
-	.fallback("")
-	.desc("[file: path to input lex weight model file|learn: monolingual corpus in input language to learn]")
-	.name("inplexweight-path")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(reflexweight_name_m))
-        .fallback("uniform")
-        .desc("name of lex weight model: [uniform(default)|file|learn]")
-        .name("lexweight-name")
-        .name("reflexweight-name")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(reflexweight_path_m))
-        .fallback("")
-        .desc("path to lex weight model file [name option: file] or monolingual corpus in reference language to learn [name option: learn]")
-	.name("lexweight-path")
-	.name("reflexweight-path")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(hyplexweight_name_m))
-	.fallback("")
-	.desc("name of hypotheses lex weight model: [uniform|file|learn] (default: same as reflexweight-name")
-	.name("hyplexweight-name")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(hyplexweight_path_m))
-	.fallback("")
-	.desc("path to lex weight model file [name option: file] or monolingual corpus in hypothesis language to learn [name option: learn]")
-        .name("hyplexweight-path")
-	;
-      p.add(com::masaers::cmdlp::value_option<std::string>(phrasesim_name_m))
-	.fallback("nwpr")
-	.desc("name of phrase sim model: [nwpf: n-gram idf-weighted precision/recall]")
-	.name("psname")
-	.name("phrasesim-name")
-	;
-      p.add(com::masaers::cmdlp::value_option<int>(n_m))
-	.fallback(0)
-	.desc("n-gram size")
-	.name("ngram-size")
-	.name("n")
-	;
-    }
-  };
+         p.add(make_knob(lexsim_name_m))
+            .fallback("exact")
+            .desc("Name of lex sim model: [exact(default)|ibm1|w2v|ibmw2v]")
+            .name("lexsim-name")
+            ;
+         p.add(make_knob(outlexsim_path_m))
+            .fallback("")
+            .desc("Path to lex sim model file in output language")
+            .name("outlexsim-path")
+            ;
+         p.add(make_knob(inplexsim_path_m))
+            .fallback("")
+            .desc("Path to lex sim model file in input language")
+            .name("inplexsim-path")
+            ;
+         p.add(make_knob(inplexweight_name_m))
+            .fallback("uniform")
+            .desc("Name of input lex weight model: [uniform(default)|file|learn]")
+            .name("inplexweight-name")
+            ;
+         p.add(make_knob(inplexweight_path_m))
+            .fallback("")
+            .desc("[file: path to input lex weight model file"
+                  "|learn: monolingual corpus in input language to learn]")
+            .name("inplexweight-path")
+            ;
+         p.add(make_knob(reflexweight_name_m))
+            .fallback("uniform")
+            .desc("Name of lex weight model: [uniform(default)|file|learn]")
+            .name("lexweight-name")
+            .name("reflexweight-name")
+            ;
+         p.add(make_knob(reflexweight_path_m))
+            .fallback("")
+            .desc("Path to lex weight model file [name option: file] "
+                  "or monolingual corpus in reference language to learn [name option: learn]")
+            .name("lexweight-path")
+            .name("reflexweight-path")
+            ;
+         p.add(make_knob(hyplexweight_name_m))
+            .fallback("")
+            .desc("Name of hypotheses lex weight model: [uniform|file|learn] "
+                  "(default: same as reflexweight-name")
+            .name("hyplexweight-name")
+            ;
+         p.add(make_knob(hyplexweight_path_m))
+            .fallback("")
+            .desc("Path to lex weight model file [name option: file] "
+                  "or monolingual corpus in hypothesis language to learn [name option: learn]")
+            .name("hyplexweight-path")
+            ;
+         p.add(make_knob(phrasesim_name_m))
+            .fallback("nwpr")
+            .desc("Name of phrase sim model: [nwpf: n-gram idf-weighted precision/recall]")
+            .name("psname")
+            .name("phrasesim-name")
+            ;
+         p.add(make_knob(n_m))
+            .fallback(0)
+            .desc("n-gram size")
+            .name("ngram-size")
+            .name("n")
+            ;
+      }
+   };
 
   static std::map<std::string, std::map<std::string, std::pair<double, double> > > mpscache_m;
   static std::map<std::string, std::map<std::string, std::pair<double, double> > > xpscache_m;

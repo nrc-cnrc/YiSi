@@ -42,14 +42,14 @@ vector<string> yisi::tokenize(string sent, char d, bool keep_empty){
   return result;
 }
 
-string yisi::join(vector<string> tokens, string d){
-  auto it = tokens.begin();
-  string result=*it;
-  it++;
-  for (; it!= tokens.end(); it++){
-    result += d + (*it);
-  }
-  return result;
+string yisi::join(const vector<string> tokens, const string d){
+   string result="";
+   for (auto it = tokens.begin(); it!= tokens.end(); ++it){
+      if (it != tokens.begin())
+         result += d;
+      result += *it;
+   }
+   return result;
 }
 
 vector<string> yisi::read_file(string filename){

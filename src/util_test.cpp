@@ -1,8 +1,8 @@
 /**
- * @file phrasesim_test.cpp
- * @brief Unit test for phrasesim.
+ * @file util_test.cpp
+ * @brief Unit test for util module.
  *
- * @author Jackie Lo
+ * @author Darlene Stewart
  *
  * Multilingual Text Processing / Traitement multilingue de textes
  * Digital Technologies Research Centre / Centre de recherche en technologies numériques
@@ -13,10 +13,9 @@
 
 #include <iostream>
 #include <vector>
-#include <fstream>
 #include <string>
 
-#include "phrasesim.h"
+#include "util.h"
 
 using namespace std;
 using namespace yisi;
@@ -26,26 +25,16 @@ using namespace yisi;
 // main
 int main(const int argc, const char* argv[])
 {
-   typedef com::masaers::cmdlp::options<phrasesim_options> options_type;
-
-   options_type opt(argc,argv);
-   if (! opt) {
-      return opt.exit_code();
-   }
-
-   phrasesim_t<options_type> phrasesim(opt);
-
+   vector<string> s0;
    vector<string> s1{"France"};
    vector<string> s2{"Italy"};
    vector<string> s3{"French", "president"};
    vector<string> s4{"Italian", "president"};
 
-   auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
-   auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
-
-   cout << "The similarity of 'France' and 'Italy' is: ("
-        << p1.first << "," << p1.second << ")" << endl;
-   cout <<  "The similarity of 'French president' and 'Italian president' is: ("
-        << p2.first << "," << p2.second << ")" << endl;
+   cout << join(s0).length() << " join(s0): " << join(s0) << endl;
+   cout << join(s1).length() << " join(s1): " << join(s1) << endl;
+   cout << join(s2).length() << " join(s2): " << join(s2) << endl;
+   cout << join(s3).length() << " join(s3): " << join(s3) << endl;
+   cout << join(s4).length() << " join(s4): " << join(s4) << endl;
 }
 

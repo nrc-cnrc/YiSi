@@ -29,24 +29,28 @@ using namespace yisi;
 int main(const int argc, const char* argv[])
 {
 
-  typedef com::masaers::cmdlp::options<yisi_options, phrasesim_options> options_type;
+   typedef com::masaers::cmdlp::options<yisi_options, phrasesim_options> options_type;
 
-  options_type opt(argc,argv);
+   options_type opt(argc,argv);
+   if (! opt) {
+      return opt.exit_code();
+   }
 
-  yisiscorer_t<options_type> yisi(opt);
+   yisiscorer_t<options_type> yisi(opt);
 
-  string reffile("test_ref.txt");
-  vector<string> sents = read_file(reffile);
+   string reffile("test_ref.txt");
+   vector<string> sents = read_file(reffile);
 
-  auto r1 = yisi.refsrlparse(sents);
-  auto r2 = yisi.hypsrlparse(sents);
-  for (size_t i=0; i<r1.size(); i++){
-    //cerr <<"Building YiSi graph"<<endl;
-    vector<srlgraph_t> rs;
-    rs.push_back(r1[i]);
-    yisigraph_t m = yisi.align(rs,r2[i]);
+   auto r1 = yisi.refsrlparse(sents);
+   auto r2 = yisi.hypsrlparse(sents);
 
-    cout << "YiSi score is:" << yisi.score(m) <<endl;
-  }
+   for (size_t i=0; i < r1.size(); i++) {
+      //cerr <<"Building YiSi graph"<<endl;
+      vector<srlgraph_t> rs;
+      rs.push_back(r1[i]);
+      yisigraph_t m = yisi.align(rs,r2[i]);
+
+      cout << "YiSi score is:" << yisi.score(m) << endl;
+   }
 }
 

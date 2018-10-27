@@ -36,11 +36,11 @@ struct eval_options {
       using namespace com::masaers::cmdlp;
 
       p.add(make_knob(ref_file_m))
+         .fallback("")
          .desc("Filenames of references separated by ':'")
          .name("ref-file")
          ;
       p.add(make_knob(hyp_file_m))
-         .fallback("")
          .desc("Filename of hypothesis")
          .name("hyp-file")
          ;

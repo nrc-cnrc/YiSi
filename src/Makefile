@@ -92,6 +92,7 @@ OBJECTS := $(filter-out $(SRLMATE_OBJS),$(ALL_OBJECTS))
 all: binaries scripts
 ifdef WITH_SRLMATE
 all: ../obj/srlmate.jar
+all: en.mplsconfig de.mplsconfig
 endif
 
 binaries: $(BIN_NAMES:%=../bin/%)
@@ -107,6 +108,9 @@ scripts: ../bin/.STAMP
 	@mkdir -pv ../obj/java
 	${JAVA_HOME}/bin/javac $(JFLAGS) -d ../obj/java $^
 	cd ../obj/java && jar -cvf ../srlmate.jar *
+
+en.mplsconfig de.mplsconfig: %: %.template
+	sed -e "s#<YISI_HOME>/#$(dir $(CURDIR))#g; s#<MATEPLUS_HOME>#$(MATEPLUS_HOME)#g;" < $< > $@
 
 $(SRLMATE_BINS): LDFLAGS += -L${JAVA_HOME}/jre/lib/amd64/server
 $(SRLMATE_BINS): LIBRARIES += -ljvm
@@ -160,10 +164,13 @@ test: ../test/.STAMP $(TEST_NAMES:%=../test/%.out)
 	@mkdir -pv $(@D)
 	@touch $@
 
-.PHONY: clean cleaner
-clean:
+.PHONY: clean cleaner clean.mplsconfig
+clean: clean.mplsconfig
 	@rm -rf ../bin
 	@rm -f *~
+
+clean.mplsconfig:
+	@rm -f en.mplsconfig de.mplsconfig
 
 cleaner: clean
 	@rm -rf ../dep ../obj

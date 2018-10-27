@@ -25,16 +25,28 @@ test: all
 
 all: test_yisi
 
-TMP_FILES = test_yisi_[0-2].out test_hyp.docyisi[0-2] test_hyp.sntyisi[0-2]
+TMP_FILES = test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
 
 compare.%: %
 	diff $< ref/$< -q
 
-.PHONY: test_yisi $(foreach n,0 1 2,test_yisi_$n)
-test_yisi: $(foreach n,0 1 2,test_yisi_$n)
+SUB:="s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
 
-$(foreach n,0 1 2,test_yisi_$n): test_yisi_%: compare.test_yisi_%.out
-$(foreach n,0 1 2,compare.test_yisi_$n.out): compare.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%
+compare2.%: %
+	diff <(cat $< | sed -e $(SUB)) <(cat ref/$< | sed -e $(SUB)) -q
+
+YSFX_NOSRL := 0 1 2
+#YSFX_SRL := 1_srl 2_srl
+YSFX_SRL := 1_srl
+
+.PHONY: test_yisi $(foreach n,$(YSFX_NOSRL) $(YSFX_SRL),test_yisi_$n)
+test_yisi: $(foreach n,$(YSFX_NOSRL) $(YSFX_SRL),test_yisi_$n)
+
+$(foreach n,$(YSFX_NOSRL),test_yisi_$n): test_yisi_%: compare.test_yisi_%.out
+$(foreach n,$(YSFX_NOSRL),compare.test_yisi_$n.out): compare.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%
+
+$(foreach n,$(YSFX_SRL),test_yisi_$n): test_yisi_%: compare2.test_yisi_%.out
+$(foreach n,$(YSFX_SRL),compare2.test_yisi_$n.out): compare2.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%
 
 test_yisi_%.out: yisi-%.config
 	../bin/run_yisi.sh $< &> $@
@@ -45,16 +57,16 @@ test_hyp.docyisi% test_hyp.sntyisi%: test_yisi_%.out
 ########################################
 .PHONY: gitignore
 gitignore: 
-	echo "${TMP_FILES} ${TMP_DIRS} core core.* .gitignore !src/* !ref/* !in/* !data/*" | tr ' ' '\n' > .gitignore
+	echo "$(TMP_FILES) $(TMP_DIRS) core core.* .gitignore !src/* !ref/* !in/* !data/*" | tr ' ' '\n' > .gitignore
 
 .PHONY: clean clean.tmp_files
 clean: clean.tmp_files
 clean.tmp_files:
-	${RM} ${TMP_FILES} core core.* .gitignore
+	$(RM) $(TMP_FILES) core core.* .gitignore
 
 ifdef TMP_DIRS
 .PHONY: clean.tmp_dirs
 clean: clean.tmp_dirs
 clean.tmp_dirs:
-	${RM} -r ${TMP_DIRS}
+	$(RM) -r $(TMP_DIRS)
 endif

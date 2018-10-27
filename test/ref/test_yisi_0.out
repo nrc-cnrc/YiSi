@@ -1,0 +1,15 @@
+Running: yisi --ref-file test_ref.en --hyp-file test_hyp.en --sntscore-file test_hyp.sntyisi0 --docscore-file test_hyp.docyisi0 --lexsim-name lcs --reflexweight-name learn --phrasesim-name nwpr --alpha 0.8 --mode yisi --n 3
+Constructing lcs lexsim model
+Learning lex weight from test_ref.en ... Done.
+Tokenizing/SRL-ing hyp ... Done.
+Tokenizing/SRL-ing ref ... Done.
+Evaluating line 1
+Evaluating line 2
+Evaluating line 3
+Evaluating line 4
+Evaluating line 5
+Evaluating line 6
+Evaluating line 7
+Evaluating line 8
+Evaluating line 9
+Evaluating line 10

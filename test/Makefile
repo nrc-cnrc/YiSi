@@ -40,16 +40,16 @@ SIMPLE_TEST_PROGS := cmdlp_test
 SIMPLE_TEST_PROGS += util_test
 SIMPLE_TEST_PROGS += phrasesim_test
 SIMPLE_TEST_PROGS += lexweight_test
-#SIMPLE_TEST_PROGS += lexsim_test
-#SIMPLE_TEST_PROGS += biw2v_test
-#SIMPLE_TEST_PROGS += w2v_test
+SIMPLE_TEST_PROGS += lexsim_test
+SIMPLE_TEST_PROGS += biw2v_test
+SIMPLE_TEST_PROGS += w2v_test
 SIMPLE_TEST_PROGS += maxmatching_test
-#SIMPLE_TEST_PROGS += srlutil_test
-SIMPLE_TEST_PROGS += srlgraph_test
-#SIMPLE_TEST_PROGS += srl_test
+SIMPLE_TEST_PROGS += srlutil_test
+#SIMPLE_TEST_PROGS += srlgraph_test
 SIMPLE_TEST_PROGS += yisiscorer_test
 
 ifdef WITH_SRLMATE
+   SIMPLE2_TEST_PROGS += srl_test
    SIMPLE2_TEST_PROGS += srlmate_test
 endif
 
@@ -59,6 +59,7 @@ all: test_yisi
 
 TMP_FILES += $(addsuffix .out, $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS))
 TMP_FILES += test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
+TMP_FILES += test_ref.en.srl
 
 compare.%: %
 	diff $< ref/$< -q
@@ -73,8 +74,24 @@ $(SIMPLE_TEST_PROGS): %: compare.%.out
 $(SIMPLE2_TEST_PROGS): %: compare2.%.out
 
 cmdlp_test.out: ARGS = --beta 0 --help
-#srl_test.out: ARGS = mate ../src/en.mplsconfig
+util_test.out: ARGS =
+phrasesim_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
+   --reflexweight-type learn --reflexweight-path test_ref.en --phrasesim-type nwpr --ngram-size 3
+lexweight_test.out: ARGS =
+lexsim_test.out: ARGS = w2v mini.d300.en EU UK
+biw2v_test.out: ARGS = mini.d300.de mini.d300.en . .
+w2v_test.out: ARGS = mini.d300.en EU UK
+maxmatching_test.out: ARGS =
+srlutil_test.out: ARGS = test_ref.en.conll09
+srlgraph_test.out: ARGS = test_ref.en test_ref.en.assert
+yisiscorer_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
+   --reflexweight-type learn --reflexweight-path test_ref.en --phrasesim-type nwpr --ngram-size 3
+srl_test.out: ARGS = mate ../src/en.mplsconfig test_ref.en test_ref.en.srl
 srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
+
+compare2.srl_test.out: compare.test_ref.en.srl
+
+test_ref.en.srl: srl_test.out ;
 
 $(addsuffix .out, $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS)): %.out:
 	../bin/$* $(ARGS) &> $@

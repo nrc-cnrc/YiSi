@@ -16,6 +16,19 @@ SHELL:=/bin/bash
 .NOTPARALLEL:
 .SECONDARY:
 
+# Override the value of MATEPLUS_HOME with a command line definition, or
+# consider defining MATEPLUS_HOME in your .profile, for example:
+#   export MATEPLUS_HOME=~/u/sandboxes/mateplus
+MATEPLUS_HOME ?= ~/u/tools/MATE/mateplus-master/src
+
+MATEPLUS_PATH ?= $(MATEPLUS_HOME)/mateplus.jar
+
+ifneq ("$(wildcard $(MATEPLUS_PATH))","")
+   WITH_SRLMATE ?= True
+else
+   $(info *** mateplus.jar not found)
+endif
+
 .PHONY: all
 # "make all" should create the .gitignore file
 all: gitignore
@@ -23,9 +36,30 @@ all: gitignore
 
 test: all
 
+SIMPLE_TEST_PROGS := cmdlp_test
+SIMPLE_TEST_PROGS += util_test
+#SIMPLE_TEST_PROGS += lw_count
+SIMPLE_TEST_PROGS += phrasesim_test
+SIMPLE_TEST_PROGS += lexweight_test
+#SIMPLE_TEST_PROGS += lexsim_test
+#SIMPLE_TEST_PROGS += biw2v_test
+#SIMPLE_TEST_PROGS += w2v_test
+SIMPLE_TEST_PROGS += maxmatching_test
+#SIMPLE_TEST_PROGS += srlutil_test
+SIMPLE_TEST_PROGS += srlgraph_test
+#SIMPLE_TEST_PROGS += srl_test
+SIMPLE_TEST_PROGS += yisiscorer_test
+
+ifdef WITH_SRLMATE
+   SIMPLE2_TEST_PROGS += srlmate_test
+endif
+
+all: $(SIMPLE_TEST_PROGS)
+all: $(SIMPLE2_TEST_PROGS)
 all: test_yisi
 
-TMP_FILES = test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
+TMP_FILES += $(addsuffix .out, $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS))
+TMP_FILES += test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
 
 compare.%: %
 	diff $< ref/$< -q
@@ -34,6 +68,17 @@ SUB:="s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
 
 compare2.%: %
 	diff <(cat $< | sed -e $(SUB)) <(cat ref/$< | sed -e $(SUB)) -q
+
+.PHONY: $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS)
+$(SIMPLE_TEST_PROGS): %: compare.%.out
+$(SIMPLE2_TEST_PROGS): %: compare2.%.out
+
+cmdlp_test.out: ARGS = --beta 0 --help
+#srl_test.out: ARGS = mate ../src/en.mplsconfig
+srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
+
+$(addsuffix .out, $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS)): %.out:
+	$* $(ARGS) &> $@
 
 YSFX_NOSRL := 0 1 2
 #YSFX_SRL := 1_srl 2_srl

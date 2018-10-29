@@ -39,7 +39,7 @@ JFLAGS += -cp ${MATEPLUS_PATH}
 
 PROG_NAMES := yisi
 TEST_NAMES := cmdlp_test srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
-	      lexweight_test lw_count phrasesim_test srl_test srlutil_test util_test \
+	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
 	      yisiscorer_test testbin
 
 ifdef WITH_SRLMATE
@@ -95,9 +95,6 @@ YISIBIN_SUB := "s~^YISIBIN=/path/to/your/yisi/bin$$~YISIBIN=$(dir $(CURDIR))bin~
 scripts: | ../bin
 	cp -p ../src/scripts/resolve_yisicmd.sh ../bin
 	sed -e $(YISIBIN_SUB) scripts/run_yisi.sh > ../bin/run_yisi.sh
-	sed -e $(YISIBIN_SUB) scripts/pp.sh > ../bin/pp.sh
-	sed -e $(YISIBIN_SUB) scripts/run_pp+yisi.sh > ../bin/run_pp+yisi.sh
-	sed -e $(YISIBIN_SUB) scripts/run_pp+matein+yisi.sh > ../bin/run_pp+matein+yisi.sh
 	chmod a+x ../bin/*.sh
 
 ../obj/srlmate.jar: *.java

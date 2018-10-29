@@ -38,7 +38,6 @@ test: all
 
 SIMPLE_TEST_PROGS := cmdlp_test
 SIMPLE_TEST_PROGS += util_test
-#SIMPLE_TEST_PROGS += lw_count
 SIMPLE_TEST_PROGS += phrasesim_test
 SIMPLE_TEST_PROGS += lexweight_test
 #SIMPLE_TEST_PROGS += lexsim_test

@@ -41,28 +41,28 @@ struct eval_options {
          .name("ref-file")
          ;
       p.add(make_knob(hyp_file_m))
-         .desc("Filename of hypothesis")
+         .desc("Filename of hypotheses")
          .name("hyp-file")
          ;
       p.add(make_knob(inp_file_m))
          .fallback("")
-         .desc("Filename of inp")
+         .desc("Filename of input")
          .name("inp-file")
          ;
       p.add(make_knob(sntscore_file_m))
          .fallback("")
-         .desc("Filename of sentence score output (default: $hyp-file.scores)")
+         .desc("Filename of sentence score output (default: <hyp-file>.scores)")
          .name("sntscore-file")
          ;
       p.add(make_knob(docscore_file_m))
          .fallback("")
-         .desc("Filename of document score output (default: $sntscore-file.doc")
+         .desc("Filename of document score output (default: <sntscore-file>.doc")
          .name("docscore-file")
          ;
       p.add(make_knob(mode_m))
          .fallback("yisi")
-         .desc("Output mode of yisi [yisi(default): print score only"
-               "|features: print feature weights and scores separated by white space]")
+         .desc("Output mode of YiSi [yisi(default): print score only "
+               "| features: print feature weights and scores separated by white space]")
          .name("mode")
          ;
    }

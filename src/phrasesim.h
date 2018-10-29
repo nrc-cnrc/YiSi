@@ -52,8 +52,8 @@ namespace yisi {
 
          p.add(make_knob(lexsim_name_m))
             .fallback("exact")
-            .desc("Name of lex sim model: [exact(default)|ibm1|w2v|ibmw2v]")
-            .name("lexsim-name")
+            .desc("Type of lex sim model: [exact(default)|ibm1|w2v|ibmw2v]")
+            .name("lexsim-type")
             ;
          p.add(make_knob(outlexsim_path_m))
             .fallback("")
@@ -67,49 +67,49 @@ namespace yisi {
             ;
          p.add(make_knob(inplexweight_name_m))
             .fallback("uniform")
-            .desc("Name of input lex weight model: [uniform(default)|file|learn]")
-            .name("inplexweight-name")
+            .desc("Type of input lex weight model: [uniform(default)|file|learn]")
+            .name("inplexweight-type")
             ;
          p.add(make_knob(inplexweight_path_m))
             .fallback("")
-            .desc("[file: path to input lex weight model file"
-                  "|learn: monolingual corpus in input language to learn]")
+            .desc("[file: path to input lex weight model file "
+                  "| learn: monolingual corpus in input language to learn]")
             .name("inplexweight-path")
             ;
          p.add(make_knob(reflexweight_name_m))
             .fallback("uniform")
-            .desc("Name of lex weight model: [uniform(default)|file|learn]")
-            .name("lexweight-name")
-            .name("reflexweight-name")
+            .desc("Type of reference lex weight model: [uniform(default)|file|learn]")
+            .name("lexweight-type")
+            .name("reflexweight-type")
             ;
          p.add(make_knob(reflexweight_path_m))
             .fallback("")
-            .desc("Path to lex weight model file [name option: file] "
-                  "or monolingual corpus in reference language to learn [name option: learn]")
+            .desc("[file: path to reference lex weight model file "
+                  "| learn: monolingual corpus in reference language to learn")
             .name("lexweight-path")
             .name("reflexweight-path")
             ;
          p.add(make_knob(hyplexweight_name_m))
             .fallback("")
-            .desc("Name of hypotheses lex weight model: [uniform|file|learn] "
-                  "(default: same as reflexweight-name")
-            .name("hyplexweight-name")
+            .desc("Type of hypotheses lex weight model: [uniform|file|learn] "
+                  "(default: same as reflexweight-type")
+            .name("hyplexweight-type")
             ;
          p.add(make_knob(hyplexweight_path_m))
             .fallback("")
-            .desc("Path to lex weight model file [name option: file] "
-                  "or monolingual corpus in hypothesis language to learn [name option: learn]")
+            .desc("[file: path to hypotheses lex weight model file "
+                  "| learn: monolingual corpus in hypothesis language to learn")
             .name("hyplexweight-path")
             ;
          p.add(make_knob(phrasesim_name_m))
             .fallback("nwpr")
-            .desc("Name of phrase sim model: [nwpf: n-gram idf-weighted precision/recall]")
+            .desc("Type of phrase sim model: [nwpf: n-gram idf-weighted precision/recall]")
             .name("psname")
-            .name("phrasesim-name")
+            .name("phrasesim-type")
             ;
          p.add(make_knob(n_m))
             .fallback(0)
-            .desc("n-gram size")
+            .desc("N-gram size")
             .name("ngram-size")
             .name("n")
             ;

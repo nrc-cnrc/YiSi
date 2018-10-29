@@ -33,16 +33,16 @@ if [[ $docscorefile != "" ]]; then
     yisiflags="$yisiflags --docscore-file $docscorefile"
 fi
 
-if [[ $outsrlname != "" ]]; then
-    yisiflags="$yisiflags --outsrl-name $outsrlname"
+if [[ $outsrltype != "" ]]; then
+    yisiflags="$yisiflags --outsrl-type $outsrltype"
 fi
 
 if [[ $outsrlpath != "" ]]; then
     yisiflags="$yisiflags --outsrl-path $outsrlpath"
 fi
 
-if [[ $inpsrlname != "" ]]; then
-    yisiflags="$yisiflags --inpsrl-name $inpsrlname"
+if [[ $inpsrltype != "" ]]; then
+    yisiflags="$yisiflags --inpsrl-type $inpsrltype"
 fi
 
 if [[ $inpsrlpath != "" ]]; then
@@ -57,12 +57,12 @@ if [[ $weightconfig != "" ]]; then
     yisiflags="$yisiflags --weightconfig-path $weightconfig"
 fi
 
-if [[ $frameweightname != "" ]]; then
-    yisiflags="$yisiflags --frameweight-name $frameweightname"
+if [[ $frameweighttype != "" ]]; then
+    yisiflags="$yisiflags --frameweight-type $frameweighttype"
 fi
 
-if [[ $lexsimname != "" ]]; then
-    yisiflags="$yisiflags --lexsim-name $lexsimname"
+if [[ $lexsimtype != "" ]]; then
+    yisiflags="$yisiflags --lexsim-type $lexsimtype"
 fi
 
 if [[ $inplexsimpath != "" ]]; then
@@ -73,32 +73,32 @@ if [[ $outlexsimpath != "" ]]; then
     yisiflags="$yisiflags --outlexsim-path $outlexsimpath"
 fi
 
-if [[ $reflexweightname != "" ]]; then
-    yisiflags="$yisiflags --reflexweight-name $reflexweightname"
+if [[ $reflexweighttype != "" ]]; then
+    yisiflags="$yisiflags --reflexweight-type $reflexweighttype"
 fi
 
 if [[ $reflexweightpath != "" ]]; then
     yisiflags="$yisiflags --reflexweight-path $reflexweightpath"
 fi
 
-if [[ $hyplexweightname != "" ]]; then
-    yisiflags="$yisiflags --hyplexweight-name $hyplexweightname"
+if [[ $hyplexweighttype != "" ]]; then
+    yisiflags="$yisiflags --hyplexweight-type $hyplexweighttype"
 fi
 
 if [[ $hyplexweightpath != "" ]]; then
     yisiflags="$yisiflags --hyplexweight-path $hyplexweightpath"
 fi
 
-if [[ $inplexweightname != "" ]]; then
-    yisiflags="$yisiflags --inplexweight-name $inplexweightname"
+if [[ $inplexweighttype != "" ]]; then
+    yisiflags="$yisiflags --inplexweight-type $inplexweighttype"
 fi
 
 if [[ $inplexweightpath != "" ]]; then
     yisiflags="$yisiflags --inplexweight-path $inplexweightpath"
 fi
 
-if [[ $phrasesimname != "" ]]; then
-    yisiflags="$yisiflags --phrasesim-name $phrasesimname"
+if [[ $phrasesimtype != "" ]]; then
+    yisiflags="$yisiflags --phrasesim-type $phrasesimtype"
 fi
 
 if [[ $alpha != "" ]]; then

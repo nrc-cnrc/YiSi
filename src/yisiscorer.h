@@ -47,51 +47,51 @@ namespace yisi {
 
          p.add(make_knob(inpsrl_name_m))
             .fallback("")
-            .desc("Name of inp srl: [read|mate]")
-            .name("inpsrl-name")
+            .desc("Type of input language SRL: [read|mate]")
+            .name("inpsrl-type")
             ;
          p.add(make_knob(inpsrl_path_m))
             .fallback("")
-            .desc("[read: path to assert formated parse of input sentences"
-                  "|mate: full path and filename of lang.mplsconfig]")
+            .desc("[read: path to assert formated parse of input sentences "
+                  "| mate: full path and filename of <srclang>.mplsconfig]")
             .name("inpsrl-path")
             ;
          p.add(make_knob(outsrl_name_m))
             .fallback("")
-            .desc("Name of out srl: [read|mate]")
-            .name("outsrl-name")
-            .name("refsrl-name")
-            .name("hypsrl-name")
-            .name("srl-name")
+            .desc("Type of output language SRL: [read|mate]")
+            .name("outsrl-type")
+            .name("refsrl-type")
+            .name("hypsrl-type")
+            .name("srl-type")
             ;
          p.add(make_knob(outsrl_path_m))
             .fallback("")
-            .desc("[read: path to assert formated parse output"
-                  "|mate: full path and file name of lang.mplsconfig]")
+            .desc("[read: path to assert formatted parse output "
+                  "| mate: full path and filename of <tgtlang>.mplsconfig]")
             .name("outsrl-path")
             .name("refsrl-path")
-            .name("hypsrl-paht")
+            .name("hypsrl-path")
             .name("srl-path")
             ;
          p.add(make_knob(labelconfig_path_m))
             .fallback("")
-            .desc("Path to yisi srl role label config")
+            .desc("Path to YiSi SRL role label config file")
             .name("labelconfig-path")
             ;
          p.add(make_knob(weightconfig_path_m))
             .fallback("")
-            .desc("Path to yisi srl role label config (default:"
-                  "<empty string> to use yisi unsupervised estimation of weight")
+            .desc("Path to YiSi SRL role label config file (default: "
+                  "<empty string> to use YiSi unsupervised estimation of weight")
             .name("weightconfig-path")
             ;
          p.add(make_knob(frameweight_name_m))
             .fallback("coverage")
-            .desc("Name of frame weight function: [uniform|coverage(default)]")
-            .name("frameweight-name")
+            .desc("Type of frame weight function: [uniform|coverage(default)]")
+            .name("frameweight-type")
             ;
          p.add(make_knob(beta_m))
             .fallback(0.0)
-            .desc("Beta value of yisi [0.0(default)]")
+            .desc("Beta value of YiSi [0.0(default)]")
             .name("beta")
             ;
          p.add(make_knob(alpha_m))

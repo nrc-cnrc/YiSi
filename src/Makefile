@@ -1,20 +1,13 @@
-# ========================================================================
-# Makefile
+# @file Makefile
+# @brief Makefile for building YiSi
 #
-# Authors: Jackie Lo and Darlene Stewart
+# @author Jackie Lo and Darlene Stewart
 #
-# Acknowledgement:
-#
-#   The skeleton of this makefile was cloned from
-#
-#   https://github.com/masaers/cmdlp
-#
-#   Thanks Markus!
-#
-# ========================================================================
-#
-# Settings
-#
+# Multilingual Text Processing / Traitement multilingue de textes
+# Digital Technologies Research Centre / Centre de recherche en technologies numériques
+# National Research Council Canada / Conseil national de recherches Canada
+# Copyright 2018, Her Majesty in Right of Canada /
+# Copyright 2018, Sa Majeste la Reine du Chef du Canada
 
 # Override the value of MATEPLUS_HOME with a command line definition, or
 # consider defining MATEPLUS_HOME in your .profile, for example:
@@ -41,14 +34,13 @@ endif
 endif
 endif
 
-
 CXXFLAGS += -Wall -pedantic -std=c++11 -g -O3
 JFLAGS += -cp ${MATEPLUS_PATH}
 
-PROG_NAMES :=
+PROG_NAMES := yisi
 TEST_NAMES := cmdlp_test srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
 	      lexweight_test lw_count phrasesim_test srl_test srlutil_test util_test \
-	      yisiscorer_test yisi testbin
+	      yisiscorer_test testbin
 
 ifdef WITH_SRLMATE
    TEST_NAMES += srlmate_test
@@ -85,8 +77,8 @@ OBJECTS := $(filter-out $(SRLMATE_OBJS),$(ALL_OBJECTS))
 
 # Clear default suffix rules
 .SUFFIXES:
-# Keep STAMPs and dependencies between calls
-.PRECIOUS: %/.STAMP ../dep/%.d ../obj/%.o
+# Keep dependencies between calls
+.PRECIOUS: ../dep/%.d ../obj/%.o
 
 .PHONY: all binaries scripts
 all: binaries scripts
@@ -97,7 +89,7 @@ endif
 
 binaries: $(BIN_NAMES:%=../bin/%)
 
-scripts: ../bin/.STAMP
+scripts: | ../bin
 	@ln -sf ../src/scripts/pp* ../bin
 	@ln -sf ../src/scripts/resolve_yisicmd.sh ../bin
 	@echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_pp+yisi.sh && cat scripts/run_pp+yisi.sh >> ../bin/run_pp+yisi.sh
@@ -119,12 +111,12 @@ $(SRLMATE_OBJS) $(SRLMATE_BIN_OBJS): CXXFLAGS += -I${JAVA_HOME}/include -I${JAVA
 $(SRLMATE_BINS): $(SRLMATE_OBJS)
 $(SRLMATE_BINS): OBJECTS += $(SRLMATE_OBJS)
 
-../bin/%: ../obj/%.o $(OBJECTS) ../bin/.STAMP
+../bin/%: ../obj/%.o $(OBJECTS) | ../bin
 	$(CXX) $(LDFLAGS) $< $(OBJECTS) $(LIBRARIES) -o $@
 
-$(SRC_OBJS): ../obj/%.o: %.cpp ../obj/.STAMP ../dep/.STAMP
+$(SRC_OBJS): ../obj/%.o: %.cpp | ../obj ../dep
 
-$(CMDLP_OBJS): ../obj/%.o: cmdlp/%.cpp ../obj/.STAMP ../dep/.STAMP
+$(CMDLP_OBJS): ../obj/%.o: cmdlp/%.cpp | ../obj ../dep
 
 ifdef WITH_SRLMATE
 ../obj/srl.o: ../obj/.STAMP.WITH_SRLMATE
@@ -136,43 +128,29 @@ endif
 	$(CXX) $(CXXFLAGS) -MM -MT '$@' $< > $(@:../obj/%.o=../dep/%.d)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-../obj/.STAMP.WITH_SRLMATE ../obj/.STAMP.WITHOUT_SRLMATE: ../obj/.STAMP
+../obj/.STAMP.WITH_SRLMATE ../obj/.STAMP.WITHOUT_SRLMATE: | ../obj
 	rm -rf ../obj/.STAMP.WITH*_SRLMATE
 	touch $@
 
 .PHONY: test
-test: ../test/.STAMP $(TEST_NAMES:%=../test/%.out)
-	@if [ -s ../test/.ERROR ]; then \
-	     ( cat ../test/.ERROR; rm ../test/.ERROR ) \
-	else echo "\n[ALL TESTS PASSED]\n"; \
-	fi
+test:
+	$(MAKE) -C ../test MATEPLUS_PATH=$(MATEPLUS_PATH)
 
-../test/%.out: ../bin/% ../test/.STAMP
-	@if [ -e $@ ]; then \
-	( cp $@ $@.old; \
-          echo "$< &> $@"; $< &> $@; \
-	  diff $@ $@.old >> ../test/.ERROR \
-	  || echo "REGRESSION TEST FAILED: $<" >> ../test/.ERROR \
-	  ; \
-	  rm $@.old ) \
-	else \
-	( $< &> $@; \
-          echo "WARNING: No regression test: $<" >> ../test/.ERROR ) \
-	fi
-
-%/.STAMP:
-	@mkdir -pv $(@D)
-	@touch $@
+../dep ../obj ../bin:
+	mkdir -p $@
 
 .PHONY: clean cleaner clean.mplsconfig
 clean: clean.mplsconfig
-	@rm -rf ../bin
-	@rm -f *~
+	$(RM) -r ../bin
+	$(RM) *~
 
 clean.mplsconfig:
-	@rm -f en.mplsconfig de.mplsconfig
+	$(RM) -f en.mplsconfig de.mplsconfig
 
-cleaner: clean
-	@rm -rf ../dep ../obj
+clean.test:
+	$(MAKE) -C ../test clean
+
+cleaner: clean clean.test
+	$(RM) -r ../dep ../obj
 
 -include $(wildcard ../dep/*.d)

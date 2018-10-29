@@ -38,7 +38,7 @@ int main(const int argc, const char* argv[])
 
    yisiscorer_t<options_type> yisi(opt);
 
-   string reffile("test_ref.txt");
+   string reffile("test_ref.en");
    vector<string> sents = read_file(reffile);
 
    auto r1 = yisi.refsrlparse(sents);

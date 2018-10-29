@@ -89,15 +89,16 @@ endif
 
 binaries: $(BIN_NAMES:%=../bin/%)
 
+.PHONY: scripts
 scripts: | ../bin
-	@ln -sf ../src/scripts/pp* ../bin
-	@ln -sf ../src/scripts/resolve_yisicmd.sh ../bin
-	@echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_pp+yisi.sh && cat scripts/run_pp+yisi.sh >> ../bin/run_pp+yisi.sh
-	@echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_yisi.sh && cat scripts/run_yisi.sh >> ../bin/run_yisi.sh
-	@chmod a+x ../bin/*.sh
+	ln -sf ../src/scripts/pp* ../bin
+	ln -sf ../src/scripts/resolve_yisicmd.sh ../bin
+	echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_pp+yisi.sh && cat scripts/run_pp+yisi.sh >> ../bin/run_pp+yisi.sh
+	echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_yisi.sh && cat scripts/run_yisi.sh >> ../bin/run_yisi.sh
+	chmod a+x ../bin/*.sh
 
 ../obj/srlmate.jar: *.java
-	@mkdir -pv ../obj/java
+	mkdir -pv ../obj/java
 	${JAVA_HOME}/bin/javac $(JFLAGS) -d ../obj/java $^
 	cd ../obj/java && jar -cvf ../srlmate.jar *
 

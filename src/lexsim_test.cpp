@@ -31,12 +31,18 @@ int main(int argc, char* argv[])
   }
   lexsim_t l(lsname, lspath);
   string s1, s2;
-  while (true){
-    cout <<"Input two strings:"<<endl;
-    cin >> s1;
-    cin >> s2;
-
+  if (argc > 4){
+    s1=argv[3];
+    s2=argv[4];
     cout <<lsname <<" similarity of `"<< s1 << "' and `"<<s2 <<"': "<< l.get_sim(s1, s2, yisi::REF_MODE)<<endl;
+  } else {
+    while (true){
+      cout <<"Input two strings:"<<endl;
+      cin >> s1;
+      cin >> s2;
+
+      cout <<lsname <<" similarity of `"<< s1 << "' and `"<<s2 <<"': "<< l.get_sim(s1, s2, yisi::REF_MODE)<<endl;
+    }
   }
 
   /*

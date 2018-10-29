@@ -39,10 +39,12 @@ int main(const int argc, const char* argv[])
    yisiscorer_t<options_type> yisi(opt);
 
    string reffile("test_ref.en");
-   vector<string> sents = read_file(reffile);
+   string hypfile("test_hyp.en");
+   vector<string> refsents = read_file(reffile);
+   vector<string> hypsents = read_file(hypfile);
 
-   auto r1 = yisi.refsrlparse(sents);
-   auto r2 = yisi.hypsrlparse(sents);
+   auto r1 = yisi.refsrlparse(refsents);
+   auto r2 = yisi.hypsrlparse(hypsents);
 
    for (size_t i=0; i < r1.size(); i++) {
       //cerr <<"Building YiSi graph"<<endl;

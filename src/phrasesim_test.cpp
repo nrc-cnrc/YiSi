@@ -35,17 +35,17 @@ int main(const int argc, const char* argv[])
 
    phrasesim_t<options_type> phrasesim(opt);
 
-   vector<string> s1{"France"};
-   vector<string> s2{"Italy"};
-   vector<string> s3{"French", "president"};
-   vector<string> s4{"Italian", "president"};
+   vector<string> s1{"EU"};
+   vector<string> s2{"UK"};
+   vector<string> s3{"EU", "government"};
+   vector<string> s4{"UK", "government"};
 
    auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
    auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
 
-   cout << "The similarity of 'France' and 'Italy' is: ("
+   cout << "The similarity of 'EU' and 'UK' is: ("
         << p1.first << "," << p1.second << ")" << endl;
-   cout <<  "The similarity of 'French president' and 'Italian president' is: ("
+   cout <<  "The similarity of 'EU government' and 'UK government' is: ("
         << p2.first << "," << p2.second << ")" << endl;
 }
 

@@ -26,7 +26,9 @@ int main(const int argc, const char* argv[])
 {
 
   auto s = read_conll09batch(argv[1]);
-  cout << s[0];
+  for (auto it=s.begin(); it!=s.end(); it++){
+    cout << *it;
+  }
   
   return 0;
 }

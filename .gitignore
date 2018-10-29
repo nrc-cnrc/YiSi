@@ -3,6 +3,6 @@ bin/
 dep/
 obj/
 
-test/*.out
-test/.STAMP
-test/.ERROR
+# mplsconfig files that are generated from templates
+src/en.mplsconfig
+src/de.mplsconfig

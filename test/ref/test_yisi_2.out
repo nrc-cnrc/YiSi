@@ -1,4 +1,3 @@
-Running: yisi --hyp-file test_hyp.en --inp-file test_inp.de --sntscore-file test_hyp.sntyisi2 --docscore-file test_hyp.docyisi2 --lexsim-name biw2v --inplexsim-path mini.d300.de --outlexsim-path mini.d300.en --hyplexweight-name learn --inplexweight-name learn --phrasesim-name nwpr --alpha 0.8 --mode yisi --n 3
 Reading w2v text model from mini.d300.en
 Size of voc: 500 Dimension: 300
 Finished reading w2v model.

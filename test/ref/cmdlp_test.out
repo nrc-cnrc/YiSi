@@ -1,5 +1,5 @@
 
-usage: cmdlp_test -[-b]eta
+usage: ../bin/cmdlp_test -[-b]eta
 
 -[-a]lpha|--ALPHA=10
     The alpha value.

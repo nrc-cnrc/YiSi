@@ -78,7 +78,7 @@ cmdlp_test.out: ARGS = --beta 0 --help
 srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
 
 $(addsuffix .out, $(SIMPLE_TEST_PROGS) $(SIMPLE2_TEST_PROGS)): %.out:
-	$* $(ARGS) &> $@
+	../bin/$* $(ARGS) &> $@
 
 YSFX_NOSRL := 0 1 2
 #YSFX_SRL := 1_srl 2_srl
@@ -94,7 +94,7 @@ $(foreach n,$(YSFX_SRL),test_yisi_$n): test_yisi_%: compare2.test_yisi_%.out
 $(foreach n,$(YSFX_SRL),compare2.test_yisi_$n.out): compare2.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%
 
 test_yisi_%.out: yisi-%.config
-	../bin/run_yisi.sh $< &> $@
+	../bin/yisi --config $< &> $@
 
 test_hyp.docyisi% test_hyp.sntyisi%: test_yisi_%.out
 	:

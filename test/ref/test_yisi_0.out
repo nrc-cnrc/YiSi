@@ -1,4 +1,3 @@
-Running: yisi --ref-file test_ref.en --hyp-file test_hyp.en --sntscore-file test_hyp.sntyisi0 --docscore-file test_hyp.docyisi0 --lexsim-name lcs --reflexweight-name learn --phrasesim-name nwpr --alpha 0.8 --mode yisi --n 3
 Constructing lcs lexsim model
 Learning lex weight from test_ref.en ... Done.
 Tokenizing/SRL-ing hyp ... Done.

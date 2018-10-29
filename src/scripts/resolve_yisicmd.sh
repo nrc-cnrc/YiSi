@@ -11,7 +11,7 @@
 # Copyright 2018, Sa Majeste la Reine du Chef du Canada /
 # Copyright 2018, Her Majesty in Right of Canada
 
-source $1
+source <(cat $1 | sed -e 's/-\(.*=\)/\1/g;')
 
 if [[ $reffile != "" ]]; then
     yisiflags="$yisiflags --ref-file $reffile"
@@ -113,7 +113,9 @@ if [[ $mode != "" ]]; then
     yisiflags="$yisiflags --mode $mode"
 fi
 
-if [[ $n != "" ]]; then
+if [[ $ngramsize != "" ]]; then
+    yisiflags="$yisiflags --ngram-size $ngramsize"
+elif [[ $n != "" ]]; then
     yisiflags="$yisiflags --n $n"
 fi
 

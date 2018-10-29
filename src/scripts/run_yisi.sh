@@ -13,6 +13,8 @@
 
 ################
 
+YISIBIN=/path/to/your/yisi/bin
+
 # Check if YiSi is on the PATH.
 if [[ $(which yisi 2> /dev/null) ]]; then
    YISIBIN_PFX=""

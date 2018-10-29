@@ -12,13 +12,23 @@
 # Copyright 2018, Her Majesty in Right of Canada
 
 ################
-TESTCODE=`$YISIBIN/testbin`
+
+YISIBIN=/path/to/your/yisi/bin
+
+# Check if YiSi is on the PATH.
+if [[ $(which yisi 2> /dev/null) ]]; then
+   YISIBIN_PFX=""
+else
+   YISIBIN_PFX="${YISIBIN_PFX}"
+fi
+
+TESTCODE=`${YISIBIN_PFX}testbin`
 if [[ $TESTCODE != "0" ]]; then
     echo "ERROR: fail to run YiSi test program. Exiting..."
     exit 1
 fi
 
-yisiflags=`$YISIBIN/resolve_yisicmd.sh $1`
+yisiflags=`${YISIBIN_PFX}resolve_yisicmd.sh $1`
 source $1
 reffile_raw=`echo $reffile | sed "s/yisi_tok/raw/g"`
 hypfile_raw=`echo $hypfile | sed "s/yisi_tok/raw/g"`
@@ -29,20 +39,20 @@ hypfile_tmp=`mktemp`
 inpfile_tmp=`mktemp`
 inpfile_pas=`mktemp`
 cd -
-echo "Running: $YISIBIN/yisi $yisiflags"
+echo "Running: ${YISIBIN_PFX}yisi $yisiflags"
 date +%s > $docscorefile.bt 
 if [ "$reffile" != "" ]; then
-    cat $reffile_raw | $YISIBIN/pp.sh > ~/u/tmp/$reffile_tmp
+    cat $reffile_raw | ${YISIBIN_PFX}pp.sh > ~/u/tmp/$reffile_tmp
 fi
 if [ "$hypfile" != "" ]; then
-    cat $hypfile_raw | $YISIBIN/pp.sh > ~/u/tmp/$hypfile_tmp
+    cat $hypfile_raw | ${YISIBIN_PFX}pp.sh > ~/u/tmp/$hypfile_tmp
 fi
 if [ "$inpfile" != "" ]; then
-    cat $inpfile_raw | $YISIBIN/pp.sh > ~/u/tmp/$inpfile_tmp
-    $YISIBIN/srlmate_test $YISIBIN/../src/$srclang.mplsconfig < $inpfile > ~/u/tmp/$inpfile_pas
+    cat $inpfile_raw | ${YISIBIN_PFX}pp.sh > ~/u/tmp/$inpfile_tmp
+    ${YISIBIN_PFX}srlmate_test $YISIBIN/../src/$srclang.mplsconfig < $inpfile > ~/u/tmp/$inpfile_pas
 fi
 
-$YISIBIN/yisi $yisiflags
+${YISIBIN_PFX}yisi $yisiflags
 
 date +%s > $docscorefile.et
 rm ~/u/tmp/$reffile_tmp ~/u/tmp/$hypfile_tmp ~/u/tmp/$inpfile_tmp ~/u/tmp/$inpfile_pas

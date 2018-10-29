@@ -11,6 +11,8 @@
 # Copyright 2018, Sa Majeste la Reine du Chef du Canada /
 # Copyright 2018, Her Majesty in Right of Canada
 
+YISIBIN=/path/to/your/yisi/bin
+
 cat - \
     | sed -f $YISIBIN/norm_punc.sed \
     | $YISIBIN/tok.pl

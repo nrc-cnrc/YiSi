@@ -89,12 +89,15 @@ endif
 
 binaries: $(BIN_NAMES:%=../bin/%)
 
+YISIBIN_SUB := "s~^YISIBIN=/path/to/your/yisi/bin$$~YISIBIN=$(dir $(CURDIR))bin~"
+
 .PHONY: scripts
 scripts: | ../bin
-	ln -sf ../src/scripts/pp* ../bin
-	ln -sf ../src/scripts/resolve_yisicmd.sh ../bin
-	echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_pp+yisi.sh && cat scripts/run_pp+yisi.sh >> ../bin/run_pp+yisi.sh
-	echo YISIBIN=$(dir $(CURDIR))bin > ../bin/run_yisi.sh && cat scripts/run_yisi.sh >> ../bin/run_yisi.sh
+	cp -p ../src/scripts/resolve_yisicmd.sh ../bin
+	sed -e $(YISIBIN_SUB) scripts/run_yisi.sh > ../bin/run_yisi.sh
+	sed -e $(YISIBIN_SUB) scripts/pp.sh > ../bin/pp.sh
+	sed -e $(YISIBIN_SUB) scripts/run_pp+yisi.sh > ../bin/run_pp+yisi.sh
+	sed -e $(YISIBIN_SUB) scripts/run_pp+matein+yisi.sh > ../bin/run_pp+matein+yisi.sh
 	chmod a+x ../bin/*.sh
 
 ../obj/srlmate.jar: *.java

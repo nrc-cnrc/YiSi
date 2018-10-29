@@ -83,11 +83,17 @@ YSFX_NOSRL := 0 1 2
 #YSFX_SRL := 1_srl 2_srl
 YSFX_SRL := 1_srl
 
-.PHONY: test_yisi $(foreach n,$(YSFX_NOSRL) $(YSFX_SRL),test_yisi_$n)
-test_yisi: $(foreach n,$(YSFX_NOSRL) $(YSFX_SRL),test_yisi_$n)
+.PHONY: test_yisi
+.PHONY: $(foreach n,$(YSFX_NOSRL),test_yisi_$n)
+test_yisi: $(foreach n,$(YSFX_NOSRL),test_yisi_$n)
 
 $(foreach n,$(YSFX_NOSRL),test_yisi_$n): test_yisi_%: compare.test_yisi_%.out
 $(foreach n,$(YSFX_NOSRL),compare.test_yisi_$n.out): compare.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%
+
+.PHONY: $(foreach n,$(YSFX_SRL),test_yisi_$n)
+ifdef WITH_SRLMATE
+test_yisi: $(foreach n,$(YSFX_SRL),test_yisi_$n)
+endif
 
 $(foreach n,$(YSFX_SRL),test_yisi_$n): test_yisi_%: compare2.test_yisi_%.out
 $(foreach n,$(YSFX_SRL),compare2.test_yisi_$n.out): compare2.test_yisi_%.out: compare.test_hyp.docyisi% compare.test_hyp.sntyisi%

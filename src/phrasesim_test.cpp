@@ -21,9 +21,6 @@
 using namespace std;
 using namespace yisi;
 
-// globals
-
-// main
 int main(const int argc, const char* argv[])
 {
    typedef com::masaers::cmdlp::options<phrasesim_options> options_type;

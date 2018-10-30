@@ -20,9 +20,6 @@
 using namespace std;
 using namespace yisi;
 
-// globals
-
-// main
 int main(const int argc, const char* argv[])
 {
    vector<string> s0;

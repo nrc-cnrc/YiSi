@@ -30,21 +30,21 @@
 
 namespace yisi {
 
-  class srlmate_t:public srlmodel_t{
-  public:
-    srlmate_t(){};
-    srlmate_t(std::string path);
-    ~srlmate_t();
-    std::string jrun(std::string sent);
-    srlgraph_t parse(std::string sent);
-    virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
-  private:
-    std::string noparse(std::vector<std::string> tokens);
-    JavaVM* jvm_m;
-    JNIEnv* jen_m;
-    jclass mate_class_m;
-    jobject mate_object_m;
-  };
+   class srlmate_t:public srlmodel_t{
+   public:
+      srlmate_t() {}
+      srlmate_t(std::string path);
+      ~srlmate_t();
+      std::string jrun(std::string sent);
+      srlgraph_t parse(std::string sent);
+      virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
+   private:
+      std::string noparse(std::vector<std::string> tokens);
+      JavaVM* jvm_m;
+      JNIEnv* jen_m;
+      jclass mate_class_m;
+      jobject mate_object_m;
+   };
 
 } // yisi
 

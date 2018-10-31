@@ -28,39 +28,40 @@
 
 namespace yisi {
 
-  std::vector<srlgraph_t> read_srl(std::vector<std::string> sents, std::string parsefile);
-  srlgraph_t read_conll09(std::string parse);
-  void resolve_arg_span(std::map<int, std::vector<int> > child, int curid, srlgraph_t::srlnid_type pid, size_t& b, size_t&e);
-  std::vector<srlgraph_t> read_conll09batch(std::string filename);
-  
-  class srlmodel_t {
-  public:
-    srlmodel_t(){};
-    virtual ~srlmodel_t(){};
-    virtual srlgraph_t parse(std::string){
-      std::cerr<<"ERROR: type of semantic role labeler does not support individual sentence parsing. Exiting..."<<std::endl;
-      exit(1);
-    };
-    virtual std::vector<srlgraph_t> parse(std::vector<std::string>)=0;
-  };
+   std::vector<srlgraph_t> read_srl(std::vector<std::string> sents, std::string parsefile);
+   srlgraph_t read_conll09(std::string parse);
+   void resolve_arg_span(std::map<int, std::vector<int> > child, int curid,
+      srlgraph_t::srlnid_type pid, size_t& b, size_t&e);
+   std::vector<srlgraph_t> read_conll09batch(std::string filename);
 
-  class srlread_t:public srlmodel_t{
-  public:
-    srlread_t(){};
-    srlread_t(std::string parsefile);
-    virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
-  private:
-    std::string parsefile_m;
-  };
+   class srlmodel_t {
+   public:
+      srlmodel_t() {}
+      virtual ~srlmodel_t() {}
+      virtual srlgraph_t parse(std::string) {
+         std::cerr << "ERROR: Semantic role labeler type does not support "
+                   << "individual sentence parsing. Exiting..." << std::endl;
+         exit(1);
+      }
+      virtual std::vector<srlgraph_t> parse(std::vector<std::string>)=0;
+   }; // srlmodel_t
 
-  class srltok_t:public srlmodel_t{
-  public:
-    srltok_t(){};
-    virtual srlgraph_t parse(std::string sent);
-    virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
-  private:
-  };
+   class srlread_t:public srlmodel_t {
+   public:
+      srlread_t() {}
+      srlread_t(std::string parsefile);
+      virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
+   private:
+      std::string parsefile_m;
+   }; // class srlread_t
 
+   class srltok_t:public srlmodel_t {
+   public:
+      srltok_t() {}
+      virtual srlgraph_t parse(std::string sent);
+      virtual std::vector<srlgraph_t> parse(std::vector<std::string> sents);
+   private:
+   }; //class srltok_t
 
 } // yisi
 

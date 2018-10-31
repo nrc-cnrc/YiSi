@@ -22,59 +22,63 @@
 using namespace std;
 using namespace yisi;
 
-// globals
-
-// main
 int main(const int argc, const char* argv[])
 {
+   if (argc == 1) {
+      srl_t mate("mate", "parse_full_es.sh");
 
-  if (argc == 1){
-    srl_t mate("mate", "/home/loc/tools/MATE/srl-20131216/scripts/parse_full_es.sh");
-    
-    vector<string> sents;
-    
-    ifstream IN("test_es.txt");
-    if (IN.fail() or IN.bad()) {
-       cerr << "ERROR: Failed to open: test_es.txt. Exiting..." << endl;
-       exit(1);
-    }
-    while (!IN.eof()){
-      string line;
-      getline(IN, line);
-      if (line != ""){
-	sents.push_back(line);
+      vector<string> sents;
+
+      ifstream IN("test_es.txt");
+      if (IN.fail() or IN.bad()) {
+         cerr << "ERROR: Failed to open: test_es.txt. Exiting..." << endl;
+         exit(1);
       }
-    }
-    auto r = mate.parse(sents);
-    cout<<"Done parsing "<< r.size() <<" srlgraphes."<<endl;
-    for (auto it=r.begin(); it!=r.end(); it++){
-      cout<<*it;
-    }
-  } else {
-    srl_t parser(argv[1], argv[2]);
-    vector<string> sents;
-    ifstream IN(argv[3]);
-    if (IN.fail() or IN.bad()) {
-       cerr << "ERROR: Failed to open:" << argv[3] << ". Exiting..." << endl;
-       exit(1);
-    }
-    while(!IN.eof()){
-      string line;
-      getline(IN, line);
-      if (line !=""){
-	sents.push_back(line);
+
+      while (!IN.eof()) {
+         string line;
+         getline(IN, line);
+         if (line != "") {
+            sents.push_back(line);
+         }
       }
-    }
-    IN.close();
-    ofstream OUT(argv[4]);
-    auto r=parser.parse(sents);
-    cout<<"Done parsing "<< r.size() <<" srlgraphes."<<endl;
-    for (int i=0; i<(int)r.size(); i++){
-      r[i].print(OUT, i);
-    }
-    OUT.close();
-  }
-    
-  return 0;
+
+      auto r = mate.parse(sents);
+      cout << "Done parsing " << r.size() << " srlgraphs." << endl;
+
+      for (auto it = r.begin(); it != r.end(); it++) {
+         cout << *it;
+      }
+
+   } else {
+      srl_t parser(argv[1], argv[2]);
+      vector<string> sents;
+
+      ifstream IN(argv[3]);
+      if (IN.fail() or IN.bad()) {
+         cerr << "ERROR: Failed to open:" << argv[3] << ". Exiting..." << endl;
+         exit(1);
+      }
+
+      while (!IN.eof()) {
+         string line;
+         getline(IN, line);
+         if (line != "") {
+            sents.push_back(line);
+         }
+      }
+      IN.close();
+
+      auto r = parser.parse(sents);
+      cout << "Done parsing " << r.size() << " srlgraphs." << endl;
+
+      ofstream OUT(argv[4]);
+      for (int i = 0; i < (int)r.size(); i++) {
+         r[i].print(OUT, i);
+      }
+      OUT.close();
+   }
+
+   return 0;
 }
 

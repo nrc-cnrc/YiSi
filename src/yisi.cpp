@@ -22,8 +22,6 @@
 using namespace std;
 using namespace yisi;
 
-// globals
-
 struct eval_options {
    std::string ref_file_m;
    std::string hyp_file_m;
@@ -66,9 +64,8 @@ struct eval_options {
          .name("mode")
          ;
    }
-};
+}; // struct eval_options
 
-// main
 int main(const int argc, const char* argv[])
 {
    typedef com::masaers::cmdlp::options<eval_options, yisi_options, phrasesim_options> options_type;
@@ -122,7 +119,7 @@ int main(const int argc, const char* argv[])
                   refsents[j].push_back(rs[j]);
                }
             } else {
-               cerr << "ERROR: no. of sentences in ref-file (" << rs.size()
+               cerr << "ERROR: No. of sentences in ref-file (" << rs.size()
                     << ") does not match with no. of sentences in hyp-file ("
                     << hypsents.size() << "). Check your input! Exiting ..."
                     << endl;
@@ -130,7 +127,7 @@ int main(const int argc, const char* argv[])
             }
          }
       } else {
-         cerr << "ERROR: no. of sentences in ref-file (" << rs.size()
+         cerr << "ERROR: No. of sentences in ref-file (" << rs.size()
               << ") does not match with no. of sentences in hyp-file ("
               << hypsents.size() << "). Check your input! Exiting ..." << endl;
          exit(1);
@@ -143,9 +140,9 @@ int main(const int argc, const char* argv[])
    }
 
    if (inpsents.size() > 0 && inpsents.size() != hypsents.size()) {
-      cerr << "ERROR: no. of sentences in inp-file (" << inpsents.size()
-           << ") does not match with no. of sentences in hyp-file ("
-           << hypsents.size() << "). Check your input! Exiting..." << endl;
+      cerr << "ERROR: No. of sentences in inp-file (" << inpsents.size()
+              << ") does not match with no. of sentences in hyp-file ("
+              << hypsents.size() << "). Check your input! Exiting..." << endl;
       exit(1);
    }
 
@@ -153,9 +150,11 @@ int main(const int argc, const char* argv[])
    vector<srlgraph_t> hypsrlgraphs = yisi.hypsrlparse(hypsents);
    cerr << "Done." << endl;
    vector<vector<srlgraph_t> > refsrlgraphs;
+
    for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
       refsrlgraphs.push_back(vector<srlgraph_t>());
    }
+
    if (refsents.size() > 0) {
       cerr << "Tokenizing/SRL-ing ref ... ";
       for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
@@ -163,6 +162,7 @@ int main(const int argc, const char* argv[])
       }
       cerr << "Done." << endl;
    }
+
    vector<srlgraph_t> inpsrlgraphs;
    if (inpsents.size() > 0) {
       cerr << "Tokenizing/SRL-ing inp ... ";
@@ -204,4 +204,3 @@ int main(const int argc, const char* argv[])
 
    return 0;
 }
-

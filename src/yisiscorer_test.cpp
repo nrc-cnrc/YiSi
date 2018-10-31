@@ -23,12 +23,8 @@
 using namespace std;
 using namespace yisi;
 
-// globals
-
-// main
 int main(const int argc, const char* argv[])
 {
-
    typedef com::masaers::cmdlp::options<yisi_options, phrasesim_options> options_type;
 
    options_type opt(argc,argv);
@@ -47,7 +43,7 @@ int main(const int argc, const char* argv[])
    auto r2 = yisi.hypsrlparse(hypsents);
 
    for (size_t i=0; i < r1.size(); i++) {
-      //cerr <<"Building YiSi graph"<<endl;
+      //cerr << "Building YiSi graph" << endl;
       vector<srlgraph_t> rs;
       rs.push_back(r1[i]);
       yisigraph_t m = yisi.align(rs,r2[i]);
@@ -55,4 +51,3 @@ int main(const int argc, const char* argv[])
       cout << "YiSi score is:" << yisi.score(m) << endl;
    }
 }
-

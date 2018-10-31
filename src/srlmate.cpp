@@ -122,6 +122,8 @@ srlmate_t::srlmate_t(string path) {
    jint result = JNI_CreateJavaVM(&jvm_m, (void**)&jen_m, &vm_args);
    delete vm_opts;
    if (result != JNI_OK) {
+      cerr << "ERROR: Failed to create Java VM. (error code = " << result << "). Exiting..." << endl;
+      exit(1);
       jvm_m = NULL;
    }
 
@@ -146,7 +148,7 @@ srlmate_t::srlmate_t(string path) {
    string error(jen_m->GetStringUTFChars((jstring)jerr, NULL));
    if (!error.empty()) {
       cerr << "ERROR: Failed to initialize yisi.Mate (" << error << "). Exiting..." << endl;
-      //exit(1);
+      exit(1);
    }
 
    mate_class_m = mcls;

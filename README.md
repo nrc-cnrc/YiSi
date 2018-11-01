@@ -145,6 +145,9 @@ See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if in
 
 ## Acknowledgement
 I would like to give special thanks to the following people:
+
 Darlene Stewart, for her major efforts in defense coding and packaging the software. This release would be in a much worse shape without her filling up the potholes lying everywhere.
+
 Markus Saers, for his accomodations in licensing the command line parser and fulfilling wishlist items in it.
+
 Everyone in the NRC MTP team and Karteek Addanki, Meriem Beloucif, Nedjma Ousidhoum, Andrew Cattle and Marine Carpuat, for the moral support in the critical moment when YiSi was born.

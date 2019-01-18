@@ -1,0 +1,59 @@
+/**
+ * @file oov_test.cpp
+ * @brief Check the OOV rate in the embeddings given a test document.
+ *
+ * @author Jackie Lo
+ *
+ * Multilingual Text Processing / Traitement multilingue de textes
+ * Digital Technologies Research Centre / Centre de recherche en technologies numériques
+ * National Research Council Canada / Conseil national de recherches Canada
+ * Copyright 2018, Her Majesty in Right of Canada /
+ * Copyright 2018, Sa Majeste la Reine du Chef du Canada
+ */
+
+#include "lexsim.h"
+
+#include <iostream>
+#include <set>
+
+using namespace std;
+using namespace yisi;
+
+int main(int argc, char* argv[])
+{
+   string lsname = argv[1];
+   string lspath = argv[2];
+   string test = argv[3];
+   
+   lexsim_t l(lsname, lspath);
+   auto lines = read_file(test);
+   int oovToken=0;
+   int oovType=0;
+   int nToken=0;
+   int nType=0;
+   set<string> seen;
+   set<string> oov;
+   for (auto it = lines.begin(); it != lines.end(); it++){
+     auto tokens = tokenize(*it);
+     for (auto jt = tokens.begin(); jt != tokens.end(); jt++){
+       nToken++;
+       if (seen.find(*jt)!=seen.end()){
+	 if (oov.find(*jt)!=oov.end()){
+	   oovToken++;
+	 } 
+       } else {
+	 nType++;
+	 seen.insert(*jt);
+	 auto v = l.get_wv(*jt, yisi::HYP_MODE);
+	 if (!(v.size()>0)){
+	   oov.insert(*jt);
+	   oovToken++;
+	   oovType++;
+	 }
+       }
+     }
+   }
+   cout << oovType << " "<<oovToken<<" "<<nType<<" "<<nToken<<endl;
+   return 0;
+}
+

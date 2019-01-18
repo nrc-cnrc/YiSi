@@ -8,3 +8,6 @@ src/en.mplsconfig
 src/de.mplsconfig
 src/es.mplsconfig
 src/zh.mplsconfig
+
+# quick tools for other project
+src/oov_test.cpp

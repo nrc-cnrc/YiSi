@@ -75,7 +75,11 @@ namespace yisi {
 	;
       p.add(make_knob(refsrl_name_m))
         .fallback("")
+<<<<<<< HEAD
         .desc("Type of reference SRL (specify only if it is different from the hypothesis SRL): [read|mate]")
+=======
+        .desc("Type of reference SRL (specify only if it is different from the output language SRL): [read|mate]")
+>>>>>>> 9fc633652a5bea1000db7df8dc6a82983943570f
         .name("refsrl-type")
         ;
       p.add(make_knob(refsrl_path_m))

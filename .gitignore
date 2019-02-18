@@ -9,5 +9,11 @@ src/de.mplsconfig
 src/es.mplsconfig
 src/zh.mplsconfig
 
+# all backup files
+src/*~
+src/*.bak
+
 # quick tools for other project
+src/Makefile
 src/oov_test.cpp
+scripts/emap.py

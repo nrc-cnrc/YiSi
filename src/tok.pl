@@ -54,6 +54,7 @@ while(<STDIN>){
 
 	if ( $sent eq "" ){
 	    $output = "\n";
+	    print STDOUT $output;
 	}else{
 	    my $isgarbage = 0;
 	    my @chars = split(//,$sent);

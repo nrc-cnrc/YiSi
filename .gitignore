@@ -16,4 +16,5 @@ src/*.bak
 # quick tools for other project
 src/Makefile
 src/oov_test.cpp
+src/ngram_test.cpp
 scripts/emap.py

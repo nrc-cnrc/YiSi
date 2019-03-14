@@ -1,28 +1,28 @@
 # YiSi: A Semantic Machine Translation Evaluation Metric for Evaluating Languages with Different Levels of Available Resources
 ## Introduction
-YiSi<sup>[a]</sup> is a family of semantic machine translation (MT) evaluation metrics 
-with a flexible architecture for evaluating MT output in languages of different 
-resource levels. Inspired by MEANT 2.0 (Lo, 2017), YiSi-1 measures the similarity 
+YiSi<sup>[a]</sup> is a family of semantic machine translation (MT) evaluation metrics
+with a flexible architecture for evaluating MT output in languages of different
+resource levels. Inspired by MEANT 2.0 (Lo, 2017), YiSi-1 measures the similarity
 between the human references and machine translation by aggregating the weighted
-distributional lexical semantic similarity, and, optionally, the shallow semantic 
-structures. YiSi-0 is a degenerate resource-free version using the longest 
-common character substring accuracy to replace distributional semantics for 
-evaluating lexical similarity between the human reference and MT output. On the 
-other hand, YiSi-2 is the bilingual reference-less version using bilingual word 
-embeddings for evaluating crosslingual lexical semantic similarity between the input 
-and MT output. 
+distributional lexical semantic similarity, and, optionally, the shallow semantic
+structures. YiSi-0 is a degenerate resource-free version using the longest
+common character substring accuracy to replace distributional semantics for
+evaluating lexical similarity between the human reference and MT output. On the
+other hand, YiSi-2 is the bilingual reference-less version using bilingual word
+embeddings for evaluating crosslingual lexical semantic similarity between the input
+and MT output.
 
-YiSi-1 achieved the highest average correlation with human direct assessment (DA) 
+YiSi-1 achieved the highest average correlation with human direct assessment (DA)
 judgment across all language pairs at system-level and the highest median correlation
- with DA relative ranking across all language pairs at segment-level in the WMT2018 
-metrics task (Ma et al., 2018). YiSi-1 also successfully served in WMT2018 parallel 
+ with DA relative ranking across all language pairs at segment-level in the WMT2018
+metrics task (Ma et al., 2018). YiSi-1 also successfully served in WMT2018 parallel
 corpus filtering task while YiSi-2 showed comparable accuracy in the same task.
 
-YiSi-0 is readily available for evaluating all languages. YiSi-1 requires a 
-monolingual corpus in the output language to train the distributional lexical 
-semantics model. YiSi-1_srl is designed for resource-rich languages that are equipped 
-with an automatic semantic role labeler in the output language. YiSi-2 requires 
-bilingual word embeddings and YiSi-2_srl addinionally requires an automatic semantic 
+YiSi-0 is readily available for evaluating all languages. YiSi-1 requires a
+monolingual corpus in the output language to train the distributional lexical
+semantics model. YiSi-1_srl is designed for resource-rich languages that are equipped
+with an automatic semantic role labeler in the output language. YiSi-2 requires
+bilingual word embeddings and YiSi-2_srl addinionally requires an automatic semantic
 role labeler for both the input and output language.
 
 <sup>[a]</sup> YiSi is the romanization of the Cantonese word "意思/meaning".
@@ -45,16 +45,16 @@ role labeler for both the input and output language.
   export JAVA_HOME=/path/to/jdk_install_directory
   ```
 - YiSi depends on mateplus, an extended version of the mate-tools semantic role labeler.
-You can download and install mateplus from:  
+You can download and install mateplus from:
   https://github.com/microth/mateplus
-- Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions. 
+- Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions.
 - Define the `MATEPLUS_HOME` environment variable:
   ```bash
-  export MATEPLUS_HOME=/path/to/mateplus_install_director
+  export MATEPLUS_HOME=/path/to/mateplus_install_directory
   ```
   Thus, the location of `mateplus.jar` is `$MATEPLUS_HOME/mateplus.jar`
 - Put the JAR files for the dependencies you install for mateplus in `$MATEPLUS_HOME/lib`.
-- Put the models you download for mateplus in `$MATEPLUS_HOME/lib`.
+- Put the models you download for mateplus in `$MATEPLUS_HOME/models`.
 
 ### Building YiSi
 If building YiSi with SRLMATE in order to use SRL, then either define the `JAVE_HOME`

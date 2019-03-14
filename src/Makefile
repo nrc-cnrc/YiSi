@@ -107,7 +107,7 @@ scripts: | ../bin
 ../obj/srlmate.jar: *.java
 	mkdir -pv ../obj/java
 	${JAVA_HOME}/bin/javac $(JFLAGS) -d ../obj/java $^
-	cd ../obj/java && jar -cvf ../srlmate.jar *
+	cd ../obj/java && ${JAVA_HOME}/bin/jar -cvf ../srlmate.jar *
 
 en.mplsconfig de.mplsconfig es.mplsconfig zh.mplsconfig: %: %.template
 	sed -e "s#<YISI_HOME>#$(dir $(CURDIR))#g; s#//#/#g;" \

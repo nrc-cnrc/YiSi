@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is part of the command-line option library, which was cloned from: -->
+<!-- https://github.com/masaers/cmdlp (v0.3 tag) -->
+
+<!-- Thanks Markus! -->
+<!-- Consider cloning the original repository if you like it. -->
+
+<!-- Copyright (c) 2018 Markus S. Saers -->
+
 <!-- ======================================================================= -->
 <!-- Creates a C++ header with a [S]erializable [ENUM]eration. -->
 <!-- These are especially useful for categorial knobs in the command line parser. -->

@@ -1,3 +1,13 @@
+/**
+   This file is part of the command-line option library, which was cloned from:
+   https://github.com/masaers/cmdlp (v0.3 tag)
+
+   Thanks Markus!
+   Consider cloning the original repository if you like it.
+
+   Copyright (c) 2018 Markus S. Saers
+ */
+
 #ifndef COM_MASAERS_CMDLP_OPTIONS_HPP
 #define COM_MASAERS_CMDLP_OPTIONS_HPP
 #include "cmdlp.h"

@@ -1,7 +1,6 @@
 /**
    Unit test for the command-line option library, which was cloned from:
-
-   https://github.com/masaers/cmdlp
+   https://github.com/masaers/cmdlp (v0.3 tag)
 
    Thanks Markus!
    Consider cloning the original repository if you like it.

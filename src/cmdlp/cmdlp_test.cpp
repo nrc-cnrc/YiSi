@@ -8,12 +8,10 @@
    Copyright (c) 2018 Markus S. Saers
  */
 
-#include "cmdlp.h"
 #include "options.h"
 #include "magic_enum.h"
 #include "paragraph.h"
 #include <iostream>
-#include <string>
 #include <vector>
 #include <set>
 
@@ -50,7 +48,6 @@ struct local_options {
   bool flip;
   bool on;
   bool off;
-  std::string path;
   std::set<std::string> strings;
   std::vector<std::string> cipher;
   std::map<std::string, float> constants;
@@ -71,12 +68,6 @@ struct local_options {
     p.add(make_switch(flip)).desc("A switch").name('f').name("flip");
     p.add(make_onswitch(on)).desc("Turns on").name("on");
     p.add(make_offswitch(off)).desc("Turns off").name("off");
-    p.add(make_knob(path))
-    .desc("The path name.")
-    .name('p', "path")
-    .name("PATH")
-    .fallback("a_path")
-    ;
     p.add(make_knob(strings))
     .desc("Some input strings")
     .name('s', "str")

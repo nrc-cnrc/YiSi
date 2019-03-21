@@ -66,7 +66,7 @@ build/obj/%.o : %.cpp
 	@mkdir -pv ${@D}
 	@mkdir -pv $(dir $(@:build/obj/%.o=build/dep/%.d))
 	$(CXX) $(CXXFLAGS) -MM -MT '$@' $< > $(@:build/obj/%.o=build/dep/%.d)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@
 
 build/include/%.h : data/%.xml
 	@mkdir -pv ${@D}

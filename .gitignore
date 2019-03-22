@@ -2,6 +2,7 @@
 bin/
 dep/
 obj/
+src/cmdlp/build/
 
 # mplsconfig files that are generated from templates
 src/en.mplsconfig
@@ -12,9 +13,3 @@ src/zh.mplsconfig
 # all backup files
 src/*~
 src/*.bak
-
-# quick tools for other project
-src/Makefile
-src/oov_test.cpp
-src/ngram_test.cpp
-scripts/emap.py

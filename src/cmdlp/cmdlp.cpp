@@ -1,6 +1,6 @@
 /**
    This command-line option library was cloned from:
-   https://github.com/masaers/cmdlp (v0.3 tag)
+   https://github.com/masaers/cmdlp (v0.4 tag)
 
    Thanks Markus!
    Consider cloning the original repository if you like it.

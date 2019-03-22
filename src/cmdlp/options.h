@@ -11,6 +11,7 @@
 #ifndef COM_MASAERS_CMDLP_OPTIONS_HPP
 #define COM_MASAERS_CMDLP_OPTIONS_HPP
 #include "cmdlp.h"
+#include "iooption.h"
 #include "paragraph.h"
 // c++
 #include <vector>
@@ -80,7 +81,7 @@ template<typename... options_T>
 com::masaers::cmdlp::options<options_T...>::options(const int argc, const char** argv, const options_config& cfg)
 : options_T()..., help_requested_m(false), error_count_m(0) {
   using namespace std;
-  string dumpto;
+  optional_ofile dumpto;
   config_files configs;
   parser p(cerr);
   options_helper::init_bases<options<options_T...>, parser, options_T...>(*this, p);
@@ -124,25 +125,9 @@ com::masaers::cmdlp::options<options_T...>::options(const int argc, const char**
       const auto p = paragraph(cerr, 72, 4, 2);
       cerr << cfg.postamble() << endl;
     }
-  } if (! dumpto.empty()) {
-    ofstream ofs;
-    ostream* out = nullptr;
-    if (dumpto == "-") {
-      out = &cout;
-    } else {
-      ofs.open(dumpto);
-      if (ofs) {
-        out = &ofs;
-      } else {
-        cerr << "Failed to open file '" << dumpto << "' for dumping parameters." << endl; 
-        ++error_count_m;
-      }
-    }
-    if (out != nullptr) {
-      p.dumpto_stream(*out, false);
-    }
-  } else {
-    // keep calm and continue as usual
+  }
+  if (dumpto) {
+    p.dumpto_stream(*dumpto, false);
   }
 }
 

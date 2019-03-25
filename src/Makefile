@@ -37,6 +37,10 @@ endif
 CXXFLAGS += -Wall -pedantic -std=c++11 -g -O3 -Icmdlp/build/include
 JFLAGS += -cp ${MATEPLUS_PATH}
 
+CMDLP_LIB = cmdlp/build/lib/libcmdlp.a
+LDFLAGS += -Lcmdlp/build/lib
+LIBRARIES += -Wl,-Bstatic -lcmdlp -Wl,-Bdynamic
+
 PROG_NAMES := yisi
 TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
 	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
@@ -54,7 +58,6 @@ BIN_NAMES := $(PROG_NAMES) $(TEST_NAMES)
 ALL_BIN_NAMES := $(BIN_NAMES) srlmate_test
 
 SRC_OBJS := $(patsubst %.cpp,../obj/%.o,$(wildcard *.cpp))
-CMDLP_OBJS := $(patsubst cmdlp/%.cpp,cmdlp/build/obj/%.o,$(wildcard cmdlp/*.cpp))
 
 # We compile/link SRLMATE objects a bit differently.
 SRLMATE_OBJS := $(addprefix ../obj/,srlmate.o)
@@ -69,7 +72,6 @@ endif
 
 # Object files are c++ sources that do not result in stand alone binaries
 ALL_OBJECTS := $(filter-out $(addprefix ../obj/,$(ALL_BIN_NAMES:%=%.o)),$(SRC_OBJS))
-ALL_OBJECTS += $(filter-out $(addprefix cmdlp/build/obj/,$(CMDLP_TEST_NAMES:%=%.o)),$(CMDLP_OBJS))
 
 OBJECTS := $(filter-out $(SRLMATE_OBJS),$(ALL_OBJECTS))
 
@@ -114,12 +116,12 @@ $(SRLMATE_OBJS) $(SRLMATE_BIN_OBJS): CXXFLAGS += -I${JAVA_HOME}/include -I${JAVA
 $(SRLMATE_BINS): $(SRLMATE_OBJS)
 $(SRLMATE_BINS): OBJECTS += $(SRLMATE_OBJS)
 
-../bin/%: ../obj/%.o $(OBJECTS) | ../bin
+../bin/%: ../obj/%.o $(OBJECTS) $(CMDLP_LIB) | ../bin
 	$(CXX) $(LDFLAGS) $< $(OBJECTS) $(LIBRARIES) -o $@
 
 $(SRC_OBJS): ../obj/%.o: %.cpp | ../obj ../dep
 
-$(CMDLP_OBJS):
+$(CMDLP_LIB):
 	$(MAKE) -C cmdlp
 
 ifdef WITH_SRLMATE

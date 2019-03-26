@@ -1,5 +1,5 @@
 
-usage: ../src/cmdlp/build/bin/cmdlp_test -[-b]eta file_0 (... file_n)
+usage: ../src/cmdlp/build/bin/cmdlp_test -[-b]eta --reference_file_prefix|--refs file_0 (... file_n)
 
      This can be a pretty long text about what the program does, that
      goes between the usage and the option descriptions. Just to give
@@ -29,6 +29,10 @@ usage: ../src/cmdlp/build/bin/cmdlp_test -[-b]eta file_0 (... file_n)
 -[-m]agic=no_magic
      [no_magic] Disable magic completely. [less_magic] Limit magic to keep them
      guessing. [more_magic] Make no mistake, magic is here!
+--settings=/dev/fd/63
+     A settings file.
+--reference_file_prefix|--refs=test_ref.en
+     A prefix for reference files.
 --dumpto=
      Dumps the parameters, as undestood by the program, to a config file that
      can later be used to rerun with the same settings. Leave empty to not dump.

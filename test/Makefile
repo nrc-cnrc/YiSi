@@ -36,7 +36,7 @@ all: gitignore
 
 test: all
 
-CMDLP_TEST_PROGS := cmdlp_test
+CMDLP_TEST_PROGS := cmdlp_test.1 cmdlp_test.2
 SIMPLE_TEST_PROGS := util_test
 SIMPLE_TEST_PROGS += phrasesim_test
 SIMPLE_TEST_PROGS += lexweight_test
@@ -75,7 +75,8 @@ $(CMDLP_TEST_PROGS): %: compare.%.out
 $(SIMPLE_TEST_PROGS): %: compare.%.out
 $(SIMPLE2_TEST_PROGS): %: compare2.%.out
 
-cmdlp_test.out: ARGS = --beta 0 --help
+cmdlp_test.1.out: ARGS = --beta 0 --settings <(echo hello) --refs test_ref.en --help
+cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /etc/timezone
 util_test.out: ARGS =
 phrasesim_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
    --reflexweight-type learn --reflexweight-path test_ref.en --phrasesim-type nwpr --ngram-size 3
@@ -99,7 +100,7 @@ compare2.srl_test.out: compare.test_ref.en.srl
 test_ref.en.srl: srl_test.out ;
 
 $(addsuffix .out, $(ALL_SIMPLE_TEST_PROGS)): %.out:
-	$(BIN)/$* $(ARGS) &> $@
+	$(BIN)/$(firstword $(subst ., ,$*)) $(ARGS) &> $@
 
 YSFX_NOSRL := 0 1 2
 #YSFX_SRL := 1_srl 2_srl

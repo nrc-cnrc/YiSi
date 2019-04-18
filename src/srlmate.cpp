@@ -39,6 +39,10 @@ auto name = jni_env_ptr->expr;                              \
    }                                                        \
 }                                                           \
 
+JavaVM* srlmate_t::jvm_m = NULL;
+JNIEnv* srlmate_t::jen_m = NULL;
+int srlmate_t::obj_cnt_m = 0;
+
 srlmate_t::srlmate_t(string path) {
    cerr << "Setting up MATE ...";
 
@@ -107,25 +111,28 @@ srlmate_t::srlmate_t(string path) {
    }
 
    // init JVM
-   size_t opt_count = 2;
-   JavaVMOption* vm_opts = new JavaVMOption[opt_count];
-   string opt0 = "-Djava.class.path=" + matejar;
-   string opt1 = "-Xmx6g";
-   vm_opts[0].optionString = const_cast<char*>(opt0.c_str());
-   vm_opts[1].optionString = const_cast<char*>(opt1.c_str());
+   if (jvm_m == NULL) {
+      size_t opt_count = 2;
+      JavaVMOption* vm_opts = new JavaVMOption[opt_count];
+      string opt0 = "-Djava.class.path=" + matejar;
+      string opt1 = "-Xmx12g";
+      vm_opts[0].optionString = const_cast<char*>(opt0.c_str());
+      vm_opts[1].optionString = const_cast<char*>(opt1.c_str());
 
-   JavaVMInitArgs vm_args;
-   vm_args.version = JNI_VERSION_1_6;
-   vm_args.options = vm_opts;
-   vm_args.nOptions = opt_count;
+      JavaVMInitArgs vm_args;
+      vm_args.version = JNI_VERSION_1_6;
+      vm_args.options = vm_opts;
+      vm_args.nOptions = opt_count;
 
-   jint result = JNI_CreateJavaVM(&jvm_m, (void**)&jen_m, &vm_args);
-   delete vm_opts;
-   if (result != JNI_OK) {
-      cerr << "ERROR: Failed to create Java VM. (error code = " << result << "). Exiting..." << endl;
-      exit(1);
-      jvm_m = NULL;
+      jint result = JNI_CreateJavaVM(&jvm_m, (void**)&jen_m, &vm_args);
+      delete vm_opts;
+      if (result != JNI_OK) {
+         cerr << "ERROR: Failed to create Java VM. (error code = " << result << "). Exiting..." << endl;
+         exit(1);
+         jvm_m = NULL;
+      }
    }
+   ++obj_cnt_m;
 
    JNI_SAFE_CALL(mcls, jen_m, FindClass("yisi/Mate"));
    JNI_SAFE_CALL(ctor, jen_m, GetMethodID(mcls, "<init>", "()V"));
@@ -157,8 +164,11 @@ srlmate_t::srlmate_t(string path) {
 }  // srlmate_t
 
 srlmate_t::~srlmate_t() {
-   if (jvm_m != NULL) {
+   --obj_cnt_m;
+   if (obj_cnt_m == 0 && jvm_m != NULL) {
       jvm_m->DestroyJavaVM();
+      jvm_m = NULL;
+      jen_m = NULL;
    }
 }
 

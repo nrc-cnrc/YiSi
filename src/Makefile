@@ -107,7 +107,7 @@ scripts: | ../bin
 	cd ../obj/java && jar -cvf ../srlmate.jar *
 
 en.mplsconfig de.mplsconfig es.mplsconfig zh.mplsconfig: %: %.template
-	sed -e "s#<YISI_HOME>/#$(dir $(CURDIR))#g; s#<MATEPLUS_HOME>#$(MATEPLUS_HOME)#g;" < $< > $@
+	sed -e "s#<YISI_HOME>#$(dir $(CURDIR))#g; s#//#/#g; s#<MATEPLUS_HOME>#$(MATEPLUS_HOME)#g;" < $< > $@
 
 $(SRLMATE_BINS): LDFLAGS += -L${JAVA_HOME}/jre/lib/amd64/server
 $(SRLMATE_BINS): LIBRARIES += -ljvm

@@ -103,8 +103,7 @@ $(addsuffix .out, $(ALL_SIMPLE_TEST_PROGS)): %.out:
 	$(BIN)/$(firstword $(subst ., ,$*)) $(ARGS) &> $@
 
 YSFX_NOSRL := 0 1 2
-#YSFX_SRL := 1_srl 2_srl
-YSFX_SRL := 1_srl
+YSFX_SRL := 1_srl 2_srl
 
 .PHONY: test_yisi
 .PHONY: $(foreach n,$(YSFX_NOSRL),test_yisi_$n)

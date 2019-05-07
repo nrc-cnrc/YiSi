@@ -25,10 +25,14 @@ int main(const int argc, const char* argv[])
    string sent;
 
    while (getline(cin, sent)) {
-      string mateout = mate.jrun(sent);
-      cout << mateout << endl << endl;
-      srlgraph_t result = read_conll09(mateout);
-      cerr << result << endl;
+     sent_t* s = new sent_t("word");
+     s->set_tokens(tokenize(sent));
+     string mateout = mate.jrun(s);
+     cout << mateout << endl << endl;
+     srlgraph_t result = read_conll09(mateout, s);
+     cerr << result << endl;
+     delete s;
+     s = NULL;
    }
 
    return 0;

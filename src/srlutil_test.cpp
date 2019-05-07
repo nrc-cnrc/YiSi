@@ -27,6 +27,10 @@ int main(const int argc, const char* argv[])
       cout << *it;
    }
 
+   for (auto it=s.begin(); it!=s.end(); it++){
+     it->delete_sent();
+   }
+
    return 0;
 }
 

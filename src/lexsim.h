@@ -97,6 +97,19 @@ namespace yisi {
       int dimension_m;
    }; // class lexsimw2v_t
 
+   class lexsimemb_t:public lexsimmodel_t {
+   public:
+     lexsimemb_t() {
+       func_m = "cosine";
+     }
+     virtual ~lexsimemb_t() {}
+     virtual double get_sim(std::string ref, std::string hyp, int mode);
+     virtual double get_sim(std::vector<double>& ref, std::vector<double>& hyp);
+   protected:
+     std::string func_m;
+   }; // class lexsimw2v_t
+
+
    class lexsimemapw2v_t:public lexsimw2v_t {
    public:
      lexsimemapw2v_t() {}

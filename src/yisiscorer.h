@@ -37,6 +37,7 @@ namespace yisi {
     std::string refsrl_path_m;
     std::string hypsrl_name_m;
     std::string hypsrl_path_m;
+
     std::string labelconfig_path_m;
     std::string weightconfig_path_m;
     std::string frameweight_name_m;
@@ -253,7 +254,7 @@ namespace yisi {
       }
     }
     
-    std::vector<srlgraph_t> inpsrlparse(std::vector<std::string> inpsents) {
+    std::vector<srlgraph_t> inpsrlparse(std::vector<sent_t*> inpsents) {
       //std::cerr << "Tokenizing/SRL-ing the input ...";
       std::vector<srlgraph_t> result = inpsrl_p->parse(inpsents);
       //std::cerr << "Done." << std::endl;
@@ -263,7 +264,7 @@ namespace yisi {
       return result;
     }
     
-    std::vector<srlgraph_t> refsrlparse(std::vector<std::string> refsents) {
+    std::vector<srlgraph_t> refsrlparse(std::vector<sent_t*> refsents) {
       //std::cerr << "Tokenizing/SRL-ing the references ... ";
       std::vector<srlgraph_t> result = refsrl_p->parse(refsents);
       //std::cerr << "Done." << std::endl;
@@ -273,14 +274,14 @@ namespace yisi {
       return result;
     }
       
-    std::vector<srlgraph_t> hypsrlparse(std::vector<std::string> hypsents) {
+    std::vector<srlgraph_t> hypsrlparse(std::vector<sent_t*> hypsents) {
       //std::cerr << "Tokenizing/SRL-ing the hypotheses ... ";
       std::vector<srlgraph_t> result = hypsrl_p->parse(hypsents);
       //std::cerr << "Done." << std::endl;
       return result;
     }
     
-    srlgraph_t hypsrlparse(std::string hypsent) {
+    srlgraph_t hypsrlparse(sent_t* hypsent) {
       //std::cerr <<"Tokenizing/SRL-ing the hypothesis ... ";
       srlgraph_t result = hypsrl_p->parse(hypsent);
       //std::cerr << "Done." << std::endl;
@@ -667,7 +668,7 @@ namespace yisi {
     
     double get_roleweight(yisigraph_t yg, size_t roleid, int mode, int refid = -1) {
       if (weightconfig_path_m == "lexweight") {
-	auto fillers = yg.get_role_fillers(roleid, mode, refid);
+	auto fillers = yg.get_role_filler_units(roleid, mode, refid);
 	return phrasesim_p->get_lexweight(fillers, mode);
       } else {
 	std::string label = yg.get_rolelabel(roleid, mode, refid);

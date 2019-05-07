@@ -43,37 +43,37 @@ double lexsimexact_t::get_sim(string ref, string hyp, int mode) {
 }
 
 double lexsimlcs_t::get_sim(string ref, string hyp, int mode) {
-   if (mode == yisi::INP_MODE) {
-      cerr << "ERROR: longest common subsequence lex sim model is not defined "
-           << "in crosslingual settings. Exiting..." << endl;
-      exit(1);
-   }
-   double lcs_n = 0.0;
-   size_t ref_n = ref.length();
-   size_t hyp_n = hyp.length();
-   // find the length of the longest common character subsequence
-   for (size_t i = 0; i < ref_n - lcs_n - 1; i++) {
-      //cerr << "Current ref pos: " << i << endl;
-      size_t j;
-      for (j = lcs_n + 1; j <= ref_n - i; j++) {
-         //cerr << "Previous common length: " << lcs_n << endl;
-         //cerr << "Current common length: " << j << endl;
-         auto searching = ref.substr(i, j);
-         //cerr << "Current target: " << searching << endl;
-         auto found = hyp.find(searching);
-         //cerr << "Found position: " << found << endl;
-         if (found == string::npos) {
-            break;
-         }
+  if (mode == yisi::INP_MODE) {
+    cerr << "ERROR: longest common subsequence lex sim model is not defined "
+	 << "in crosslingual settings. Exiting..." << endl;
+    exit(1);
+  }
+  double lcs_n = 0.0;
+  size_t ref_n = ref.length();
+  size_t hyp_n = hyp.length();
+  // find the length of the longest common character subsequence
+  for (size_t i = 0; i < ref_n - lcs_n; i++) {
+    // cerr << "Current ref pos: " << i << endl;
+    size_t j;
+    for (j = lcs_n + 1; j <= ref_n - i; j++) {
+      //cerr << "Previous common length: " << lcs_n << endl;
+      //cerr << "Current common length: " << j << endl;
+      auto searching = ref.substr(i, j);
+      //cerr << "Current target: " << searching << endl;
+      auto found = hyp.find(searching);
+      //cerr << "Found position: " << found << endl;
+      if (found == string::npos) {
+	break;
       }
-      j = j - 1;
-      if (j > lcs_n) {
-         lcs_n = j;
-      }
-   }
-   //cerr << "lcs of (" << ref << " , " << hyp << ") = ("
-   //     << lcs_n << "," << ref_n << "," << hyp_n << ")" << endl;
-   return (2.0 * lcs_n) / (double)(ref_n + hyp_n);
+    }
+    j = j - 1;
+    if (j > lcs_n) {
+      lcs_n = j;
+    }
+  }
+  //cerr << "lcs of (" << ref << " , " << hyp << ") = ("
+  //     << lcs_n << "," << ref_n << "," << hyp_n << ")" << endl;
+  return (2.0 * lcs_n) / (double)(ref_n + hyp_n);
 }
 
 //lexsimibm_t::lexsimibm_t(string path) {
@@ -219,7 +219,7 @@ lexsimemapw2v_t::lexsimemapw2v_t(string emap_path, string outw2v_path)
   cerr << "Reading emap model from " << emap_path << endl;
   ifstream EMAP(emap_path.c_str());
   if (!EMAP) {
-    cerr << "ERROR: fail to open ibm model. Exiting..." << endl;
+    cerr << "ERROR: fail to open emap model. Exiting..." << endl;
     exit(1);
   }
   while (!EMAP.eof()) {
@@ -307,6 +307,15 @@ double lexsimbiw2v_t::get_sim(vector<double>& s1, vector<double>& hyp) {
    }
 }
 
+double lexsimemb_t::get_sim(string s1, string hyp, int mode){
+  cerr <<"ERROR: lexsim model is a contextual embedding model, cannot compute lexsim without providing the embedding. Exiting..." << endl;
+  exit(1);
+}
+
+double lexsimemb_t::get_sim(vector<double>& s1, vector<double>& hyp){
+  return yisi::get_sim(s1, hyp, func_m);
+}
+
 lexsim_t::lexsim_t() {
    lexsim_p = new lexsimexact_t();
 }
@@ -324,6 +333,8 @@ lexsim_t::lexsim_t(string name, string out_path, string inp_path) {
      lexsim_p = new lexsimbiw2v_t(inp_path, out_path);
    } else if (name == "lcs") {
      lexsim_p = new lexsimlcs_t();
+   } else if (name == "emb"){
+     lexsim_p = new lexsimemb_t();
    } else {
      cerr << "ERROR: Unknown lexsim model type " << name << endl;
    }
@@ -345,6 +356,8 @@ lexsim_t::lexsim_t(lexsim_t& rhs) {
       lexsim_p = new lexsimbiw2v_t(rhs.inplexsim_path_m, rhs.outlexsim_path_m);
    } else if (rhs.lexsim_name_m == "lcs") {
       lexsim_p = new lexsimlcs_t();
+   } else if (rhs.lexsim_name_m == "emb") {
+     lexsim_p = new lexsimemb_t();
    }
    lexsim_name_m = rhs.lexsim_name_m;
    outlexsim_path_m = rhs.outlexsim_path_m;
@@ -404,7 +417,7 @@ void yisi::read_binw2v(string path, map<string, vector<double> >& model, int& di
    long long d = 0;
    char tmp;
 
-   cerr << "Reading w2v model from " << path << endl;
+   cerr << "Reading w2v binary model from " << path << endl;
    ifstream W2V(path.c_str(), ios::in | ios::binary);
    if (!W2V) {
       cerr << "ERROR: Failed to open w2v model. Exiting..." << endl;

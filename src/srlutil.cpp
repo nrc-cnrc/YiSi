@@ -163,7 +163,7 @@ srlgraph_t yisi::read_conll09(string parse, sent_t* sent) {
   } // while (!iss.eof())
   
 
-  if ((result.get_sent_length() > 0) && (tokens.size() > result.get_sent_length())){
+  if ((result.get_sent_length() > 0) && (tokens.size() > result.get_sent_length()) && (result.get_sent_type() != "word")){
     cerr <<"ERROR: Tokenization of words changed by srl. Potential index failure!" <<endl;
   } else {
     result.set_tokens(tokens);

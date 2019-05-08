@@ -151,13 +151,14 @@ size_t srlgraph_t::get_sent_length(){
   return sent_p->get_token_size();
 }
 
-/*
+
 void srlgraph_t::set_tokens(vector<string>& tokens) {
-   span_type r(0, tokens.size());
-   srl_m.set_node_data(root_m, r);
-   tokens_m = tokens;
+  //cerr<<"Setting new tokens...";
+  span_type r(0, tokens.size());
+  srl_m.set_node_data(root_m, r);
+  sent_p->set_tokens(tokens);
+  //cerr << "Done"<<endl;
 }
-*/
 
 void srlgraph_t::set_sent(sent_t* sent){
   span_type r(0, sent->get_token_size());

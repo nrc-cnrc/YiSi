@@ -17,6 +17,7 @@
 #include "util.h"
 
 #include <map>
+#include <set>
 #include <fstream>
 #include <sstream>
 
@@ -102,7 +103,7 @@ vector<srlgraph_t> yisi::read_srl(vector<sent_t*> sents, string parsefile) {
             }
          } // while (!iss.eof())
 
-         if ((int)tmptok.size() > result.at(id).get_sent_length()) {
+         if (tmptok.size() > result.at(id).get_sent_length()) {
 	   //result.at(id).set_tokens(tmptok);
 	   cerr <<"ERROR: Tokenization of words changed by srl. Potential index failure!" <<endl;
          }
@@ -124,9 +125,9 @@ srlgraph_t yisi::read_conll09(string parse, sent_t* sent) {
 
   vector<string> tokens;
   vector<int> preds;
-  map<int, srlgraph_t::srlnid_type> pids;
-  vector<vector<pair<int, string> > > args;
-  map<int, vector<int> > child;
+  vector<srlgraph_t::srlnid_type> p_nids;
+  vector<vector<srlgraph_t::label_type> > labels;
+  map<int, set<int> > child;
   istringstream iss(parse);
 
   while (!iss.eof()) {
@@ -135,140 +136,86 @@ srlgraph_t yisi::read_conll09(string parse, sent_t* sent) {
     vector<string> field = tokenize(t, '\t', true);
     //ID FORM LEMMA PLEMMA POS PPOS FEAT PFEAT HEAD PHEAD DEPREL PDEPREL FILLPRED PRED APREDs
     int id = stoi(field[0]) - 1;
+    //cerr <<"Reading "<< id;
     tokens.push_back(field[1]);
-    int parent = stoi(field[8]);
-    if (parent > 0) {
-      if (child.find(parent - 1) != child.end()) {
-        child[parent - 1].push_back(id);
+    int p = stoi(field[8]);
+    if (p > 0) {
+      child[p - 1].insert(id);
+    }
+
+    for (int i = 14; i < (int)field.size(); i++) {
+      if (tokens.size() == 1){
+	vector<srlgraph_t::label_type> l;
+	l.push_back(field[i]);
+	labels.push_back(l);
       } else {
-        child[parent - 1] = vector<int>(1, id);
+	labels[i-14].push_back(field[i]);
       }
     }
     if (field[13] != "_") {
       preds.push_back(id);
       srlgraph_t::span_type s(id, id + 1);
       srlgraph_t::srlnid_type pid = result.new_pred(s, plabel);
-      pids[id] = pid;
+      p_nids.push_back(pid);
+      labels[preds.size()-1][id]="V";
     }
-    for (int i = 14; i < (int)field.size(); i++) {
-      if ((int)args.size() < i - 13) {
-        vector<pair<int, string> > a;
-        args.push_back(a);
-      }
-      if (field[i] != "_") {
-        args[i - 14].push_back(make_pair(id, field[i]));
-      }
-    }
+    //cerr<<" Done." <<endl;
   } // while (!iss.eof())
+  
 
-  if (tokens.size() > result.get_sent_length()){
+  if ((result.get_sent_length() > 0) && (tokens.size() > result.get_sent_length())){
     cerr <<"ERROR: Tokenization of words changed by srl. Potential index failure!" <<endl;
+  } else {
+    result.set_tokens(tokens);
   }
   //result.set_tokens(tokens);
-  for (int i = 0; i < (int)args.size(); i++) {
-    srlgraph_t::srlnid_type pid = pids[preds[i]];
-    for (int j = 0; j < (int)args[i].size(); j++) {
-      int head = args[i][j].first;
-      srlgraph_t::label_type label = args[i][j].second;
-      size_t b = head;
-      size_t e = head;
-      resolve_arg_span(child, head, preds[i], b, e);
-      srlgraph_t::span_type s(b, e + 1);
-      result.new_arg(pid, s, label);
+
+  for (int i = 0; i < (int)labels.size(); i++) {
+    for (int j = 0; j < (int) labels[i].size(); j++){
+      populate_label(labels[i], child, j); 
     }
   }
-
+  for (int i = 0; i < (int)labels.size(); i++) {
+    auto pid = p_nids[i];
+    srlgraph_t::span_type curspan;
+    srlgraph_t::label_type curlabel = "_";
+    for (size_t j=0; j<labels[i].size(); j++){
+      //cerr<<labels[i][j]<<" ";
+      if (labels[i][j] != curlabel){
+	if (curlabel != "_" && curlabel != "V"){
+	  curspan.second = j;
+	  result.new_arg(pid, curspan, curlabel);
+	}
+	curspan.first = j;
+	curlabel = labels[i][j];
+      }
+    }
+    if (curlabel != "_" && curlabel != "V"){
+      curspan.second = labels[i].size();
+      result.new_arg(pid, curspan, curlabel);
+    }
+    //cerr<<endl;
+  }
   return result;
 } // read_conll09
 
 srlgraph_t yisi::read_conll09(string parse) {
-  if (parse.empty()) {
-    sent_t* sent = new sent_t("word");
-    auto tokens = tokenize(parse);
-    sent->set_tokens(tokens);
-    srlgraph_t re(sent);
-    return re;
-  }
   sent_t* sent = new sent_t("word");
-  srlgraph_t result(sent);
-  srlgraph_t::label_type plabel = "V";
   
-  vector<string> tokens;
-  vector<int> preds;
-  map<int, srlgraph_t::srlnid_type> pids;
-  vector<vector<pair<int, string> > > args;
-  map<int, vector<int> > child;
-  istringstream iss(parse);
-
-  while (!iss.eof()) {
-    string t;
-    getline(iss, t);
-    vector<string> field = tokenize(t, '\t', true);
-    //ID FORM LEMMA PLEMMA POS PPOS FEAT PFEAT HEAD PHEAD DEPREL PDEPREL FILLPRED PRED APREDs
-    int id = stoi(field[0]) - 1;
-    tokens.push_back(field[1]);
-    int parent = stoi(field[8]);
-    if (parent > 0) {
-      if (child.find(parent - 1) != child.end()) {
-	child[parent - 1].push_back(id);
-      } else {
-	child[parent - 1] = vector<int>(1, id);
-      }
-    }
-    if (field[13] != "_") {
-      preds.push_back(id);
-      srlgraph_t::span_type s(id, id + 1);
-      srlgraph_t::srlnid_type pid = result.new_pred(s, plabel);
-      pids[id] = pid;
-    }
-    for (int i = 14; i < (int)field.size(); i++) {
-      if ((int)args.size() < i - 13) {
-	vector<pair<int, string> > a;
-	args.push_back(a);
-      }
-      if (field[i] != "_") {
-	args[i - 14].push_back(make_pair(id, field[i]));
-         }
-    }
-  } // while (!iss.eof())
-  
-  // result.set_tokens(tokens);
-  sent->set_tokens(tokens);
-  for (int i = 0; i < (int)args.size(); i++) {
-    srlgraph_t::srlnid_type pid = pids[preds[i]];
-    for (int j = 0; j < (int)args[i].size(); j++) {
-      int head = args[i][j].first;
-      srlgraph_t::label_type label = args[i][j].second;
-      size_t b = head;
-      size_t e = head;
-      resolve_arg_span(child, head, preds[i], b, e);
-      srlgraph_t::span_type s(b, e + 1);
-      result.new_arg(pid, s, label);
-    }
-  }
+  auto result = read_conll09(parse, sent);
   
   return result;
 } // read_conll09
 
-void yisi::resolve_arg_span(map<int, vector<int> > child, int curid,
-                            srlgraph_t::srlnid_type pid, size_t& b, size_t&e) {
-  //cerr << curid << "," << pid << "," << b << "," << e << endl;
-  auto curchild = child[curid];
-  bool find = false;
-  for (auto it = curchild.begin(); it != curchild.end() && !find; it++) {
-    if (*it == (int)pid) {
-      find = true;
-    }
-  }
-  if (!find) {
-    for (auto it = curchild.begin(); it != curchild.end(); it++) {
-      if (*it < (int)b) {
-	b = *it;
+void yisi::populate_label(vector<string>& labels, map<int, set<int> > child, int i){
+  if (labels[i] != "_" && labels[i] != "V"){
+    auto curchildren = child[i];
+    for (auto ct = curchildren.begin(); ct != curchildren.end(); ct++){
+      //cerr<<"Label " <<*ct <<" "<<labels[*ct]<<endl;
+      if (labels[*ct] == "_"){
+	labels[*ct] = labels[i];
+	populate_label(labels, child, *ct);
       }
-      if (*it > (int)e) {
-	e = *it;
-      }
-      resolve_arg_span(child, *it, pid, b, e);
     }
   }
 }

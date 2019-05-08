@@ -22,6 +22,7 @@
 
 #include "srlgraph.h"
 
+#include <set>
 #include <string>
 #include <vector> 
 #include <map>
@@ -31,8 +32,7 @@ namespace yisi {
    std::vector<srlgraph_t> read_srl(std::vector<sent_t*> sents, std::string parsefile);
    srlgraph_t read_conll09(std::string parse, sent_t* sent);
    srlgraph_t read_conll09(std::string parse);
-   void resolve_arg_span(std::map<int, std::vector<int> > child, int curid,
-      srlgraph_t::srlnid_type pid, size_t& b, size_t&e);
+   void populate_label(std::vector<std::string>& labels, std::map<int, std::set<int> > child, int i);
    std::vector<srlgraph_t> read_conll09batch(std::string filename);
    std::vector<srlgraph_t> read_conll09batch(std::string filename, std::vector<sent_t*> sents);
    class srlmodel_t {

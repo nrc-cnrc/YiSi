@@ -65,7 +65,7 @@ namespace yisi {
      std::string get_sent_type(){return sent_p->get_type();};
      size_t get_sent_length();
      
-     //void set_tokens(std::vector<std::string>& tokens);
+     void set_tokens(std::vector<std::string>& tokens);
      void set_sent(sent_t* sent);
      void set_role_span(srlnid_type predid, span_type& span);
      void set_role_label(srlnid_type predid, label_type& label);

@@ -214,9 +214,9 @@ int main(const int argc, const char* argv[])
     cerr<<"Done."<<endl;
   }
 
-  cerr<<"Reading inp sents... ";
   vector<sent_t*> inpsents;
   if (opt.inp_file_m != "") {
+    cerr<<"Reading inp sents... ";
     inpsents = read_sent(opt.inp_type_m, opt.inp_file_m, opt.inpunit_file_m, opt.inpidemb_file_m);
     if (inpsents.size() != hypsents.size()) {
       cerr << "ERROR: No. of sentences in inp-file (" << inpsents.size()
@@ -224,8 +224,8 @@ int main(const int argc, const char* argv[])
 	   << hypsents.size() << "). Check your input! Exiting..." << endl;
       exit(1);
     }
+    cerr<<"Done."<<endl;
   }
-  cerr<<"Done."<<endl;
 
   cerr << "Creating hyp srlgraphs... ";
   vector<srlgraph_t> hypsrlgraphs = yisi.hypsrlparse(hypsents);

@@ -87,7 +87,7 @@ build/test/%.out : build/bin/%
 	fi
 
 clean :
-	@rm -rf build/dep build/obj build/bin build/lib
+	@rm -rf build/dep build/obj build/bin build/lib build/include
 	@rm -f *~
 
 cleaner : clean

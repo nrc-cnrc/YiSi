@@ -36,6 +36,7 @@ role labeler for both the input and output language.
 (Note: GCC 4.9.3 cannot compile the current version of the cmdlp library we use.)
 - YiSi requires `make`; we're using GNU Make 3.81.
 - YiSi requires `bash`; we're using GNU bash, version 4.1.2.
+- YiSi requires `xsltproc`; we're using xsltproc, version 10128.
 
 #### Additional requirements to use SRL
 - YiSi interfaces to a Java SRL library (mateplus), thus requires Java JDK 1.8 to build `srlmate.jar`.

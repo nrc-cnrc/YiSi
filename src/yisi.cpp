@@ -307,6 +307,6 @@ int main(const int argc, const char* argv[])
     delete *it;
     *it = NULL;
   }
-  
+
   return 0;
 }

@@ -37,7 +37,7 @@ namespace yisi {
      ~sent_t(){};
      std::string get_type();
      std::vector<std::string> get_tokens(span_type tspan);
-     inline std::vector<std::string> get_tokens() {return token_m;};
+     std::vector<std::string> get_tokens();
      std::vector<std::string> get_units(span_type uspan);
      std::vector<std::vector<double> > get_embs(span_type uspan);
      void set_tokens(std::vector<std::string> t);
@@ -47,7 +47,7 @@ namespace yisi {
      void set_uid2tid(std::vector<size_t> u2t);
      span_type tspan2uspan(span_type tspan);
      span_type uspan2tspan(span_type uspan);
-     inline size_t get_token_size(){ return token_m.size();}
+     size_t get_token_size();
    private:
      std::string sent_type_m;
      std::vector<std::string> token_m;

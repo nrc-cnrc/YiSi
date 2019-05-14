@@ -83,6 +83,7 @@ namespace yisi {
       //std::cerr << "first align the sentence node of ref" << refid << std::endl;
       auto refroot = refsrlgraph_m[refid].get_root();
       auto hyproot = hypsrlgraph_m.get_root();
+      
       auto ru = refsrlgraph_m[refid].get_role_filler_units(refroot);
       //std::cerr << "Got r " << ru.size() << std::endl;
       auto hu = hypsrlgraph_m.get_role_filler_units(hyproot);

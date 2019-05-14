@@ -112,11 +112,10 @@ srlgraph_t::srlnid_type srlgraph_t::get_pred(srlnid_type argid) {
   return predof_m[argid];
 }
 
-/*
-vector<string>& srlgraph_t::get_sentence() {
-  return tokens_m;
+
+vector<string> srlgraph_t::get_sentence() {
+  return sent_p->get_tokens();
 }
-*/
 
 vector<string> srlgraph_t::get_role_filler_units(srlnid_type roleid) {
   //vector<string> fillers;
@@ -204,7 +203,8 @@ ostream& srlgraph_t::operator<<(ostream& os) {
       }
     }
   } else {
-    for (vector<string>::iterator it = sent_p->get_tokens(get_role_span(root_m)).begin(); it != sent_p->get_tokens(get_role_span(root_m)).end(); it++) {
+    auto t = sent_p->get_tokens();
+    for (auto it = t.begin(); it != t.end(); it++) {
       os << *it << " ";
     }
     os << endl;

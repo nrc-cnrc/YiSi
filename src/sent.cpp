@@ -59,7 +59,19 @@ vector<string> sent_t::get_tokens(span_type tspan){
   for (size_t i = tspan.first; i< tspan.second; i++){
     result.push_back(token_m[i]);
   }
+  /*
+  cerr<<"In get_tokens("<<tspan.first<<","<<tspan.second<<"): ";
+  for (auto it = result.begin(); it != result.end(); it++){
+    cerr <<*it <<" ";
+  }
+  cerr <<endl;
+  */
   return result;
+}
+
+vector<string> sent_t::get_tokens(){
+  // cerr<<"In get_tokens(): "<<endl;
+  return token_m;
 }
 
 vector<string> sent_t::get_units(span_type uspan){
@@ -70,7 +82,9 @@ vector<string> sent_t::get_units(span_type uspan){
     }
   } else {
     for (size_t i = uspan.first; i< uspan.second; i++){
-      result.push_back(unit_m[i]);
+      if (i < unit_m.size()){
+	result.push_back(unit_m[i]);
+      }
     }
   }
   return result;
@@ -94,7 +108,11 @@ sent_t::span_type sent_t::tspan2uspan(span_type tspan){
     return tspan;
   }else{
     //cerr<<tid2uspan_m.size();
-    return span_type(tid2uspan_m[tspan.first].first, tid2uspan_m[tspan.second-1].second);
+    if (tspan.first < tid2uspan_m.size() && (tspan.second-1) < tid2uspan_m.size()){
+      return span_type(tid2uspan_m[tspan.first].first, tid2uspan_m[tspan.second-1].second);
+    } else {
+      return tspan;
+    }
   }
 }
 
@@ -107,7 +125,14 @@ sent_t::span_type sent_t::uspan2tspan(span_type uspan){
 }
 
 void sent_t::set_tokens(vector<string> t){
-  token_m = t;
+  token_m=t;
+  /*
+  cerr <<"In set_tokens(t): ";
+  for (auto it = token_m.begin(); it != token_m.end(); it++){
+    cerr << *it <<" ";
+  }
+  cerr<<endl;
+  */
 }
 
 void sent_t::set_units(vector<string> u ){
@@ -124,6 +149,10 @@ void sent_t::set_tid2uspan(vector<span_type> t2u){
 
 void sent_t::set_uid2tid(vector<size_t> u2t){
   uid2tid_m = u2t;
+}
+
+size_t sent_t::get_token_size(){
+  return token_m.size();
 }
 
 vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit_path, string idemb_path){

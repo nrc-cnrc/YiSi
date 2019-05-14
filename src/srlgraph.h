@@ -56,7 +56,7 @@ namespace yisi {
      
      srlnid_type get_pred(srlnid_type argid);
      
-     // std::vector<std::string>& get_sentence();
+     std::vector<std::string> get_sentence();
      std::vector<std::string> get_role_filler_units(srlnid_type roleid);
      std::vector<std::vector<double> > get_role_filler_embs(srlnid_type roleid);
      

@@ -26,11 +26,19 @@ int main(const int argc, const char* argv[])
 
    while (getline(cin, sent)) {
      sent_t* s = new sent_t("word");
-     s->set_tokens(tokenize(sent));
+     auto tokens = tokenize(sent);
+     s->set_tokens(tokens);
+     /*
+     auto t = s->get_tokens();
+     for (auto it = t.begin(); it != t.end(); it++){
+       cerr <<*it <<" ";
+     }
+     cerr<<endl;
+     */
      string mateout = mate.jrun(s);
      cout << mateout << endl << endl;
-     srlgraph_t result = read_conll09(mateout, s);
-     cerr << result << endl;
+     srlgraph_t g = read_conll09(mateout, s);
+     cerr<< g << endl;
      delete s;
      s = NULL;
    }

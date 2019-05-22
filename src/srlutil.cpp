@@ -113,6 +113,7 @@ vector<srlgraph_t> yisi::read_srl(vector<sent_t*> sents, string parsefile) {
 
    return result;
 }  // read_srl
+
 srlgraph_t yisi::read_conll09(string parse, sent_t* sent) {
   srlgraph_t result(sent);
   if (parse.empty()) {
@@ -170,16 +171,19 @@ srlgraph_t yisi::read_conll09(string parse, sent_t* sent) {
     }
   } // while (!iss.eof())
 
-  if (result.get_sent_length() > 0 && tokens.size() > result.get_sent_length()) {
-    if (result.get_sent_type() != "word"){
-      cerr <<"ERROR: Tokenization of words changed by srl. Potential index failure!" <<endl;
-      cerr <<"Tokens were: "<< join(result.get_sentence(), " ") <<endl;
-      cerr <<"Tokens are: "<< join(tokens, " ") <<endl;
-    } else {
-      cerr <<"Set tokens rule fired? ("<< tokens.size() <<"," << result.get_sent_length()<<")"<<endl;
-      result.set_tokens(tokens);
-    }
-  }
+   if (result.get_sent_type() == "word") {
+      if (tokens.size() > result.get_sent_length()) {
+         if (result.get_sent_length() > 0)
+            cerr <<"Set tokens rule fired (" << tokens.size() << "," << result.get_sent_length() << ")" << endl;
+         result.set_tokens(tokens);
+      }
+   } else {
+      if (result.get_sent_length() > 0 && tokens.size() > result.get_sent_length()) {
+         cerr <<"ERROR: Tokenization of words changed by srl. Potential index failure!" <<endl;
+         cerr <<"Tokens were: "<< join(result.get_sentence(), " ") <<endl;
+         cerr <<"Tokens are: "<< join(tokens, " ") <<endl;
+      }
+   }
 
   for (int i = 0; i < (int)labels.size(); i++) {
     for (int j = 0; j < (int) labels[i].size(); j++){

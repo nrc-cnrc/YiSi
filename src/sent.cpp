@@ -160,7 +160,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
   vector<vector<double> > emb;
   vector<sent_t::span_type> t2u;
   vector<size_t> u2t;
-  int currtid=-1;
+  size_t currtid = (size_t)-1;
   //cerr<<token_path << " ";
   auto token_strs = read_file(token_path);
   if (unit_path==""){
@@ -208,7 +208,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
 	emb.clear();
 	t2u.clear();
 	u2t.clear();
-	currtid=-1;
+	currtid=(size_t)-1;
       } else {
 	istringstream iss(line);
 	size_t uid;

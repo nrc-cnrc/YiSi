@@ -23,21 +23,21 @@ using namespace yisi;
 
 int main(int argc, char* argv[])
 {
-  set<string> result;
-  while (!cin.eof()){
-    string line;
-    cin >> line;
-    auto tokens = tokenize(line);
-    auto ngrams = collect_ngram(atoi(argv[1]), tokens);
-    for (auto it=ngrams.begin(); it!=ngrams.end(); it++){
-      auto ngram = join(*it);
-      result.insert(ngram);
-    }
-  }
-  for (auto it=result.begin(); it!=result.end(); it++){
-    cout<<*it<<endl;
-  }
-    
-  return 0;
+   set<string> result;
+   while (!cin.eof()) {
+      string line;
+      cin >> line;
+      auto tokens = tokenize(line);
+      auto ngrams = collect_ngram(atoi(argv[1]), tokens);
+      for (auto it = ngrams.begin(); it != ngrams.end(); it++) {
+         auto ngram = join(*it);
+         result.insert(ngram);
+      }
+   }
+   for (auto it = result.begin(); it != result.end(); it++) {
+      cout << *it << endl;
+   }
+
+   return 0;
 }
 

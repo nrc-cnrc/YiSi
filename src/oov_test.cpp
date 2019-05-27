@@ -22,16 +22,18 @@ int main(int argc, char* argv[])
 {
    lexsim_t w2vtxt("w2v", argv[1], "cosine");
    string sent;
+
    while(!cin.eof()){
-     getline(cin, sent);
-     //cout <<sent<<endl;
-     auto tokens = tokenize(sent);
-     for (auto it=tokens.begin(); it!=tokens.end(); it++){
-       if ((w2vtxt.get_wv(*it,HYP_MODE)).size() == 0){
-	 cout << *it << endl;
-       }
-     }
+      getline(cin, sent);
+      //cout << sent << endl;
+      auto tokens = tokenize(sent);
+      for (auto it = tokens.begin(); it != tokens.end(); it++){
+         if ((w2vtxt.get_wv(*it,HYP_MODE)).size() == 0){
+            cout << *it << endl;
+         }
+      }
    }
+
    return 0;
 }
 

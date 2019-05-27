@@ -27,22 +27,23 @@ int main(int argc, char* argv[])
    int dim;
    read_binw2v(inpembpath, inpemb, dim);
    read_binw2v(hypembpath, hypemb, dim);
-   
+
    auto it = inpemb.begin();
    auto jt = hypemb.begin();
-   while(it != inpemb.end() && jt != hypemb.end()){
-     string inp=it->first;
-     string hyp=jt->first;
-     if (inp == hyp){
-       cout<<inp <<" " << hyp <<endl;
-       it++;
-       jt++;
-     } else if(inp.compare(hyp)<0){
-       it++;
-     } else {
-       jt++;
-     }
+   while (it != inpemb.end() && jt != hypemb.end()) {
+      string inp = it->first;
+      string hyp = jt->first;
+      if (inp == hyp) {
+         cout << inp << " " << hyp << endl;
+         it++;
+         jt++;
+      } else if (inp.compare(hyp) < 0) {
+         it++;
+      } else {
+         jt++;
+      }
    }
+
    return 0;
 }
 

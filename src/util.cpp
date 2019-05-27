@@ -28,20 +28,20 @@ using namespace yisi;
 using namespace std;
 
 vector<string> yisi::tokenize(string sent, char d, bool keep_empty) {
-  //cerr << "Tokenizing " << sent << " by " << d << endl;
-  vector<string> result;
-  if (sent != ""){
-    istringstream iss(sent);
-    while (!iss.eof()) {
-      string token;
-      getline(iss, token, d);
-      if (token != "" || keep_empty) {
-	result.push_back(token);
+   //cerr << "Tokenizing " << sent << " by " << d << endl;
+   vector <string> result;
+   if (sent != "") {
+      istringstream iss(sent);
+      while (!iss.eof()) {
+         string token;
+         getline(iss, token, d);
+         if (token != "" || keep_empty) {
+            result.push_back(token);
+         }
       }
-    }
-  }
-  //cerr << endl;
-  return result;
+   }
+   //cerr << endl;
+   return result;
 }
 
 string yisi::join(const vector<string> tokens, const string d) {

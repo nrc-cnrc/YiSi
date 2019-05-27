@@ -442,10 +442,10 @@ double yisigraph_t::spanlength(span_type span) {
 }
 
 void yisigraph_t::print(ostream& os) {
-  string h = yisi::join(hypsrlgraph_m.get_role_filler_units(hypsrlgraph_m.get_root()), " ");
-  //os << h <<endl;
-  for (size_t i = 0; i < refalignment_m.size(); i++) {
-    string r = yisi::join(refsrlgraph_m[i].get_role_filler_units(refsrlgraph_m[i].get_root()), " ");
+   string h = yisi::join(hypsrlgraph_m.get_role_filler_units(hypsrlgraph_m.get_root()), " ");
+   //os << h <<endl;
+   for (size_t i = 0; i < refalignment_m.size(); i++) {
+      string r = yisi::join(refsrlgraph_m[i].get_role_filler_units(refsrlgraph_m[i].get_root()), " ");
       //os << r <<endl;
       for (auto jt = refalignment_m[i].begin(); jt != refalignment_m[i].end(); jt++) {
          auto refnid = jt->first;
@@ -457,7 +457,7 @@ void yisigraph_t::print(ostream& os) {
       }
    }
    if (inp_b) {
-     string inp = yisi::join(inpsrlgraph_m.get_role_filler_units(inpsrlgraph_m.get_root()), " ");
+      string inp = yisi::join(inpsrlgraph_m.get_role_filler_units(inpsrlgraph_m.get_root()), " ");
       os << inp << endl;
       for (auto kt = inpalignment_m.begin(); kt != inpalignment_m.end(); kt++) {
          auto inpnid = kt->first;

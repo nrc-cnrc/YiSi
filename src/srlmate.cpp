@@ -73,43 +73,33 @@ srlmate_t::srlmate_t(string path) {
       getline(iss, cfgv);
       if (cfgn == "yisi_home") {
          yisi_home = cfgv;
-      }
-      else if (cfgn == "mate_jars") {
+      } else if (cfgn == "mate_jars") {
          mate_jars = cfgv;
-      }
-      else if (cfgn == "lang") {
+      } else if (cfgn == "lang") {
          lang = cfgv;
-      }
-      else if (cfgn == "rerank") {
+      } else if (cfgn == "rerank") {
          if ((cfgv.compare("0") == 0) || (cfgv.compare("false") == 0)) {
             rerank = false;
          } else {
             rerank = true;
          }
-      }
-      else if (cfgn == "hybrid") {
+      } else if (cfgn == "hybrid") {
          if ((cfgv.compare("0") == 0) || (cfgv.compare("false") == 0)) {
             hybrid = false;
          } else {
             hybrid = true;
          }
-      }
-      else if (cfgn == "token") {
+      } else if (cfgn == "token") {
          token = cfgv;
-      }
-      else if (cfgn == "morph") {
+      } else if (cfgn == "morph") {
          morph = cfgv;
-      }
-      else if (cfgn == "lemma") {
+      } else if (cfgn == "lemma") {
          lemma = cfgv;
-      }
-      else if (cfgn == "tagger") {
+      } else if (cfgn == "tagger") {
          tagger = cfgv;
-      }
-      else if (cfgn == "parser") {
+      } else if (cfgn == "parser") {
          parser = cfgv;
-      }
-      else if (cfgn == "srl") {
+      } else if (cfgn == "srl") {
          srl = cfgv;
       }
    }

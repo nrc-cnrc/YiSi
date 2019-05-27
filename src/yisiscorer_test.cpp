@@ -51,12 +51,12 @@ int main(const int argc, const char* argv[])
 
       cout << "YiSi score is:" << yisi.score(m) << endl;
    }
-   for (auto it = refsents.begin(); it != refsents.end(); it++){
-     delete *it;
-     *it = NULL;
+   for (auto it = refsents.begin(); it != refsents.end(); it++) {
+      delete *it;
+      *it = NULL;
    }
-   for (auto it = hypsents.begin(); it != hypsents.end(); it++){
-     delete *it;
-     *it=NULL;
+   for (auto it = hypsents.begin(); it != hypsents.end(); it++) {
+      delete *it;
+      *it = NULL;
    }
 }

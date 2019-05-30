@@ -100,7 +100,7 @@ srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
 $(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
 $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS): BIN = ../bin
 
-compare_w_java_log.srl_test.out: compare.test_ref.en.srl
+compare_w_java_log.srl_test.out: compare_w_alt.test_ref.en.srl
 
 test_ref.en.srl: srl_test.out ;
 

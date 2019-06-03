@@ -81,7 +81,8 @@ $(SIMPLE_TEST_PROGS): %: compare.%.out
 $(SIMPLE_SRL_TEST_PROGS): %: compare_w_java_log.%.out
 
 cmdlp_test.1.out: ARGS = --beta 0 --settings <(echo hello) --refs test_ref.en --help
-cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /etc/timezone
+#cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /etc/timezone
+cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /tmp/cmdlp_test.2.empty
 util_test.out: ARGS =
 phrasesim_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
    --reflexweight-type learn --reflexweight-path test_ref.en --phrasesim-type nwpr --ngram-size 3
@@ -103,6 +104,15 @@ $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS): BIN = ../bin
 compare_w_java_log.srl_test.out: compare_w_alt.test_ref.en.srl
 
 test_ref.en.srl: srl_test.out ;
+
+cmdlp_test.2.out: | /tmp/cmdlp_test.2.empty
+
+# Note: There is a rather rare race condition where the following touch command
+# could fail if two users run this simultaneously. In that case simply running
+# make again will succeed.
+/tmp/cmdlp_test.2.empty:
+	touch $@
+	chmod -f o+r $@
 
 $(addsuffix .out, $(ALL_SIMPLE_TEST_PROGS)): %.out:
 	$(BIN)/$(firstword $(subst ., ,$*)) $(ARGS) &> $@

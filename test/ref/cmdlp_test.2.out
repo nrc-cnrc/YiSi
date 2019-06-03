@@ -14,5 +14,5 @@ From settings: 'hello'
      The Skåne town of Råå has a stream (å) with eel (ål):
    ie Råååål. Hope that is enough unicode to give a bad
    linebreak.
-Reference file: '/etc/timezone'.
-1
+Reference file: '/tmp/cmdlp_test.2.empty'.
+0

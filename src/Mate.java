@@ -1,7 +1,7 @@
 /**
  * @file Mate.java
  * @brief Bridging class for MATE
- * 
+ *
  * @author Jackie Lo
  *
  * Multilingual Text Processing / Traitement multilingue de textes
@@ -26,6 +26,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.lang.Class;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 public class Mate {
    // protected CompletePipeline pipeline = null;
@@ -104,7 +105,7 @@ public class Mate {
 
          // String error = FileExistenceVerifier.verifyCompletePipelineAllNecessaryModelFiles(options);
          Class<?> class_FileExistenceVerifier = classLoader.loadClass("se.lth.cs.srl.util.FileExistenceVerifier");
-         Method method_verifyCompletePipelineAllNecessaryModelFiles = 
+         Method method_verifyCompletePipelineAllNecessaryModelFiles =
                class_FileExistenceVerifier.getMethod("verifyCompletePipelineAllNecessaryModelFiles", class_FullPipelineOptions);
 //         System.err.println("Got Method " + method_verifyCompletePipelineAllNecessaryModelFiles);
          String error = (String) method_verifyCompletePipelineAllNecessaryModelFiles.invoke(null, options);
@@ -118,8 +119,20 @@ public class Mate {
 //            System.err.println("Got Method " + method_getCompletePipeline);
             pipeline = method_getCompletePipeline.invoke(null, options);
          }
+      } catch (InvocationTargetException ite) {
+         Throwable e = ite.getTargetException();
+         if( e != null && e.getMessage() != null ) {
+            result += e.getClass().getName() + ":" + e.getMessage();
+         } else {
+            result += "An unknown error has occured: " + ite.getClass().getName();
+         }
       } catch (Exception e){
-         result += e.getMessage();
+         String msg = e.getMessage();
+         if( msg != null ) {
+            result += msg;
+         } else {
+            result += "An unknown error has occured: " + e.getClass().getName();
+         }
       }
       return result;
    }
@@ -134,7 +147,7 @@ public class Mate {
       } catch (Exception e) {
          e.printStackTrace();
          System.err.println(sentence);
-      } 
+      }
       return result;
    }
 }

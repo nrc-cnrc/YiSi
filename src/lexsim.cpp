@@ -371,6 +371,7 @@ lexsim_t::~lexsim_t() {
 }
 
 double lexsim_t::get_sim(string s1, string hyp, int mode) {
+#ifndef IGNORE_CACHE
    //cerr << "Querying " << mode << " lex sim of " << s1 << " and " << hyp << "; ";
    if (mode == yisi::INP_MODE) {
       if (xlscache_m.find(s1) != xlscache_m.end()) {
@@ -394,15 +395,20 @@ double lexsim_t::get_sim(string s1, string hyp, int mode) {
          mlscache_m[s1] = c;
       }
    }
+#endif
 
    //cerr << "computing = ";
    double s = lexsim_p->get_sim(s1, hyp, mode);
+
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       xlscache_m[s1][hyp] = s;
    } else {
       mlscache_m[s1][hyp] = s;
       //cerr<<s << endl;
    }
+#endif
+
    return s;
 }
 

@@ -122,8 +122,10 @@ namespace yisi {
       }
    }; // struct phrasesim_options
 
+#ifndef IGNORE_CACHE
    static std::map<std::string, std::map<std::string, std::pair<double, double> > > mpscache_m;
    static std::map<std::string, std::map<std::string, std::pair<double, double> > > xpscache_m;
+#endif
 
    class phrasesim_t {
    public:

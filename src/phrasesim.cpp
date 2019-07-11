@@ -117,6 +117,7 @@ std::pair<double, double> phrasesim_t::operator()(std::vector<std::string> s1tok
    }
    hyptxt = hyptxt + hyptokens[j];
 
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       if (xpscache_m.find(s1txt) != xpscache_m.end()) {
          if (xpscache_m[s1txt].find(hyptxt) != xpscache_m[s1txt].end()) {
@@ -136,12 +137,18 @@ std::pair<double, double> phrasesim_t::operator()(std::vector<std::string> s1tok
          mpscache_m[s1txt] = c;
       }
    }
+#endif
+
    auto s = nwpr(s1tokens, hyptokens, mode);
+
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       xpscache_m[s1txt][hyptxt] = s;
    } else {
       mpscache_m[s1txt][hyptxt] = s;
    }
+#endif
+
    return s;
 }
 
@@ -167,6 +174,7 @@ std::pair<double, double> phrasesim_t::operator()(std::vector<std::string> s1tok
    }
    hyptxt = hyptxt + hyptokens[j];
 
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       if (xpscache_m.find(s1txt) != xpscache_m.end()) {
          if (xpscache_m[s1txt].find(hyptxt) != xpscache_m[s1txt].end()) {
@@ -186,12 +194,18 @@ std::pair<double, double> phrasesim_t::operator()(std::vector<std::string> s1tok
          mpscache_m[s1txt] = c;
       }
    }
+#endif
+
    auto s = nwpr(s1tokens, hyptokens, s1embs, hypembs, mode);
+
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       xpscache_m[s1txt][hyptxt] = s;
    } else {
       mpscache_m[s1txt][hyptxt] = s;
    }
+#endif
+
    return s;
 }
 

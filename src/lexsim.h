@@ -35,8 +35,10 @@
 
 namespace yisi {
 
+#ifndef IGNORE_CACHE
    static std::map<std::string, std::map<std::string, double> > mlscache_m;
    static std::map<std::string, std::map<std::string, double> > xlscache_m;
+#endif
 
    class lexsimmodel_t {
    public:

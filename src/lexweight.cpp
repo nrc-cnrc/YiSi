@@ -115,7 +115,9 @@ lexweightlearn_t::lexweightlearn_t(string path) {
      }
    }
    learn(tokens);
-   cerr << "Done." << endl;
+   if( paths.size() > 0 ) {
+      cerr << "Done." << endl;
+   }
 }
 
 void lexweightlearn_t::learn(vector<vector<string> > tokens) {

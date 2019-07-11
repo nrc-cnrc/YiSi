@@ -71,7 +71,7 @@ SRLMATE_BINS := $(addprefix ../bin/,srlmate_test)
 
 ifdef WITH_SRLMATE
    SRLMATE_OBJS += $(addprefix ../obj/,srl.o)
-   SRLMATE_BINS += $(addprefix ../bin/,srl_test yisiscorer_test yisi)
+   SRLMATE_BINS += $(addprefix ../bin/,srl_test yisiscorer_test yisi srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test lexweight_test phrasesim_test srlutil_test util_test emap_test oov_test ngram_test overlapvocab_test testbin)
 endif
 
 # Object files are c++ sources that do not result in stand alone binaries

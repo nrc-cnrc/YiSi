@@ -31,7 +31,7 @@ int main(const int argc, const char* argv[])
       return opt.exit_code();
    }
 
-   phrasesim_t<options_type> phrasesim(opt);
+   phrasesim_t phrasesim(opt);
 
    vector<string> s1{"EU"};
    vector<string> s2{"UK"};

@@ -157,7 +157,7 @@ int main(const int argc, const char* argv[])
       }
    }
 
-   yisiscorer_t<options_type> yisi(opt);
+   yisiscorer_t yisi(opt, opt);
 
    if (opt.sntscore_file_m == "") {
       opt.sntscore_file_m = opt.hyp_file_m + ".sntyisi";

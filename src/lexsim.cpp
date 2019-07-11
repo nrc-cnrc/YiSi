@@ -394,6 +394,7 @@ double lexsim_t::get_sim(string s1, string hyp, int mode) {
          mlscache_m[s1] = c;
       }
    }
+
    //cerr << "computing = ";
    double s = lexsim_p->get_sim(s1, hyp, mode);
    if (mode == yisi::INP_MODE) {
@@ -434,13 +435,13 @@ void yisi::read_binw2v(string path, map<string, vector<double> >& model, int& di
       getline(W2V, wordtmp, ' ');
       string word = strip(wordtmp);
       //cerr << i << "\t" << word << endl;
-      vector<double> embedding;
+      vector<double> embedding(dimension);
       double len = 0.0;
       for (long long j = 0; j < dimension; j++) {
          float f;
          W2V.read((char*)&f, sizeof(float));
          //cerr << "\t" << j << " " << f << endl;
-         embedding.push_back(f);
+         embedding[j] = f;
          len += f * f;
       }
       len = sqrt(len);
@@ -479,7 +480,7 @@ void yisi::read_txtw2v(string path, map<string, vector<double> >& model, int& di
       string word;
       getline(W2V, word, ' ');
       //cout << i << ": [" << word << ", ";
-      vector<double> embedding;
+      vector<double> embedding(dimension);
       double len = 0.0;
       string af;
       float f;
@@ -487,13 +488,13 @@ void yisi::read_txtw2v(string path, map<string, vector<double> >& model, int& di
          getline(W2V, af, ' ');
          f = atof(af.c_str());
          //cout << f << ", ";
-         embedding.push_back(f);
+         embedding[j] = f;
          len += f * f;
       }
       getline(W2V, af);
       f = atof(af.c_str());
       //cout << f << "]" << endl;
-      embedding.push_back(f);
+      embedding[dimension-1] = f;
 
       len += f * f;
 

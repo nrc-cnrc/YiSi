@@ -33,7 +33,7 @@ int main(const int argc, const char* argv[])
       return opt.exit_code();
    }
 
-   yisiscorer_t<options_type> yisi(opt);
+   yisiscorer_t yisi(opt, opt);
 
    string reffile("test_ref.en");
    string hypfile("test_hyp.en");

@@ -70,7 +70,7 @@ SRLMATE_BINS := $(addprefix ../bin/,srlmate_test)
 
 
 ifdef WITH_SRLMATE
-   SRLMATE_OBJS += $(addprefix ../obj/,srl.o)
+   SRLMATE_OBJS += $(addprefix ../obj/,srl.o yisiscorer.o)
    SRLMATE_BINS += $(addprefix ../bin/,srl_test yisiscorer_test yisi)
 endif
 

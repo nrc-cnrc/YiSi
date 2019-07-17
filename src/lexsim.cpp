@@ -371,6 +371,7 @@ lexsim_t::~lexsim_t() {
 }
 
 double lexsim_t::get_sim(string s1, string hyp, int mode) {
+#ifndef IGNORE_CACHE
    //cerr << "Querying " << mode << " lex sim of " << s1 << " and " << hyp << "; ";
    if (mode == yisi::INP_MODE) {
       if (xlscache_m.find(s1) != xlscache_m.end()) {
@@ -394,14 +395,20 @@ double lexsim_t::get_sim(string s1, string hyp, int mode) {
          mlscache_m[s1] = c;
       }
    }
+#endif
+
    //cerr << "computing = ";
    double s = lexsim_p->get_sim(s1, hyp, mode);
+
+#ifndef IGNORE_CACHE
    if (mode == yisi::INP_MODE) {
       xlscache_m[s1][hyp] = s;
    } else {
       mlscache_m[s1][hyp] = s;
       //cerr<<s << endl;
    }
+#endif
+
    return s;
 }
 
@@ -434,13 +441,13 @@ void yisi::read_binw2v(string path, map<string, vector<double> >& model, int& di
       getline(W2V, wordtmp, ' ');
       string word = strip(wordtmp);
       //cerr << i << "\t" << word << endl;
-      vector<double> embedding;
+      vector<double> embedding(dimension);
       double len = 0.0;
       for (long long j = 0; j < dimension; j++) {
          float f;
          W2V.read((char*)&f, sizeof(float));
          //cerr << "\t" << j << " " << f << endl;
-         embedding.push_back(f);
+         embedding[j] = f;
          len += f * f;
       }
       len = sqrt(len);
@@ -479,7 +486,7 @@ void yisi::read_txtw2v(string path, map<string, vector<double> >& model, int& di
       string word;
       getline(W2V, word, ' ');
       //cout << i << ": [" << word << ", ";
-      vector<double> embedding;
+      vector<double> embedding(dimension);
       double len = 0.0;
       string af;
       float f;
@@ -487,13 +494,13 @@ void yisi::read_txtw2v(string path, map<string, vector<double> >& model, int& di
          getline(W2V, af, ' ');
          f = atof(af.c_str());
          //cout << f << ", ";
-         embedding.push_back(f);
+         embedding[j] = f;
          len += f * f;
       }
       getline(W2V, af);
       f = atof(af.c_str());
       //cout << f << "]" << endl;
-      embedding.push_back(f);
+      embedding[dimension-1] = f;
 
       len += f * f;
 

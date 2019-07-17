@@ -68,7 +68,7 @@ compare.%: %
 SUB:="s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
 
 compare_w_java_log.%: %
-	diff <(cat $< | sed -e $(SUB)) <(cat ref/$< | sed -e $(SUB)) -q
+	diff <(cat $< | grep -v '^[Loading | Setting up]' | sed -e $(SUB)) <(cat ref/$< |  grep -v '^[Loading | Setting up]' | sed -e $(SUB)) -q
 
 compare_w_alt.%: %
 	diff $< ref/$< -q || diff -s $< ref/$<.alt -q
@@ -148,7 +148,7 @@ test_hyp.docyisi% test_hyp.sntyisi%: test_yisi_%.out
 
 ########################################
 .PHONY: gitignore
-gitignore: 
+gitignore:
 	echo "$(TMP_FILES) $(TMP_DIRS) core core.* .gitignore !src/* !ref/* !in/* !data/*" | tr ' ' '\n' > .gitignore
 
 .PHONY: clean clean.tmp_files

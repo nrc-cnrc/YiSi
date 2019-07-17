@@ -22,7 +22,7 @@
 using namespace yisi;
 using namespace std;
 
-yisigraph_t::yisigraph_t(const vector<srlgraph_t> refsrlgraph, 
+yisigraph_t::yisigraph_t(const vector<srlgraph_t> refsrlgraph,
 			 const srlgraph_t hypsrlgraph) {
    refsrlgraph_m = refsrlgraph;
    hypsrlgraph_m = hypsrlgraph;
@@ -33,7 +33,7 @@ yisigraph_t::yisigraph_t(const vector<srlgraph_t> refsrlgraph,
    //cout << refsrlgraph_m;
    //cout << "hypsrlgraph:" << endl;
    //cout << hypsrlgraph_m;
-   //cout<<"Done."<<endl;   
+   //cout<<"Done."<<endl;
 }
 
 yisigraph_t::yisigraph_t(const vector<srlgraph_t> refsrlgraph,
@@ -469,3 +469,285 @@ void yisigraph_t::print(ostream& os) {
       }
    }
 }
+
+void yisigraph_t::align(phrasesim_t* phrasesim) {
+   //yisi alignment algorithm goes here
+   //loop all references and input
+   for (size_t refid = 0; refid < refsrlgraph_m.size(); refid++) {
+      //std::cerr << "first align the sentence node of ref" << refid << std::endl;
+      auto refroot = refsrlgraph_m[refid].get_root();
+      auto hyproot = hypsrlgraph_m.get_root();
+
+      auto ru = refsrlgraph_m[refid].get_role_filler_units(refroot);
+      //std::cerr << "Got r " << ru.size() << std::endl;
+      auto hu = hypsrlgraph_m.get_role_filler_units(hyproot);
+      //std::cerr << "Got h " << hu.size() << std::endl;
+      std::pair<double, double> sentsim;
+      if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+         //std::cerr<<"computing sentsim on word"<<std::endl;
+         sentsim = (*phrasesim)(ru, hu, yisi::REF_MODE);
+      } else {
+         auto remb = refsrlgraph_m[refid].get_role_filler_embs(refroot);
+         auto hemb = hypsrlgraph_m.get_role_filler_embs(hyproot);
+         sentsim = (*phrasesim)(ru, hu, remb, hemb, yisi::REF_MODE);
+      }
+
+      //std::cerr << "sentsim = (" << sentsim.first << "," << sentsim.second << ")";
+      //std::cerr << "refroot = " << refroot << std::endl;
+      //std::cerr << "hyproot = " << hyproot << std::endl;
+      refalignment_m.push_back(std::map<srlnid_type, alignment_type>());
+      //std::cerr << "Done creating refalignment map" << std::endl;
+      refalignment_m[refid][refroot] = alignment_type(hyproot, sentsim.second);
+      //std::cerr << "Done adding ref alignment edge" << std::endl;
+      if (hypalignment_m.find(hyproot) == hypalignment_m.end()) {
+         hypalignment_m[hyproot] = std::vector<std::pair<int, alignment_type> >();
+      }
+      hypalignment_m[hyproot].push_back(std::make_pair(refid, alignment_type(refroot, sentsim.first)));
+      //std::cerr << "Done adding hyp alignment edge" << std::endl;
+      //std::cerr << "prepare the pred maxmatching matrix"<<std::endl;
+      auto refpreds = refsrlgraph_m[refid].get_preds();
+      auto hyppreds = hypsrlgraph_m.get_preds();
+      maxmatching_t refpredmatch;
+      maxmatching_t hyppredmatch;
+      for (auto it = refpreds.begin(); it != refpreds.end(); it++) {
+         auto refpredid = *it;
+         auto refpredspan = refsrlgraph_m[refid].get_role_span(refpredid);
+         if (refpredspan.first != refpredspan.second) {
+            auto refpredphrase = refsrlgraph_m[refid].get_role_filler_units(refpredid);
+            for (auto jt = hyppreds.begin(); jt != hyppreds.end(); jt++) {
+               auto hyppredid = *jt;
+               auto hyppredspan = hypsrlgraph_m.get_role_span(hyppredid);
+               if (hyppredspan.first != hyppredspan.second) {
+                  auto hyppredphrase = hypsrlgraph_m.get_role_filler_units(hyppredid);
+                  std::pair<double, double> predsim;
+                  if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                     predsim = (*phrasesim)(refpredphrase, hyppredphrase, yisi::REF_MODE);
+                  } else {
+                     auto rpredemb = refsrlgraph_m[refid].get_role_filler_embs(refpredid);
+                     auto hpredemb = hypsrlgraph_m.get_role_filler_embs(hyppredid);
+                     predsim = (*phrasesim)(refpredphrase, hyppredphrase, rpredemb, hpredemb, yisi::REF_MODE);
+                  }
+                  refpredmatch.add_weight(refpredid, hyppredid, predsim.second);
+                  hyppredmatch.add_weight(refpredid, hyppredid, predsim.first);
+               }
+            } // for jt
+         }
+      }  // for it
+      //std::cerr <<"run maxmatch on preds" <<std::endl;
+      auto rpr = refpredmatch.run();
+      auto hpr = hyppredmatch.run();
+      //std::cerr <<"for each aligned pred" <<std::endl;
+      for (size_t i = 0; i < rpr.size(); i++) {
+         auto aligned_ref_pred = rpr[i].first.first;
+         auto aligned_hyp_pred = rpr[i].first.second;
+         auto psim = rpr[i].second;
+         refalignment_m[refid][aligned_ref_pred] = alignment_type(aligned_hyp_pred, psim);
+         //hypalignment_m[aligned_hyp_pred] = alignment_type(aligned_ref_pred, psim);
+         //std::cerr<<"prepare the arg maxmatching matrix"<<std::endl;
+         auto refargs = refsrlgraph_m[refid].get_args(aligned_ref_pred);
+         auto hypargs = hypsrlgraph_m.get_args(aligned_hyp_pred);
+         maxmatching_t argmatch;
+         for (auto it = refargs.begin(); it != refargs.end(); it++) {
+            auto refargid = *it;
+            auto refargphrase = refsrlgraph_m[refid].get_role_filler_units(refargid);
+            for (auto jt = hypargs.begin(); jt != hypargs.end(); jt++) {
+               auto hypargid = *jt;
+               auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
+               std::pair<double, double> argsim;
+               if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  argsim = (*phrasesim)(refargphrase, hypargphrase, yisi::REF_MODE);
+               } else {
+                  auto rargemb = refsrlgraph_m[refid].get_role_filler_embs(refargid);
+                  auto hargemb = hypsrlgraph_m.get_role_filler_embs(hypargid);
+                  argsim = (*phrasesim)(refargphrase, hypargphrase, rargemb, hargemb, yisi::REF_MODE);
+               }
+               argmatch.add_weight(refargid, hypargid, argsim.second);
+            } // for jt
+         } // for it
+         //std::cerr << "run maxmatch on args" <<std::endl;
+         auto ar = argmatch.run();
+         //std::cerr << "for each aligned arg" <<std::endl;
+         for (size_t j = 0; j < ar.size(); j++) {
+            auto aligned_ref_arg = ar[j].first.first;
+            auto aligned_hyp_arg = ar[j].first.second;
+            auto asim = ar[j].second;
+            refalignment_m[refid][aligned_ref_arg] = alignment_type(aligned_hyp_arg, asim);
+            //hypalignment_m[aligned_hyp_arg] = alignment_type(aligned_ref_arg, asim);
+         } // for j
+      } // for i
+      for (size_t i = 0; i < hpr.size(); i++) {
+         auto aligned_ref_pred = hpr[i].first.first;
+         auto aligned_hyp_pred = hpr[i].first.second;
+         auto psim = hpr[i].second;
+         if (hypalignment_m.find(aligned_hyp_pred) == hypalignment_m.end()) {
+            hypalignment_m[aligned_hyp_pred] = std::vector<std::pair<int, alignment_type> >();
+         }
+         hypalignment_m[aligned_hyp_pred].push_back(std::make_pair(refid,
+            alignment_type(aligned_ref_pred, psim)));
+         auto refargs = refsrlgraph_m[refid].get_args(aligned_ref_pred);
+         auto hypargs = hypsrlgraph_m.get_args(aligned_hyp_pred);
+         maxmatching_t argmatch;
+         for (auto it = refargs.begin(); it != refargs.end(); it++) {
+            auto refargid = *it;
+            auto refargphrase = refsrlgraph_m[refid].get_role_filler_units(refargid);
+            for (auto jt = hypargs.begin(); jt != hypargs.end(); jt++) {
+               auto hypargid = *jt;
+               auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
+               std::pair<double, double> argsim;
+               if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  argsim = (*phrasesim)(refargphrase, hypargphrase, yisi::REF_MODE);
+               } else {
+                  auto rargemb = refsrlgraph_m[refid].get_role_filler_embs(refargid);
+                  auto hargemb = hypsrlgraph_m.get_role_filler_embs(hypargid);
+                  argsim = (*phrasesim)(refargphrase, hypargphrase, rargemb, hargemb, yisi::REF_MODE);
+               }
+               argmatch.add_weight(refargid, hypargid, argsim.first);
+            } // for jt
+         } // for it
+         auto ar = argmatch.run();
+         for (size_t j = 0; j < ar.size(); j++) {
+            auto aligned_ref_arg = ar[j].first.first;
+            auto aligned_hyp_arg = ar[j].first.second;
+            auto asim = ar[j].second;
+            if (hypalignment_m.find(aligned_hyp_arg) == hypalignment_m.end()) {
+               hypalignment_m[aligned_hyp_arg] =
+                  std::vector<std::pair<int, alignment_type> >();
+            }
+            hypalignment_m[aligned_hyp_arg].push_back(std::make_pair(refid,
+               alignment_type(aligned_ref_arg, asim)));
+         }  // for j
+      } // for i
+   } // for refid
+   //input
+   if (inp_b) {
+      //std::cerr << "first align the sentence node of inp: ";
+      auto inproot = inpsrlgraph_m.get_root();
+      auto hyproot = hypsrlgraph_m.get_root();
+      auto r = inpsrlgraph_m.get_role_filler_units(inproot);
+      //std::cerr<< r.size();
+      auto h = hypsrlgraph_m.get_role_filler_units(hyproot);
+      //std::cerr<< h.size();
+      std::pair<double, double> sentsim;
+      if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+         sentsim = (*phrasesim)(r, h, yisi::INP_MODE);
+      } else {
+         auto remb = inpsrlgraph_m.get_role_filler_embs(inproot);
+         auto hemb = hypsrlgraph_m.get_role_filler_embs(hyproot);
+         //std::cerr<< remb.size() <<" " <<hemb.size();
+         sentsim = (*phrasesim)(r, h, remb, hemb, yisi::INP_MODE);
+      }
+      //std::cerr << "sentsim = (" << sentsim.first << "," << sentsim.second << ")";
+      inpalignment_m[inproot] = alignment_type(hyproot, sentsim.second);
+      if (hypalignment_m.find(hyproot) == hypalignment_m.end()) {
+         hypalignment_m[hyproot] = std::vector<std::pair<int, alignment_type> >();
+      }
+      hypalignment_m[hyproot].push_back(std::make_pair((int)refsrlgraph_m.size(),
+         alignment_type(inproot, sentsim.first)));
+      auto inppreds = inpsrlgraph_m.get_preds();
+      auto hyppreds = hypsrlgraph_m.get_preds();
+      maxmatching_t inppredmatch;
+      maxmatching_t hyppredmatch;
+      for (auto it = inppreds.begin(); it != inppreds.end(); it++) {
+         auto inppredid = *it;
+         auto inppredspan = inpsrlgraph_m.get_role_span(inppredid);
+         if (inppredspan.first != inppredspan.second) {
+            auto inppredphrase = inpsrlgraph_m.get_role_filler_units(inppredid);
+            for (auto jt = hyppreds.begin(); jt != hyppreds.end(); jt++) {
+               auto hyppredid = *jt;
+               auto hyppredspan = hypsrlgraph_m.get_role_span(hyppredid);
+               if (hyppredspan.first != hyppredspan.second) {
+                  auto hyppredphrase = hypsrlgraph_m.get_role_filler_units(hyppredid);
+                  std::pair<double, double> predsim;
+                  if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                     predsim = (*phrasesim)(inppredphrase, hyppredphrase, yisi::INP_MODE);
+                  } else {
+                     auto ipredemb = inpsrlgraph_m.get_role_filler_embs(inppredid);
+                     auto hpredemb = hypsrlgraph_m.get_role_filler_embs(hyppredid);
+                     predsim = (*phrasesim)(inppredphrase, hyppredphrase, ipredemb, hpredemb, yisi::INP_MODE);
+                  }
+                  inppredmatch.add_weight(inppredid, hyppredid, predsim.second);
+                  hyppredmatch.add_weight(inppredid, hyppredid, predsim.first);
+               }
+            }
+         }
+      }
+      auto ipr = inppredmatch.run();
+      auto hpr = hyppredmatch.run();
+      for (size_t i = 0; i < ipr.size(); i++) {
+         auto aligned_inp_pred = ipr[i].first.first;
+         auto aligned_hyp_pred = ipr[i].first.second;
+         auto psim = ipr[i].second;
+         inpalignment_m[aligned_inp_pred] = alignment_type(aligned_hyp_pred, psim);
+         auto inpargs = inpsrlgraph_m.get_args(aligned_inp_pred);
+         auto hypargs = hypsrlgraph_m.get_args(aligned_hyp_pred);
+         maxmatching_t argmatch;
+         for (auto it = inpargs.begin(); it != inpargs.end(); it++) {
+            auto inpargid = *it;
+            auto inpargphrase = inpsrlgraph_m.get_role_filler_units(inpargid);
+            for (auto jt = hypargs.begin(); jt != hypargs.end(); jt++) {
+               auto hypargid = *jt;
+               auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
+               std::pair<double, double> argsim;
+               if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  argsim = (*phrasesim)(inpargphrase, hypargphrase, yisi::INP_MODE);
+               } else {
+                  auto iargemb = inpsrlgraph_m.get_role_filler_embs(inpargid);
+                  auto hargemb = hypsrlgraph_m.get_role_filler_embs(hypargid);
+                  argsim = (*phrasesim)(inpargphrase, hypargphrase, iargemb, hargemb, yisi::INP_MODE);
+               }
+               argmatch.add_weight(inpargid, hypargid, argsim.second);
+            }
+         }
+         auto ar = argmatch.run();
+         for (size_t j = 0; j < ar.size(); j++) {
+            auto aligned_inp_arg = ar[j].first.first;
+            auto aligned_hyp_arg = ar[j].first.second;
+            auto asim = ar[j].second;
+            inpalignment_m[aligned_inp_arg] = alignment_type(aligned_hyp_arg, asim);
+         }
+      }
+      for (size_t i = 0; i < hpr.size(); i++) {
+         auto aligned_inp_pred = hpr[i].first.first;
+         auto aligned_hyp_pred = hpr[i].first.second;
+         auto psim = hpr[i].second;
+         if (hypalignment_m.find(aligned_hyp_pred) == hypalignment_m.end()) {
+            hypalignment_m[aligned_hyp_pred] =
+               std::vector<std::pair<int, alignment_type> >();
+         }
+         hypalignment_m[aligned_hyp_pred].push_back(std::make_pair((int)refsrlgraph_m.size(),
+            alignment_type(aligned_inp_pred, psim)));
+         auto inpargs = inpsrlgraph_m.get_args(aligned_inp_pred);
+         auto hypargs = hypsrlgraph_m.get_args(aligned_hyp_pred);
+         maxmatching_t argmatch;
+         for (auto it = inpargs.begin(); it != inpargs.end(); it++) {
+            auto inpargid = *it;
+            auto inpargphrase = inpsrlgraph_m.get_role_filler_units(inpargid);
+            for (auto jt = hypargs.begin(); jt != hypargs.end(); jt++) {
+               auto hypargid = *jt;
+               auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
+               std::pair<double, double> argsim;
+               if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  argsim = (*phrasesim)(inpargphrase, hypargphrase, yisi::INP_MODE);
+               } else {
+                  auto iargemb = inpsrlgraph_m.get_role_filler_embs(inpargid);
+                  auto hargemb = hypsrlgraph_m.get_role_filler_embs(hypargid);
+                  argsim = (*phrasesim)(inpargphrase, hypargphrase, iargemb, hargemb, yisi::INP_MODE);
+               }
+               argmatch.add_weight(inpargid, hypargid, argsim.first);
+            }
+         }
+         auto ar = argmatch.run();
+         for (size_t j = 0; j < ar.size(); j++) {
+            auto aligned_inp_arg = ar[j].first.first;
+            auto aligned_hyp_arg = ar[j].first.second;
+            auto asim = ar[j].second;
+            if (hypalignment_m.find(aligned_hyp_arg) == hypalignment_m.end()) {
+               hypalignment_m[aligned_hyp_arg] =
+                  std::vector<std::pair<int, alignment_type> >();
+            }
+            hypalignment_m[aligned_hyp_arg].push_back(std::make_pair((int)refsrlgraph_m.size(),
+               alignment_type(aligned_inp_arg, asim)));
+         }
+      }
+   }
+} // align

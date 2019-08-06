@@ -33,5 +33,42 @@ int main(const int argc, const char* argv[])
    cout << join(s2).length() << " join(s2): " << join(s2) << endl;
    cout << join(s3).length() << " join(s3): " << join(s3) << endl;
    cout << join(s4).length() << " join(s4): " << join(s4) << endl;
+
+//   string tok_s0 = "";
+//   string tok_s1 = "a b";
+//   string tok_s2 = "a:b";
+//   string tok_s3 = "a:";
+//   string tok_s4 = ":";
+
+   vector<string> toks;
+   toks = tokenize("");
+   cout << "tokenize(\"\"): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a b");
+   cout << "tokenize(\"a b\"): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("", ':');
+   cout << "tokenize(\"\", ':'): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a:b", ':');
+   cout << "tokenize(\"a:b\", ':'): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a:", ':');
+   cout << "tokenize(\"a:\", ':'): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize(":b", ':');
+   cout << "tokenize(\":b\", ':'): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize(":", ':');
+   cout << "tokenize(\":\", ':'): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+
+   toks = tokenize("", ' ', true);
+   cout << "tokenize(\"\", ' ', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a b", ' ', true);
+   cout << "tokenize(\"a b\", ' ', keep_empty=true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("", ':', true);
+   cout << "tokenize(\"\", ':', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a:b", ':', true);
+   cout << "tokenize(\"a:b\", ':', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize("a:", ':', true);
+   cout << "tokenize(\"a:\", ':', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize(":b", ':', true);
+   cout << "tokenize(\":b\", ':', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
+   toks = tokenize(":", ':', true);
+   cout << "tokenize(\":\", ':', true): " << toks.size() << " /" << join(toks, "/") << "/" << endl;
 }
 

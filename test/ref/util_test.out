@@ -6,6 +6,7 @@
 tokenize(""): 0 //
 tokenize("a b"): 2 /a/b/
 tokenize("", ':'): 0 //
+tokenize("a", ':'): 1 /a/
 tokenize("a:b", ':'): 2 /a/b/
 tokenize("a:", ':'): 1 /a/
 tokenize(":b", ':'): 1 /b/
@@ -13,6 +14,7 @@ tokenize(":", ':'): 0 //
 tokenize("", ' ', true): 0 //
 tokenize("a b", ' ', keep_empty=true): 2 /a/b/
 tokenize("", ':', true): 0 //
+tokenize("a", ':', true): 1 /a/
 tokenize("a:b", ':', true): 2 /a/b/
 tokenize("a:", ':', true): 2 /a//
 tokenize(":b", ':', true): 2 //b/

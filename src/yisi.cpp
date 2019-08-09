@@ -2,7 +2,7 @@
  * @file yisi.cpp
  * @brief Main program for YiSi.
  *
- * @author Jackie Lo
+ * @author Jackie Lo with updates by Serge Leger and Darlene Stewart
  *
  * Multilingual Text Processing / Traitement multilingue de textes
  * Digital Technologies Research Centre / Centre de recherche en technologies numériques
@@ -18,6 +18,7 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <cstdlib>
 
 using namespace std;
 using namespace yisi;
@@ -25,21 +26,21 @@ using namespace yisi;
 
 extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_options phrasesim_opt)
 {
-   if (phrasesim_opt.reflexweight_name_m == "learn" && phrasesim_opt.reflexweight_path_m == "") {
+   if (phrasesim_opt.reflexweight_name_m == "learn" && phrasesim_opt.reflexweight_path_m.empty()) {
       if (eval_opt.ref_type_m == "word") {
          phrasesim_opt.reflexweight_path_m = eval_opt.ref_file_m;
       } else {
          phrasesim_opt.reflexweight_path_m = eval_opt.refunit_file_m;
       }
    }
-   if (phrasesim_opt.hyplexweight_name_m == "learn" && phrasesim_opt.hyplexweight_path_m == "") {
+   if (phrasesim_opt.hyplexweight_name_m == "learn" && phrasesim_opt.hyplexweight_path_m.empty()) {
       if (eval_opt.hyp_type_m == "word") {
          phrasesim_opt.hyplexweight_path_m = eval_opt.hyp_file_m;
       } else {
          phrasesim_opt.hyplexweight_path_m = eval_opt.hypunit_file_m;
       }
    }
-   if (phrasesim_opt.inplexweight_name_m == "learn" && phrasesim_opt.inplexweight_path_m == "") {
+   if (phrasesim_opt.inplexweight_name_m == "learn" && phrasesim_opt.inplexweight_path_m.empty()) {
       if (eval_opt.inp_type_m == "word") {
          phrasesim_opt.inplexweight_path_m = eval_opt.inp_file_m;
       } else {
@@ -49,73 +50,72 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
 
    yisiscorer_t yisi(yisi_opt, phrasesim_opt);
 
-   if (eval_opt.sntscore_file_m == "") {
+   if (eval_opt.sntscore_file_m.empty()) {
       eval_opt.sntscore_file_m = eval_opt.hyp_file_m + ".sntyisi";
    }
 
-   if (eval_opt.docscore_file_m == "") {
+   if (eval_opt.docscore_file_m.empty()) {
       eval_opt.docscore_file_m = eval_opt.sntscore_file_m + ".docyisi";
    }
 
-   ofstream SNTOUT;
-   open_ofstream(SNTOUT, eval_opt.sntscore_file_m);
+   // Open the output file early to make sure we can open it.
+   ofstream sntout;
+   open_ofstream(sntout, eval_opt.sntscore_file_m);
 
    cerr << "Reading hyp sents... ";
-   vector<sent_t*> hypsents = read_sent(eval_opt.hyp_type_m, eval_opt.hyp_file_m, eval_opt.hypunit_file_m, eval_opt.hypidemb_file_m);
+   vector<sent_t*> hypsents = read_sent(eval_opt.hyp_type_m, eval_opt.hyp_file_m,
+                                        eval_opt.hypunit_file_m, eval_opt.hypidemb_file_m);
    cerr << "Done." << endl;
 
    vector < vector<sent_t*> > refsents;
-   if (eval_opt.ref_file_m != "") {
+   if (! eval_opt.ref_file_m.empty()) {
       cerr << "Reading ref sents... ";
       auto reffiles = tokenize(eval_opt.ref_file_m, ':');
-      auto refunits = tokenize(eval_opt.refunit_file_m, ':');
-      auto refidemb = tokenize(eval_opt.refidemb_file_m, ':');
-      size_t i = 0;
-      vector<sent_t*> rs;
-      if (reffiles.size() == refunits.size()) {
-         rs = read_sent(eval_opt.ref_type_m, reffiles[i], refunits[i], refidemb[i]);
-      } else {
-         rs = read_sent(eval_opt.ref_type_m, reffiles[i]);
+      vector<string> refunits(reffiles.size(), "");
+      if (! eval_opt.refunit_file_m.empty())
+         refunits = tokenize(eval_opt.refunit_file_m, ':');
+      if (refunits.size() != reffiles.size()) {
+         cerr << "ERROR: number of components in refunit-file (" << refunits.size()
+            << ") does not match the number of components in ref-file ("
+            << reffiles.size() << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
       }
-      if (rs.size() == hypsents.size()) {
-         for (auto jt = rs.begin(); jt != rs.end(); jt++) {
-            vector<sent_t*> ref;
-            ref.push_back(*jt);
-            refsents.push_back(ref);
+      vector<string> refidemb(reffiles.size(), "");
+      if (! eval_opt.refidemb_file_m.empty())
+         refidemb = tokenize(eval_opt.refidemb_file_m, ':');
+      if (refidemb.size() != reffiles.size()) {
+         cerr << "ERROR: number of components in refidemb-file (" << refidemb.size()
+            << ") does not match the number of components in ref-file ("
+            << reffiles.size() << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
+      refsents.resize(hypsents.size());
+      for (size_t i = 0; i < reffiles.size(); i++) {
+         auto rs = read_sent(eval_opt.ref_type_m, reffiles[i], refunits[i], refidemb[i]);
+         if (rs.size() != hypsents.size()) {
+            cerr << "ERROR: No. of sentences in ref-file " << i << " (" << rs.size()
+               << ") does not match with no. of sentences in hyp-file " << i
+               << " (" << hypsents.size() << "). Check your input! Exiting..."
+               << endl;
+            exit(EXIT_FAILURE);
          }
-         i++;
-         for (; i < reffiles.size(); i++) {
-            rs = read_sent(eval_opt.ref_type_m, reffiles[i], refunits[i], refidemb[i]);
-            if (rs.size() == hypsents.size()) {
-               for (size_t j = 0; j < rs.size(); j++) {
-                  refsents[j].push_back(rs[j]);
-               }
-            } else {
-               cerr << "ERROR: No. of sentences in ref-file (" << rs.size()
-                  << ") does not match with no. of sentences in hyp-file ("
-                  << hypsents.size() << "). Check your input! Exiting ..."
-                  << endl;
-               exit(1);
-            }
+         for (size_t j = 0; j < rs.size(); j++) {
+            refsents[j].push_back(rs[j]);
          }
-      } else {
-         cerr << "ERROR: No. of sentences in ref-file (" << rs.size()
-            << ") does not match with no. of sentences in hyp-file ("
-            << hypsents.size() << "). Check your input! Exiting ..." << endl;
-         exit(1);
       }
       cerr << "Done." << endl;
    }
 
    vector<sent_t*> inpsents;
-   if (eval_opt.inp_file_m != "") {
+   if (! eval_opt.inp_file_m.empty()) {
       cerr << "Reading inp sents... ";
-      inpsents = read_sent(eval_opt.inp_type_m, eval_opt.inp_file_m, eval_opt.inpunit_file_m, eval_opt.inpidemb_file_m);
+      inpsents = read_sent(eval_opt.inp_type_m, eval_opt.inp_file_m,
+                           eval_opt.inpunit_file_m, eval_opt.inpidemb_file_m);
       if (inpsents.size() != hypsents.size()) {
          cerr << "ERROR: No. of sentences in inp-file (" << inpsents.size()
             << ") does not match with no. of sentences in hyp-file ("
             << hypsents.size() << "). Check your input! Exiting..." << endl;
-         exit(1);
+         exit(EXIT_FAILURE);
       }
       cerr << "Done." << endl;
    }
@@ -123,12 +123,8 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
    cerr << "Creating hyp srlgraphs... ";
    vector<srlgraph_t> hypsrlgraphs = yisi.hypsrlparse(hypsents);
    cerr << "Done." << endl;
-   vector < vector<srlgraph_t> > refsrlgraphs;
 
-   for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
-      refsrlgraphs.push_back(vector<srlgraph_t>());
-   }
-
+   vector < vector<srlgraph_t> > refsrlgraphs(hypsrlgraphs.size());
    if (refsents.size() > 0) {
       cerr << "Creating ref srlgraphs... ";
       for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
@@ -149,14 +145,12 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
    for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
       cout << "Evaluating line " << i + 1 << endl;
       yisigraph_t m;
-      if (eval_opt.inp_file_m != "") {
-         /*
-          cerr<<"inpsrlgraph:"<<endl;
-          inpsrlgraphs[i].print(cout, i);
-          cerr<<"hypsrlgraph:"<<endl;
-          hypsrlgraphs[i].print(cout, i);
-          cerr<<"yisigraph:"<<endl;
-          */
+      if (! eval_opt.inp_file_m.empty()) {
+         // cerr << "inpsrlgraph:" << endl;
+         // inpsrlgraphs[i].print(cout, i);
+         // cerr << "hypsrlgraph:" << endl;
+         // hypsrlgraphs[i].print(cout, i);
+         // cerr << "yisigraph:" << endl;
          m = yisi.align(refsrlgraphs[i], hypsrlgraphs[i], inpsrlgraphs[i]);
          // m.print(cout);
       } else {
@@ -166,26 +160,27 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
       }
       if (eval_opt.mode_m != "features") {
          double s = yisi.score(m);
-         SNTOUT << s << endl;
+         sntout << s << endl;
          docscore += s;
       } else {
          auto f = yisi.features(m);
          for (auto it = f.begin(); it != f.end(); it++) {
-            SNTOUT << *it << " ";
+            sntout << *it << " ";
          }
-         SNTOUT << endl;
+         sntout << endl;
       }
    }
-   SNTOUT.close();
+   sntout.close();
 
    if (eval_opt.mode_m != "features") {
-      ofstream DOCOUT;
-      open_ofstream(DOCOUT, eval_opt.docscore_file_m);
+      ofstream docout;
+      open_ofstream(docout, eval_opt.docscore_file_m);
       docscore /= hypsents.size();
-      DOCOUT << docscore << endl;
-      DOCOUT.close();
+      docout << docscore << endl;
+      docout.close();
    }
 
+   // Clean up the memory allocated to sentences.
    for (auto it = hypsents.begin(); it != hypsents.end(); it++) {
       delete *it;
       *it = NULL;
@@ -213,8 +208,8 @@ int main(const int argc, const char* argv[])
       return opt.exit_code();
    }
 
-   if (opt.hyp_file_m == "") {
-      std::cerr << "Error: Required option '--hyp-file' not set." << std::endl << std::endl;
+   if (opt.hyp_file_m.empty()) {
+      cerr << "ERROR: Required option '--hyp-file' not set." << endl;
       return EXIT_FAILURE;
    }
 

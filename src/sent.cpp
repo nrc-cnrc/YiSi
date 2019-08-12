@@ -2,7 +2,7 @@
  * @file sent.cpp
  * @brief Sentence
  *
- * @author Jackie Lo
+ * @author Jackie Lo with updates by Darlene Stewart
  *
  * Class implementation for the classes:
  *    - sent_t
@@ -17,9 +17,11 @@
 
 #include "sent.h"
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <math.h>
+#include <regex>
 
 using namespace yisi;
 using namespace std;
@@ -100,7 +102,7 @@ vector<vector<double> > sent_t::get_embs(span_type uspan) {
    } else {
       cerr << "ERROR: sentence type (" << sent_type_m << ") "
            << "does not provide contextual embeddings. Exiting..." << endl;
-      exit(1);
+      exit(EXIT_FAILURE);
    }
 }
 
@@ -158,91 +160,144 @@ size_t sent_t::get_token_size() {
 
 vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit_path, string idemb_path) {
    vector<sent_t*> result;
-   vector<vector<double> > emb;
-   vector<sent_t::span_type> t2u;
-   vector<size_t> u2t;
-   size_t currtid = (size_t)-1;
+   vector<vector<double> > sent_emb;
+   vector<sent_t::span_type> sent_t2u;
+   vector<size_t> sent_u2t;
 
-   //cerr << token_path << " ";
-   auto token_strs = read_file(token_path);
-   if (unit_path == "") {
-      for (auto tt = token_strs.begin(); tt != token_strs.end(); tt++) {
-         sent_t* sent_p = new sent_t(sent_type);
-         sent_p->set_tokens(tokenize(*tt));
-         //cerr << "sentlength=" << sent.get_token_size();
-         result.push_back(sent_p);
-         //cerr << " Done." << endl;
+   // Validate the sent_type
+   if (sent_type == "word") {
+      if (token_path.empty() or ! unit_path.empty() or ! idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
+            << token_path << "), and no unit_path (" << unit_path
+            << ") and no idemb_path (" << idemb_path << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
       }
-
+   } else if (sent_type == "unit") {
+      // Currently need idemb file for "unit" to set sent_u2t and sent_t2u
+      if (token_path.empty() or unit_path.empty() or idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
+            << token_path << "), and unit_path (" << unit_path
+            << ") and idemb_path (" << idemb_path << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
+   } else if (sent_type == "uemb") {
+      if (token_path.empty() or unit_path.empty() or idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
+            << token_path << "), and unit_path (" << unit_path
+            << ") and idemb_path (" << idemb_path << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
    } else {
-      // cerr << unit_path << " ";
-      auto unit_strs = read_file(unit_path);
-      auto tt = token_strs.begin();
-      auto ut = unit_strs.begin();
-      //cerr << idemb_path << " ";
-      ifstream fin(idemb_path.c_str());
-      if (!fin) {
-         cerr << "ERROR: Failed to open idemb file (" << idemb_path << "). Exiting..." << endl;
-         exit(1);
-      }
-      while (!fin.eof()) {
-         string line;
-         getline(fin, line);
-         if (line.empty()) {
-            sent_t* s = new sent_t(sent_type);
-            auto tokens = tokenize(*tt);
-            s->set_tokens(tokens);
-            //cerr << "#token=" << tokens.size();
-            auto units = tokenize(*ut);
-            s->set_units(units);
-            //cerr << " #unit=" << units.size();
-            if (sent_type == "uemb") {
-               s->set_embs(emb);
-            }
-            //cerr << " #emb=" << emb.size() << " #dim=" << emb[0].size();
-            s->set_tid2uspan(t2u);
-            //cerr << " #tid=" << t2u.size();
-            s->set_uid2tid(u2t);
-            //cerr << " #uid=" << u2t.size() << " ";
-
-            result.push_back(s);
-            tt++;
-            ut++;
-            emb.clear();
-            t2u.clear();
-            u2t.clear();
-            currtid = (size_t)-1;
-         } else {
-            istringstream iss(line);
-            size_t uid;
-            size_t tid;
-            iss >> uid >> tid;
-            u2t.push_back(tid);
-            if (tid != currtid) {
-               t2u.push_back(sent_t::span_type(uid,uid+1));
-               currtid=tid;
-            } else {
-               t2u.back().second=uid+1;
-            }
-            if (sent_type == "uemb") {
-               vector<double> e;
-               double len = 0.0;
-               double v;
-               while (!iss.eof()) {
-                  iss >> v;
-                  e.push_back(v);
-                  len += v*v;
-               }
-               len = sqrt(len);
-               for (size_t i = 0; i < e.size(); i++) {
-                  e[i] /= len;
-               }
-               emb.push_back(e);
-            }
-         }
-         fin.peek();
-      }
-      fin.close();
+      cerr << "ERROR: bad sent_type '" << sent_type << "'. "
+         << "sent_type must be one of: word, unit, uemb. Exiting..." << endl;
+      exit(EXIT_FAILURE);
    }
+
+   auto token_strs = read_file(token_path);
+   vector<string> unit_strs;
+   if (! unit_path.empty()) {
+      unit_strs = read_file(unit_path);
+      if (unit_strs.size() != token_strs.size()) {
+         cerr << "ERROR: Number of sentences mismatch in units file " << unit_path << endl;
+         cerr << "Expected " << token_strs.size() << " sentences, but found "
+            << unit_strs.size() << ". Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
+   }
+   auto ut = unit_strs.begin();
+   ifstream idemb_fin;
+   if (! idemb_path.empty()) {
+      idemb_fin.open(idemb_path);
+      if (! idemb_fin) {
+         cerr << "ERROR: Failed to open idemb file (" << idemb_path << "). Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
+   }
+
+   vector<double> unit_emb;
+   size_t emb_dim = 0;
+   size_t idemb_lineno = 0;
+   result.reserve(token_strs.size());
+
+   auto check_value = [&](size_t actual, size_t expected, string desc) {
+      if (actual != expected) {
+         cerr << "ERROR: " << desc << " mismatch at line " << idemb_lineno
+            << " (sentence " << result.size() << ") in embeddings file ("
+            << idemb_path << ")." << endl;
+         cerr << "Expected " << expected << ", but found " << actual
+            << ". Exiting..." << endl;
+         exit(EXIT_FAILURE);
+      }
+   };
+
+   for (auto tt = token_strs.begin(); tt != token_strs.end(); tt++) {
+      sent_t* sent_p = new sent_t(sent_type);
+      vector<string> sent_tokens(tokenize(*tt));
+      sent_p->set_tokens(sent_tokens);
+      vector<string> sent_units;
+      if (! unit_path.empty()) {
+         sent_units = tokenize(*ut);
+         sent_p->set_units(sent_units);
+      }
+      size_t currtid = (size_t)-1;
+      string emb_line;
+      while (getline(idemb_fin, emb_line)) {  // one line per unit
+         ++idemb_lineno;
+         emb_line = regex_replace(emb_line, regex("^\\s+"), ""); // trim leading whitespace
+         if (emb_line.empty())    // empty line signals end-of-sentence
+            break;
+         istringstream emb_iss(emb_line);
+         size_t uid, tid;
+         emb_iss >> uid >> tid;
+         // Set u2t and t2u for the current unit.
+         sent_u2t.push_back(tid);
+         check_value(uid, sent_u2t.size()-1, "uid");
+         if (tid != currtid) {
+            sent_t2u.push_back(sent_t::span_type(uid, uid + 1));
+            currtid = tid;
+         } else {
+            sent_t2u.back().second = uid + 1;
+         }
+         check_value(tid, sent_t2u.size()-1, "tid");
+         // Retrieve and normalize the embedding values for the current unit.
+         unit_emb.clear();
+         unit_emb.reserve(emb_dim);
+         double len = 0.0;
+         while (!emb_iss.eof()) {
+            double v;
+            emb_iss >> v;
+            unit_emb.push_back(v);
+            len += v * v;
+         }
+         len = sqrt(len);
+         for (size_t i = 0; i < unit_emb.size(); i++) {
+            unit_emb[i] /= len;
+         }
+         if (emb_dim == 0)
+            emb_dim = unit_emb.size();
+         check_value(unit_emb.size(), emb_dim, "Embeddings dimension");
+         sent_emb.push_back(unit_emb);
+         unit_emb.clear();
+      }
+      if (! idemb_path.empty()) {
+         sent_p->set_embs(sent_emb);
+         sent_p->set_tid2uspan(sent_t2u);
+         sent_p->set_uid2tid(sent_u2t);
+         // Sanity checks
+         check_value(sent_u2t.size(), sent_units.size(), "Number of units");
+         check_value(sent_t2u.size(), sent_tokens.size(), "Number of tokens");
+         check_value(sent_emb.size(), sent_units.size(), "Number of embeddings");
+      }
+
+      result.push_back(sent_p);
+      sent_emb.clear();
+      sent_t2u.clear();
+      sent_u2t.clear();
+      if (! unit_path.empty()) {
+         ++ut;          // advance ut in lock-step with tt.
+      }
+   }
+
+   idemb_fin.close();
    return result;
 }

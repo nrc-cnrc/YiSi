@@ -69,6 +69,7 @@ namespace yisi {
             .name("ref-file")
             ;
          p.add(make_knob(hyp_file_m))
+            .fallback("")
             .desc("Filename of hypotheses. (in surface word form for SRL.)")
             .name("hyp-file")
             ;

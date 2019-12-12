@@ -213,5 +213,10 @@ int main(const int argc, const char* argv[])
       return opt.exit_code();
    }
 
+   if (opt.hyp_file_m == "") {
+      std::cerr << "Error: Required option '--hyp-file' not set." << std::endl << std::endl;
+      return EXIT_FAILURE;
+   }
+
    return eval(opt, opt, opt);
 }

@@ -123,7 +123,7 @@ sent_t::span_type sent_t::uspan2tspan(span_type uspan) {
    if (sent_type_m == "word") {
       return uspan;
    } else {
-      return span_type(uid2tid_m[uspan.first], uid2tid_m[uspan.second-1]);
+      return span_type(uid2tid_m[uspan.first], uid2tid_m[uspan.second-1]+1);
    }
 }
 

@@ -66,10 +66,12 @@ int main(const int argc, const char* argv[])
                if (emb_it != embs[0].begin())
                   cout << " ";
                cout << *emb_it;
+               assert(*emb_it >= -1.0 && *emb_it <= 1.0);
             }
          }
          cout << endl;
       }
+      cout << endl;
    }
 
    return 0;

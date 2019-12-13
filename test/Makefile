@@ -47,6 +47,7 @@ SIMPLE_TEST_PROGS += maxmatching_test
 SIMPLE_TEST_PROGS += srlutil_test
 SIMPLE_TEST_PROGS += srlgraph_test
 SIMPLE_TEST_PROGS += yisiscorer_test
+SIMPLE_TEST_PROGS += read_sent_test.1 read_sent_test.2
 
 ifdef WITH_SRLMATE
    SIMPLE_SRL_TEST_PROGS += srl_test
@@ -81,7 +82,6 @@ $(SIMPLE_TEST_PROGS): %: compare.%.out
 $(SIMPLE_SRL_TEST_PROGS): %: compare_w_java_log.%.out
 
 cmdlp_test.1.out: ARGS = --beta 0 --settings <(echo hello) --refs test_ref.en --help
-#cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /etc/timezone
 cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /tmp/cmdlp_test.2.empty
 util_test.out: ARGS =
 phrasesim_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
@@ -97,6 +97,16 @@ yisiscorer_test.out: ARGS = --lexsim-type w2v --outlexsim-path mini.d300.en \
    --reflexweight-type learn --reflexweight-path test_ref.en --phrasesim-type nwpr --ngram-size 3
 srl_test.out: ARGS = mate ../src/en.mplsconfig test_ref.en test_ref.en.srl
 srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
+
+# The BERT test files test_hyp.en.bert.{tok,unit,emb} were created as follows:
+#    ../src/BERT_wrapper.py test_hyp.en
+#    mv test_hyp.en.bert.emb test_hyp.en.bert.emb.orig
+#    paste <(cut -f1-2 test_hyp.en.bert.emb.orig) <(cut -f3 test_hyp.en.bert.emb.orig \
+#       | cut -d' ' -f1-16) > test_hyp.en.bert.emb
+# BERT produces embeddings vectors of size 768; for testing read_sent we keep
+# only the first 16 entries.
+read_sent_test.1.out: ARGS = word ../test/test_hyp.en.bert.tok
+read_sent_test.2.out: ARGS = uemb ../test/test_hyp.en.bert.{tok,unit,emb}
 
 $(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
 $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS): BIN = ../bin

@@ -27,25 +27,13 @@ using namespace yisi;
 extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_options phrasesim_opt)
 {
    if (phrasesim_opt.reflexweight_name_m == "learn" && phrasesim_opt.reflexweight_path_m.empty()) {
-      if (eval_opt.ref_type_m == "word") {
-         phrasesim_opt.reflexweight_path_m = eval_opt.ref_file_m;
-      } else {
-         phrasesim_opt.reflexweight_path_m = eval_opt.refunit_file_m;
-      }
+      phrasesim_opt.reflexweight_path_m = eval_opt.ref_file_m;
    }
    if (phrasesim_opt.hyplexweight_name_m == "learn" && phrasesim_opt.hyplexweight_path_m.empty()) {
-      if (eval_opt.hyp_type_m == "word") {
-         phrasesim_opt.hyplexweight_path_m = eval_opt.hyp_file_m;
-      } else {
-         phrasesim_opt.hyplexweight_path_m = eval_opt.hypunit_file_m;
-      }
+      phrasesim_opt.hyplexweight_path_m = eval_opt.hyp_file_m;
    }
    if (phrasesim_opt.inplexweight_name_m == "learn" && phrasesim_opt.inplexweight_path_m.empty()) {
-      if (eval_opt.inp_type_m == "word") {
-         phrasesim_opt.inplexweight_path_m = eval_opt.inp_file_m;
-      } else {
-         phrasesim_opt.inplexweight_path_m = eval_opt.inpunit_file_m;
-      }
+      phrasesim_opt.inplexweight_path_m = eval_opt.inp_file_m;
    }
 
    yisiscorer_t yisi(yisi_opt, phrasesim_opt);
@@ -64,22 +52,13 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
 
    cerr << "Reading hyp sents... ";
    vector<sent_t*> hypsents = read_sent(eval_opt.hyp_type_m, eval_opt.hyp_file_m,
-                                        eval_opt.hypunit_file_m, eval_opt.hypidemb_file_m);
+                                        eval_opt.hyp_unit_delim_m, eval_opt.hypidemb_file_m);
    cerr << "Done." << endl;
 
    vector < vector<sent_t*> > refsents;
    if (! eval_opt.ref_file_m.empty()) {
       cerr << "Reading ref sents... ";
       auto reffiles = tokenize(eval_opt.ref_file_m, ':');
-      vector<string> refunits(reffiles.size(), "");
-      if (! eval_opt.refunit_file_m.empty())
-         refunits = tokenize(eval_opt.refunit_file_m, ':');
-      if (refunits.size() != reffiles.size()) {
-         cerr << "ERROR: number of components in refunit-file (" << refunits.size()
-            << ") does not match the number of components in ref-file ("
-            << reffiles.size() << "). Exiting..." << endl;
-         exit(EXIT_FAILURE);
-      }
       vector<string> refidemb(reffiles.size(), "");
       if (! eval_opt.refidemb_file_m.empty())
          refidemb = tokenize(eval_opt.refidemb_file_m, ':');
@@ -91,7 +70,8 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
       }
       refsents.resize(hypsents.size());
       for (size_t i = 0; i < reffiles.size(); i++) {
-         auto rs = read_sent(eval_opt.ref_type_m, reffiles[i], refunits[i], refidemb[i]);
+         auto rs = read_sent(eval_opt.ref_type_m, reffiles[i],
+                             eval_opt.ref_unit_delim_m, refidemb[i]);
          if (rs.size() != hypsents.size()) {
             cerr << "ERROR: No. of sentences in ref-file " << i << " (" << rs.size()
                << ") does not match with no. of sentences in hyp-file " << i
@@ -110,7 +90,7 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
    if (! eval_opt.inp_file_m.empty()) {
       cerr << "Reading inp sents... ";
       inpsents = read_sent(eval_opt.inp_type_m, eval_opt.inp_file_m,
-                           eval_opt.inpunit_file_m, eval_opt.inpidemb_file_m);
+                           eval_opt.inp_unit_delim_m, eval_opt.inpidemb_file_m);
       if (inpsents.size() != hypsents.size()) {
          cerr << "ERROR: No. of sentences in inp-file (" << inpsents.size()
             << ") does not match with no. of sentences in hyp-file ("

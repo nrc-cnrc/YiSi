@@ -26,6 +26,7 @@
 #include <map>
 #include <iostream>
 
+
 namespace yisi {
 
    class sent_t {
@@ -58,7 +59,9 @@ namespace yisi {
       std::vector<size_t> uid2tid_m;
    }; // class sent_t
 
-   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
+
+//   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
+   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##T", std::string idemb_path="");
 
 } // yisi
 

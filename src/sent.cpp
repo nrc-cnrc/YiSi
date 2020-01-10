@@ -17,14 +17,15 @@
 
 #include "sent.h"
 
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <math.h>
-#include <regex>
 
 using namespace yisi;
 using namespace std;
+
 
 sent_t::sent_t() {
    sent_type_m = "word";
@@ -158,7 +159,7 @@ size_t sent_t::get_token_size() {
    return token_m.size();
 }
 
-vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit_path, string idemb_path) {
+vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path) {
    vector<sent_t*> result;
    vector<vector<double> > sent_emb;
    vector<sent_t::span_type> sent_t2u;
@@ -166,24 +167,22 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
 
    // Validate the sent_type
    if (sent_type == "word") {
-      if (token_path.empty() or ! unit_path.empty() or ! idemb_path.empty()) {
-         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
-            << token_path << "), and no unit_path (" << unit_path
-            << ") and no idemb_path (" << idemb_path << "). Exiting..." << endl;
+      if (file_path.empty() or ! idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires file_path ("
+            << file_path << ") and no idemb_path (" << idemb_path << "). Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
    } else if (sent_type == "unit") {
-      // Currently need idemb file for "unit" to set sent_u2t and sent_t2u
-      if (token_path.empty() or unit_path.empty() or idemb_path.empty()) {
-         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
-            << token_path << "), and unit_path (" << unit_path
-            << ") and idemb_path (" << idemb_path << "). Exiting..." << endl;
+      if (file_path.empty() or unit_delim.empty() or ! idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires file_path ("
+            << file_path << ") and unit_delim (" << unit_delim
+            << ") and no idemb_path (" << idemb_path << "). Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
    } else if (sent_type == "uemb") {
-      if (token_path.empty() or unit_path.empty() or idemb_path.empty()) {
-         cerr << "ERROR: sent_type '" << sent_type << "' requires token_path ("
-            << token_path << "), and unit_path (" << unit_path
+      if (file_path.empty() or unit_delim.empty() or idemb_path.empty()) {
+         cerr << "ERROR: sent_type '" << sent_type << "' requires file_path ("
+            << file_path << "), and unit_delim (" << unit_delim
             << ") and idemb_path (" << idemb_path << "). Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
@@ -193,18 +192,29 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
       exit(EXIT_FAILURE);
    }
 
-   auto token_strs = read_file(token_path);
-   vector<string> unit_strs;
-   if (! unit_path.empty()) {
-      unit_strs = read_file(unit_path);
-      if (unit_strs.size() != token_strs.size()) {
-         cerr << "ERROR: Number of sentences mismatch in units file " << unit_path << endl;
-         cerr << "Expected " << token_strs.size() << " sentences, but found "
-            << unit_strs.size() << ". Exiting..." << endl;
+   // Validate the unit_delim, removing the alphabetic character; set pfx_delim
+   bool pfx_delim(true);      // true iff the delimiter prefixes units
+   {
+      const char* alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      string orig_delim(unit_delim);
+      size_t txt_idx = unit_delim.find_first_of(alphabet);
+      if (txt_idx == string::npos || txt_idx == unit_delim.size()-1) {
+         pfx_delim = true;
+         unit_delim = unit_delim.substr(0, txt_idx);
+      } else if (txt_idx == 0) {
+         pfx_delim = false;
+         unit_delim = unit_delim.substr(1);
+      }
+      txt_idx = unit_delim.find_first_of(alphabet);  // should have no alphabetic left
+      if (txt_idx != string::npos) {
+         cerr << "ERROR: unit_delim (" << orig_delim << ") must contain at most 1 "
+              << "alphabetic character at either the start or end. Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
    }
-   auto ut = unit_strs.begin();
+
+   auto file_strs = read_file(file_path);
+
    ifstream idemb_fin;
    if (! idemb_path.empty()) {
       idemb_fin.open(idemb_path);
@@ -217,7 +227,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
    vector<double> unit_emb;
    size_t emb_dim = 0;
    size_t idemb_lineno = 0;
-   result.reserve(token_strs.size());
+   result.reserve(file_strs.size());
 
    auto check_value = [&](size_t actual, size_t expected, string desc) {
       if (actual != expected) {
@@ -230,73 +240,108 @@ vector<sent_t*> yisi::read_sent(string sent_type, string token_path, string unit
       }
    };
 
-   for (auto tt = token_strs.begin(); tt != token_strs.end(); tt++) {
+   for (auto ft = file_strs.begin(); ft != file_strs.end(); ft++) {
       sent_t* sent_p = new sent_t(sent_type);
-      vector<string> sent_tokens(tokenize(*tt));
-      sent_p->set_tokens(sent_tokens);
+      vector<string> sent_tokens(tokenize(*ft));
       vector<string> sent_units;
-      if (! unit_path.empty()) {
-         sent_units = tokenize(*ut);
+
+      if (sent_type != "word") {
+         sent_units.swap(sent_tokens);
          sent_p->set_units(sent_units);
-      }
-      size_t currtid = (size_t)-1;
-      string emb_line;
-      while (getline(idemb_fin, emb_line)) {  // one line per unit
-         ++idemb_lineno;
-         emb_line = regex_replace(emb_line, regex("^\\s+"), ""); // trim leading whitespace
-         if (emb_line.empty())    // empty line signals end-of-sentence
-            break;
-         istringstream emb_iss(emb_line);
-         size_t uid, tid;
-         emb_iss >> uid >> tid;
-         // Set u2t and t2u for the current unit.
-         sent_u2t.push_back(tid);
-         check_value(uid, sent_u2t.size()-1, "uid");
-         if (tid != currtid) {
-            sent_t2u.push_back(sent_t::span_type(uid, uid + 1));
-            currtid = tid;
-         } else {
-            sent_t2u.back().second = uid + 1;
-         }
-         check_value(tid, sent_t2u.size()-1, "tid");
-         // Retrieve and normalize the embedding values for the current unit.
-         unit_emb.clear();
-         unit_emb.reserve(emb_dim);
-         double len = 0.0;
-         while (!emb_iss.eof()) {
-            double v;
-            emb_iss >> v;
-            unit_emb.push_back(v);
-            len += v * v;
-         }
-         len = sqrt(len);
-         for (size_t i = 0; i < unit_emb.size(); i++) {
-            unit_emb[i] /= len;
-         }
-         if (emb_dim == 0)
-            emb_dim = unit_emb.size();
-         check_value(unit_emb.size(), emb_dim, "Embeddings dimension");
-         sent_emb.push_back(unit_emb);
-         unit_emb.clear();
-      }
-      if (! idemb_path.empty()) {
-         sent_p->set_embs(sent_emb);
+         sent_tokens.reserve(sent_units.size());  // about the same size
+         size_t unit_idx = 0;
+         bool unit_cont = false;
+         for (auto ut = sent_units.begin(); ut != sent_units.end(); ut++, unit_idx++) {
+            if (pfx_delim) {
+               if (ut->rfind(unit_delim, 0) == string::npos) {
+                  // start of new token
+                  sent_tokens.push_back(*ut);
+                  sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx+1));
+               } else {
+                  // continuation of previous token
+                  if (unit_idx == 0) {
+                     cerr << "Warning: First unit starts with continuation delimiter ("
+                          << unit_delim << ") at line " << ft - file_strs.begin() + 1
+                          << " in units file (" << file_path << ")." << endl;
+                     sent_tokens.push_back("");
+                     sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx));
+                  }
+                  sent_tokens.back() += ut->substr(unit_delim.size());
+                  ++sent_t2u.back().second;
+               }
+               sent_u2t.push_back(sent_t2u.size()-1);
+            } else {
+               auto delim_idx = ut->rfind(unit_delim);
+               if (delim_idx + unit_delim.size() < ut->size())  // delim must end the unit
+                  delim_idx = string::npos;
+               string unit_txt = delim_idx == string::npos ? *ut : ut->substr(0, delim_idx+1);
+               if (! unit_cont) {
+                  // start of new token
+                  sent_tokens.push_back(unit_txt);
+                  sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx+1));
+               } else {
+                  // continuation of previous token
+                  sent_tokens.back() += unit_txt;
+                  ++sent_t2u.back().second;
+               }
+               unit_cont = delim_idx != string::npos;
+               if (unit_cont && ut+1 == sent_units.end()) {
+                  cerr << "Warning: Last unit ends with continuation delimiter ("
+                       << unit_delim << ") at line " << ft - file_strs.begin() + 1
+                       << " in units file (" << file_path << ")." << endl;
+               }
+            }
+         } // for ut
          sent_p->set_tid2uspan(sent_t2u);
          sent_p->set_uid2tid(sent_u2t);
-         // Sanity checks
-         check_value(sent_u2t.size(), sent_units.size(), "Number of units");
-         check_value(sent_t2u.size(), sent_tokens.size(), "Number of tokens");
+         sent_t2u.clear();
+         sent_u2t.clear();
+      } // if (sent_type != "word")
+
+      sent_p->set_tokens(sent_tokens);
+
+      if (sent_type == "uemb") {
+         string emb_line;
+         while (getline(idemb_fin, emb_line)) {  // one line per unit
+            ++idemb_lineno;
+            if (lstrip(emb_line).empty())    // empty line signals end-of-sentence
+               break;
+            istringstream emb_iss(emb_line);
+
+            size_t uid, tid;
+            emb_iss >> uid >> tid;
+            // Sanity check: validate uid and tid
+            check_value(uid, sent_emb.size(), "uid");
+            check_value(tid, sent_p->uspan2tspan(sent_t::span_type(uid, uid+1)).first, "tid");
+
+            // Retrieve and normalize the embedding values for the current unit.
+            unit_emb.clear();
+            unit_emb.reserve(emb_dim);
+            double len = 0.0;
+            while (!emb_iss.eof()) {
+               double v;
+               emb_iss >> v;
+               unit_emb.push_back(v);
+               len += v * v;
+            }
+            len = sqrt(len);
+            for (size_t i = 0; i < unit_emb.size(); i++) {
+               unit_emb[i] /= len;
+            }
+
+            if (emb_dim == 0)
+               emb_dim = unit_emb.size();
+            check_value(unit_emb.size(), emb_dim, "Embeddings dimension");
+            sent_emb.push_back(unit_emb);
+            unit_emb.clear();
+         } // while getline
          check_value(sent_emb.size(), sent_units.size(), "Number of embeddings");
-      }
+         sent_p->set_embs(sent_emb);
+         sent_emb.clear();
+      } // if (sent_type == "uemb")
 
       result.push_back(sent_p);
-      sent_emb.clear();
-      sent_t2u.clear();
-      sent_u2t.clear();
-      if (! unit_path.empty()) {
-         ++ut;          // advance ut in lock-step with tt.
-      }
-   }
+   } // for ft
 
    idemb_fin.close();
    return result;

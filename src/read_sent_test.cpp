@@ -28,20 +28,26 @@ int main(const int argc, const char* argv[])
 {
    if ( argc < 3 || argc > 5) {
       cerr << "ERROR: read_sent_test requires 2-4 arguments, but got" << argc-1 << endl;
-      cerr << "Usage: read_sent_test sent_type tok_file [unit_file [emb_file]]" << endl;
+      cerr << "Usage: read_sent_test sent_type tok_or_unit_file [unit_delim [emb_file]]" << endl;
       exit (1);
    }
 
    string sent_type = argv[1];
-   string tok_file = argv[2];
-   string unit_file;
+   string tok_or_unit_file = argv[2];
+   string unit_delim;
    string emb_file;
    if (argc > 3)
-      unit_file = argv[3];
+      unit_delim = argv[3];
    if (argc > 4)
       emb_file = argv[4];
 
-   auto sents = read_sent(sent_type, tok_file, unit_file, emb_file);
+   vector<sent_t*> sents;
+   if (argc > 4)
+      sents = read_sent(sent_type, tok_or_unit_file, unit_delim, emb_file);
+   else if (argc > 3)
+      sents = read_sent(sent_type, tok_or_unit_file, unit_delim);
+   else
+      sents = read_sent(sent_type, tok_or_unit_file);
 
    for (auto sent_it = sents.begin(); sent_it != sents.end(); sent_it++) {
       sent_t* sent(*sent_it);
@@ -54,7 +60,7 @@ int main(const int argc, const char* argv[])
          auto toks = sent->get_tokens(tspan);
          assert(units.size() == 1);
          assert(toks.size() == 1);
-         if (unit_file.empty()) {
+         if (sent_type == "word") {
             assert(units[0] == toks[0]);
          }
          cout << units[0] << "\t" << toks[0] << "\t";

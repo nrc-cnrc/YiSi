@@ -2,13 +2,13 @@
  * @file read_sent_test.cpp
  * @brief Unit test for read_sent.
  *
- * @author Jackie Lo
+ * @author Darlene Stewart
  *
  * Multilingual Text Processing / Traitement multilingue de textes
  * Digital Technologies Research Centre / Centre de recherche en technologies numériques
  * National Research Council Canada / Conseil national de recherches Canada
- * Copyright 2018, Her Majesty in Right of Canada /
- * Copyright 2018, Sa Majeste la Reine du Chef du Canada
+ * Copyright 2019, Her Majesty in Right of Canada /
+ * Copyright 2019, Sa Majeste la Reine du Chef du Canada
  */
 
 #include <iostream>

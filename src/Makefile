@@ -44,11 +44,22 @@ CMDLP_LIB = cmdlp/build/lib/libcmdlp.a
 LDFLAGS += -Lcmdlp/build/lib
 LIBRARIES += -Wl,-Bstatic -lcmdlp -Wl,-Bdynamic
 
+# Flags for embedding Python code
+#CXXFLAGS += -I${PYTHON3_HOME}/include/python3.5m -I${PYTHON3_HOME}/include/python3.5m 
+#CXXFLAGS += -Wsign-compare  -DNDEBUG -g -fwrapv -O3 -Wall # -Wstrict-prototypes
+#LDFLAGS += -L${PYTHON3_HOME}/lib -lpython3.5m 
+#LDFLAGS += -lpthread -ldl  -lutil -lrt -lm  -Xlinker -export-dynamic
+#
+PYTHON_CONFIG ?= python3.7m-config
+CXXFLAGS += $(shell ${PYTHON_CONFIG} --includes)
+CXXFLAGS += -Wsign-compare  -DNDEBUG -g -fwrapv -O3 -Wall
+LDFLAGS += $(shell ${PYTHON_CONFIG} --ldflags) 
+
 PROG_NAMES := yisi
 TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
 	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
 	      emap_test oov_test ngram_test overlapvocab_test \
-	      yisiscorer_test testbin read_sent_test
+	      yisiscorer_test testbin read_sent_test call_bert_test
 CMDLP_TEST_NAMES := cmdlp_test
 
 ifdef WITH_SRLMATE

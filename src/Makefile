@@ -45,15 +45,10 @@ LDFLAGS += -Lcmdlp/build/lib
 LIBRARIES += -Wl,-Bstatic -lcmdlp -Wl,-Bdynamic
 
 # Flags for embedding Python code
-#CXXFLAGS += -I${PYTHON3_HOME}/include/python3.5m -I${PYTHON3_HOME}/include/python3.5m 
-#CXXFLAGS += -Wsign-compare  -DNDEBUG -g -fwrapv -O3 -Wall # -Wstrict-prototypes
-#LDFLAGS += -L${PYTHON3_HOME}/lib -lpython3.5m 
-#LDFLAGS += -lpthread -ldl  -lutil -lrt -lm  -Xlinker -export-dynamic
-#
-PYTHON_CONFIG ?= python3.7m-config
-CXXFLAGS += $(shell ${PYTHON_CONFIG} --includes)
-CXXFLAGS += -Wsign-compare  -DNDEBUG -g -fwrapv -O3 -Wall
-LDFLAGS += $(shell ${PYTHON_CONFIG} --ldflags) 
+PYTHON_CONFIG ?= python3-config
+CXXFLAGS += $(shell ${PYTHON_CONFIG} --cflags)
+LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFIG} --ldflags))
+LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)
 
 PROG_NAMES := yisi
 TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \

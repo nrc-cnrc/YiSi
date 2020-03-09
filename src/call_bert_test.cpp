@@ -198,15 +198,21 @@ void call_bert(string file_path) {
          PyObject *pUnit_embF = PySequence_Fast(pUnit_emb, "Expected unit_emb to be a sequence.");
 //         Py_ssize_t unit_emb_len = PySequence_Length(pUnit_emb);
          Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pUnit_embF);
+         // Output to cout in the .emb file format; also output to cerr with extra detail.
          cerr << "Unit embedding " << emb_idx << ": " << PyLong_AsSize_t(pTid) << " len: " << unit_emb_len << ": ";
+         cout << emb_idx << "\t" << PyLong_AsSize_t(pTid) << "\t";
          cerr << fixed << setprecision(4);
          for (auto i = 0; i < min(unit_emb_len, (Py_ssize_t)8); ++i) {
 //            pValue = PySequence_GetItem(pUnit_emb, i);
             pValue = PySequence_Fast_GET_ITEM(pUnit_embF, i);
             cerr << " " << PyFloat_AsDouble(pValue);
+            if (i != 0)
+               cout << " ";
+            cout << PyFloat_AsDouble(pValue);
 //            Py_DECREF(pValue);
          }
          cerr << endl;
+         cout << endl;
 
 //         Py_DECREF(pTid);
 //         Py_DECREF(pUnit_emb);
@@ -214,6 +220,7 @@ void call_bert(string file_path) {
 //         Py_DECREF(pEmbedding);
          Py_DECREF(pEmbeddingF);
       }
+      cout << endl;
 //      Py_DECREF(pSent);
 //      Py_DECREF(pUnits);
 //      Py_DECREF(pToks);

@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -233,10 +234,17 @@ void call_bert(string file_path) {
 
 int main(const int argc, const char* argv[])
 {
-   if ( argc < 2 || argc > 2) {
-      cerr << "ERROR: call_bert_test requires 1 argument, but got" << argc-1 << endl;
-      cerr << "Usage: call_bert_test inp_file" << endl;
-      exit (1);
+   string usage("Usage: call_bert_test inp_file");
+
+   if (argc < 2 || argc > 2) {
+      cerr << "ERROR: call_bert_test requires 1 argument, but got " << argc-1 << endl;
+      cerr << usage << endl;
+      exit(1);
+   }
+
+   if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "-help") == 0) {
+      cerr << usage << endl;
+      exit(0);
    }
 
    string inp_file = argv[1];

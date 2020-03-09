@@ -30,7 +30,7 @@ const int default_batch_size = 8;
 const bool default_do_lower_case = false;
 
 
-void call_bert(string file_path) {
+PyObject *call_bert(string file_path) {
    PyObject *pName, *pModule, *pClass, *pModelObject;
    PyObject *pArgs, *pValue, *pResult;
 
@@ -115,7 +115,14 @@ void call_bert(string file_path) {
       exit(EXIT_FAILURE);
    }
 
-   // Process the returned results here.
+   Py_DECREF(pModelObject);
+   Py_DECREF(pClass);
+   Py_DECREF(pModule);
+   return pResult;
+}
+
+void process_bert_result(PyObject *pResult) {
+   // Process the returned BERT results here.
    // extract_features_2_yisi returns sents
    // sents is a list of 3-tuples (units, toks, embeddings)
    //   units is a list of strings
@@ -123,108 +130,87 @@ void call_bert(string file_path) {
    //   embeddings is a list of 2-tuples (tid, unit-emb)
    //     tid is a integer
    //     unit-emb is a list of floats
+
    if (! PySequence_Check(pResult)) {
       cerr << "Python ERROR: BERT_model.extract_features_2_yisi did not return a sequence." << endl;
       exit(EXIT_FAILURE);
    }
+
+   // NOTE: PySequence_Fast_GET_ITEM returns a borrowed reference, not a new
+   // reference, so don't call Py_DECREF when all done with the reference!
+
    PyObject *pResultF = PySequence_Fast(pResult, "Expected result to be a sequence.");
-//   Py_ssize_t sents_len = PySequence_Length(pResult);
    Py_ssize_t sents_len = PySequence_Fast_GET_SIZE(pResultF);
    cerr << "BERT_model.extract_features_2_yisi returned " << sents_len << " sentences." << endl;
+
    for (auto sent_idx = 0; sent_idx < sents_len; ++sent_idx) {
-//      PyObject *pSent = PySequence_GetItem(pResult, sent_idx);
       PyObject *pSentF = PySequence_Fast(PySequence_Fast_GET_ITEM(pResultF, sent_idx),
                                         "Expected sent to be a sequence.");
-//      if (PySequence_Length(pSent) != 3) {      // Sanity check
-//         cerr << "Python ERROR: Invalid tuple length for sentence " << sent_idx << ": "
-//              << PySequence_Length(pSent) << endl;
       if (PySequence_Fast_GET_SIZE(pSentF) != 3) {      // Sanity check
          cerr << "Python ERROR: Invalid tuple length for sentence " << sent_idx << ": "
               << PySequence_Fast_GET_SIZE(pSentF) << endl;
          Py_DECREF(pSentF);
          continue;
       }
-//      PyObject *pUnits = PySequence_GetItem(pSent, 0);
       PyObject *pUnits = PySequence_Fast_GET_ITEM(pSentF, 0);
       PyObject *pUnitsF = PySequence_Fast(pUnits, "Expected units to be a sequence.");
-//      Py_ssize_t units_len = PySequence_Length(pUnits);
       Py_ssize_t units_len = PySequence_Fast_GET_SIZE(pUnitsF);
-//      PyObject *pToks = PySequence_GetItem(pSent, 1);
       PyObject *pToks = PySequence_Fast_GET_ITEM(pSentF, 1);
       PyObject *pToksF = PySequence_Fast(pToks, "Expected toks to be be a sequence.");
-//      Py_ssize_t toks_len = PySequence_Length(pToks);
       Py_ssize_t toks_len = PySequence_Fast_GET_SIZE(pToksF);
-//      PyObject *pEmbeddings = PySequence_GetItem(pSent, 2);
       PyObject *pEmbeddings = PySequence_Fast_GET_ITEM(pSentF, 2);
       PyObject *pEmbeddingsF = PySequence_Fast(pEmbeddings, "Expected embeddings to be a sequence.");
-//      Py_ssize_t embeddings_len = PySequence_Length(pEmbeddings);
       Py_ssize_t embeddings_len = PySequence_Fast_GET_SIZE(pEmbeddingsF);
       cerr << endl;
       cerr << "Sentence " << sent_idx << " lengths: units=" << units_len
            << " toks=" << toks_len << " embeddings=" << embeddings_len << endl;
       cerr << "  Units:";
       for (auto i = 0; i < units_len; ++i) {
-//         PyObject *pUnit = PySequence_GetItem(pUnits, i);
          PyObject *pUnit = PySequence_Fast_GET_ITEM(pUnitsF, i);
          cerr << " " << PyUnicode_AsUTF8(pUnit);
-//         Py_DECREF(pUnit);
       }
       cerr << endl;
       cerr << "  Toks:";
       for (auto i = 0; i < toks_len; ++i) {
-//         PyObject *pTok = PySequence_GetItem(pToks, i);
          PyObject *pTok = PySequence_Fast_GET_ITEM(pToksF, i);
          cerr << " " << PyUnicode_AsUTF8(pTok);
-//         Py_DECREF(pTok);
       }
       cerr << endl;
       for (auto emb_idx = 0; emb_idx < embeddings_len; ++emb_idx) {
-//         PyObject *pEmbedding = PySequence_GetItem(pEmbeddings, emb_idx);
          PyObject *pEmbedding = PySequence_Fast_GET_ITEM(pEmbeddingsF, emb_idx);
          PyObject *pEmbeddingF = PySequence_Fast(pEmbedding, "Expected embedding to be a sequence.");
-//         if (PySequence_Length(pEmbedding) != 2) {      // Sanity check
-//            cerr << "Python ERROR: Invalid tuple length for embedding " << emb_idx << ": "
-//                 << PySequence_Length(pEmbedding) << endl;
          if (PySequence_Fast_GET_SIZE(pEmbeddingF) != 2) {      // Sanity check
             cerr << "Python ERROR: Invalid tuple length for embedding " << emb_idx << ": "
                  << PySequence_Fast_GET_SIZE(pEmbeddingF) << endl;
             Py_DECREF(pEmbeddingF);
             continue;
          }
-//         PyObject *pTid = PySequence_GetItem(pEmbedding, 0);
          PyObject *pTid = PySequence_Fast_GET_ITEM(pEmbeddingF, 0);
-//         PyObject *pUnit_emb = PySequence_GetItem(pEmbedding, 1);
          PyObject *pUnit_emb = PySequence_Fast_GET_ITEM(pEmbeddingF, 1);
          PyObject *pUnit_embF = PySequence_Fast(pUnit_emb, "Expected unit_emb to be a sequence.");
-//         Py_ssize_t unit_emb_len = PySequence_Length(pUnit_emb);
          Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pUnit_embF);
+
          // Output to cout in the .emb file format; also output to cerr with extra detail.
-         cerr << "Unit embedding " << emb_idx << ": " << PyLong_AsSize_t(pTid) << " len: " << unit_emb_len << ": ";
+         cerr << "Unit embedding " << emb_idx << ": " << PyLong_AsSize_t(pTid)
+              << " len: " << unit_emb_len << ": ";
          cout << emb_idx << "\t" << PyLong_AsSize_t(pTid) << "\t";
          cerr << fixed << setprecision(4);
-         for (auto i = 0; i < min(unit_emb_len, (Py_ssize_t)8); ++i) {
-//            pValue = PySequence_GetItem(pUnit_emb, i);
-            pValue = PySequence_Fast_GET_ITEM(pUnit_embF, i);
-            cerr << " " << PyFloat_AsDouble(pValue);
+         cout << fixed << setprecision(6);
+         for (auto i = 0; i < min(unit_emb_len, (Py_ssize_t)16); ++i) {
+            PyObject *pValue = PySequence_Fast_GET_ITEM(pUnit_embF, i);
+            if (i < 8)
+               cerr << " " << PyFloat_AsDouble(pValue);
             if (i != 0)
                cout << " ";
             cout << PyFloat_AsDouble(pValue);
-//            Py_DECREF(pValue);
          }
          cerr << endl;
          cout << endl;
 
-//         Py_DECREF(pTid);
-//         Py_DECREF(pUnit_emb);
          Py_DECREF(pUnit_embF);
-//         Py_DECREF(pEmbedding);
          Py_DECREF(pEmbeddingF);
       }
       cout << endl;
-//      Py_DECREF(pSent);
-//      Py_DECREF(pUnits);
-//      Py_DECREF(pToks);
-//      Py_DECREF(pEmbeddings);
       Py_DECREF(pSentF);
       Py_DECREF(pUnitsF);
       Py_DECREF(pToksF);
@@ -232,10 +218,6 @@ void call_bert(string file_path) {
    }
 
    Py_DECREF(pResultF);
-   Py_DECREF(pResult);
-   Py_DECREF(pModelObject);
-   Py_DECREF(pClass);
-   Py_DECREF(pModule);
 }
 
 
@@ -256,7 +238,9 @@ int main(const int argc, const char* argv[])
 
    string inp_file = argv[1];
 
-   call_bert(inp_file);
+   PyObject *pResult = call_bert(inp_file);
+   process_bert_result(pResult);
+   Py_DECREF(pResult);
 
    return 0;
 }

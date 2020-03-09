@@ -29,6 +29,13 @@ else
    $(info *** mateplus.jar not found)
 endif
 
+BERT_STATUS != python3 -c "import bert" |& grep -o ModuleNotFoundError
+ifneq ($(BERT_STATUS)$(wildcard $(BERT_HOME)),ModuleNotFoundError)
+   WITH_BERT ?= True
+else
+   $(info *** bert python module not found)
+endif
+
 .PHONY: all
 # "make all" should create the .gitignore file
 all: gitignore
@@ -54,7 +61,11 @@ ifdef WITH_SRLMATE
    SIMPLE_SRL_TEST_PROGS += srlmate_test
 endif
 
-ALL_SIMPLE_TEST_PROGS := $(CMDLP_TEST_PROGS) $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS)
+ifdef WITH_BERT
+   BERT_TEST_PROGS := call_bert_test
+endif
+
+ALL_SIMPLE_TEST_PROGS := $(CMDLP_TEST_PROGS) $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS) $(BERT_TEST_PROGS)
 
 all: $(ALL_SIMPLE_TEST_PROGS)
 all: test_yisi
@@ -62,24 +73,41 @@ all: test_yisi
 TMP_FILES += $(addsuffix .out, $(ALL_SIMPLE_TEST_PROGS))
 TMP_FILES += test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
 TMP_FILES += test_ref.en.srl
+TMP_FILES += test_hyp.en.bert.tok.emb
+
+TMP_DIRS += tmp[0-9a-z]*
 
 compare.%: %
 	diff $< ref/$< -q
 
-SUB:="s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
+JL_SUB := "s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
 
 compare_w_java_log.%: %
-	diff <(cat $< | grep -v '^[Loading | Setting up]' | sed -e $(SUB)) <(cat ref/$< |  grep -v '^[Loading | Setting up]' | sed -e $(SUB)) -q
+	diff <(cat $< | grep -v '^Loading\|^Setting up' | sed -e $(JL_SUB)) \
+	     <(cat ref/$< |  grep -v '^Loading\|^Setting up' | sed -e $(JL_SUB)) -q
 
 compare_w_alt.%: %
 	diff $< ref/$< -q || diff -s $< ref/$<.alt -q
+
+BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
+           s/ 0x[0-9a-f]\+/ 0x00000000/g; \
+           s/[0-9]\+-[0-9]\+-[0-9]\+ [0-9:.]\+/2020-01-01 00:00:00.000000/g;"
+
+compare_w_bert_log.%: %
+	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB)) \
+	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB)) -q
 
 # Simple tests
 
 .PHONY: $(ALL_SIMPLE_TEST_PROGS)
 $(CMDLP_TEST_PROGS): %: compare.%.out
 $(SIMPLE_TEST_PROGS): %: compare.%.out
+ifdef SIMPLE_SRL_TEST_PROGS
 $(SIMPLE_SRL_TEST_PROGS): %: compare_w_java_log.%.out
+endif
+ifdef BERT_TEST_PROGS
+$(BERT_TEST_PROGS): %: compare_w_bert_log.%.out
+endif
 
 cmdlp_test.1.out: ARGS = --beta 0 --settings <(echo hello) --refs test_ref.en --help
 cmdlp_test.2.out: ARGS = --beta 0 --settings <(echo hello) --refs /tmp/cmdlp_test.2.empty
@@ -109,13 +137,22 @@ read_sent_test.1.out: ARGS = word ../test/test_hyp.en.bert.tok
 read_sent_test.2.out: ARGS = uemb ../test/test_hyp.en.bert.unit '\#\#T' ../test/test_hyp.en.bert.emb
 read_sent_test.3.out: ARGS = unit ../test/test_hyp.en.bert.unit
 
-$(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
-$(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS): BIN = ../bin
+call_bert_test.out: ARGS = ../test/test_hyp.en.bert.tok
 
+$(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
+$(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS) $(BERT_TEST_PROGS): BIN = ../bin
+
+# call_bert_test produces an extra output file.
+compare_w_bert_log.call_bert_test.out: compare.test_hyp.en.bert.tok.emb
+
+test_hyp.en.bert.tok.emb: call_bert_test.out ;
+
+# srl_test produces an extra output file.
 compare_w_java_log.srl_test.out: compare_w_alt.test_ref.en.srl
 
 test_ref.en.srl: srl_test.out ;
 
+# cmdlp_test.2 requires a file of known size with a fixed absolute path.
 cmdlp_test.2.out: | /tmp/cmdlp_test.2.empty
 
 # Note: There is a rather rare race condition where the following touch command

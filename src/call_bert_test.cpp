@@ -16,6 +16,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <cstring>
@@ -121,7 +122,7 @@ PyObject *call_bert(string file_path) {
    return pResult;
 }
 
-void process_bert_result(PyObject *pResult) {
+void process_bert_result(PyObject *pResult, string output_path) {
    // Process the returned BERT results here.
    // extract_features_2_yisi returns sents
    // sents is a list of 3-tuples (units, toks, embeddings)
@@ -130,6 +131,12 @@ void process_bert_result(PyObject *pResult) {
    //   embeddings is a list of 2-tuples (tid, unit-emb)
    //     tid is a integer
    //     unit-emb is a list of floats
+
+   ofstream fout(output_path);
+   if (! fout) {
+      cerr << "ERROR: Failed to open output file (" << output_path << "). Exiting..." << endl;
+      exit(EXIT_FAILURE);
+   }
 
    if (! PySequence_Check(pResult)) {
       cerr << "Python ERROR: BERT_model.extract_features_2_yisi did not return a sequence." << endl;
@@ -190,27 +197,27 @@ void process_bert_result(PyObject *pResult) {
          PyObject *pUnit_embF = PySequence_Fast(pUnit_emb, "Expected unit_emb to be a sequence.");
          Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pUnit_embF);
 
-         // Output to cout in the .emb file format; also output to cerr with extra detail.
+         // Output to fout in the .emb file format; also output to cerr with extra detail.
          cerr << "Unit embedding " << emb_idx << ": " << PyLong_AsSize_t(pTid)
               << " len: " << unit_emb_len << ": ";
-         cout << emb_idx << "\t" << PyLong_AsSize_t(pTid) << "\t";
+         fout << emb_idx << "\t" << PyLong_AsSize_t(pTid) << "\t";
          cerr << fixed << setprecision(4);
-         cout << fixed << setprecision(6);
+         fout << fixed << setprecision(6);
          for (auto i = 0; i < min(unit_emb_len, (Py_ssize_t)16); ++i) {
             PyObject *pValue = PySequence_Fast_GET_ITEM(pUnit_embF, i);
             if (i < 8)
                cerr << " " << PyFloat_AsDouble(pValue);
             if (i != 0)
-               cout << " ";
-            cout << PyFloat_AsDouble(pValue);
+               fout << " ";
+            fout << PyFloat_AsDouble(pValue);
          }
          cerr << endl;
-         cout << endl;
+         fout << endl;
 
          Py_DECREF(pUnit_embF);
          Py_DECREF(pEmbeddingF);
       }
-      cout << endl;
+      fout << endl;
       Py_DECREF(pSentF);
       Py_DECREF(pUnitsF);
       Py_DECREF(pToksF);
@@ -218,12 +225,13 @@ void process_bert_result(PyObject *pResult) {
    }
 
    Py_DECREF(pResultF);
+   fout.close();
 }
 
 
 int main(const int argc, const char* argv[])
 {
-   string usage("Usage: call_bert_test inp_file");
+   string usage("Usage: call_bert_test <in-file>\nwrites output to <in-file>.emb");
 
    if (argc < 2 || argc > 2) {
       cerr << "ERROR: call_bert_test requires 1 argument, but got " << argc-1 << endl;
@@ -236,10 +244,10 @@ int main(const int argc, const char* argv[])
       exit(0);
    }
 
-   string inp_file = argv[1];
+   string in_file = argv[1];
 
-   PyObject *pResult = call_bert(inp_file);
-   process_bert_result(pResult);
+   PyObject *pResult = call_bert(in_file);
+   process_bert_result(pResult, in_file+".emb");
    Py_DECREF(pResult);
 
    return 0;

@@ -54,7 +54,7 @@ PROG_NAMES := yisi
 TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
 	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
 	      emap_test oov_test ngram_test overlapvocab_test \
-	      yisiscorer_test testbin read_sent_test call_bert_test
+	      yisiscorer_test testbin read_sent_test call_bert_test bert_test
 CMDLP_TEST_NAMES := cmdlp_test
 
 ifdef WITH_SRLMATE

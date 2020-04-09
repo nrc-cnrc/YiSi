@@ -27,7 +27,7 @@ string span2str(sent_t::span_type span) {
 int main(const int argc, const char* argv[])
 {
    if ( argc < 3 || argc > 5) {
-      cerr << "ERROR: read_sent_test requires 2-4 arguments, but got" << argc-1 << endl;
+      cerr << "ERROR: read_sent_test requires 2-4 arguments, but got " << argc-1 << endl;
       cerr << "Usage: read_sent_test sent_type tok_or_unit_file [unit_delim [emb_file]]" << endl;
       exit (1);
    }
@@ -64,14 +64,19 @@ int main(const int argc, const char* argv[])
             assert(units[0] == toks[0]);
          }
          cout << units[0] << "\t" << toks[0] << "\t";
-         if (! emb_file.empty()) {
+         if (sent_type == "uemb" || sent_type == "bert") {
             auto embs = sent->get_embs(uspan);
             assert(embs.size() == 1);
             cout << "\t";
+            if (sent_type == "bert")
+               assert(embs[0].size() == 768);
             for (auto emb_it = embs[0].begin(); emb_it != embs[0].end(); emb_it++) {
-               if (emb_it != embs[0].begin())
-                  cout << " ";
-               cout << *emb_it;
+               // For bert, limit the output to the first 16 embedding values.
+               if (sent_type != "bert" || emb_it - embs[0].begin() < 16) {
+                  if (emb_it != embs[0].begin())
+                     cout << " ";
+                  cout << *emb_it;
+               }
                assert(*emb_it >= -1.0 && *emb_it <= 1.0);
             }
          }

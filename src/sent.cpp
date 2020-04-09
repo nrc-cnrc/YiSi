@@ -11,10 +11,11 @@
  * Multilingual Text Processing / Traitement multilingue de textes
  * Digital Technologies Research Centre / Centre de recherche en technologies numériques
  * National Research Council Canada / Conseil national de recherches Canada
- * Copyright 2019, Her Majesty in Right of Canada /
- * Copyright 2019, Sa Majeste la Reine du Chef du Canada
+ * Copyright 2019-2020, Her Majesty in Right of Canada /
+ * Copyright 2019-2020, Sa Majeste la Reine du Chef du Canada
  */
 
+#include "bert.h"
 #include "sent.h"
 
 #include <vector>
@@ -94,7 +95,7 @@ vector<string> sent_t::get_units(span_type uspan) {
 }
 
 vector<vector<double> > sent_t::get_embs(span_type uspan) {
-   if (sent_type_m == "uemb") {
+   if (sent_type_m == "uemb" || sent_type_m == "bert") {
       vector<vector<double> > result;
       for (size_t i = uspan.first; i < uspan.second; i++) {
          result.push_back(emb_m[i]);
@@ -172,7 +173,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
             << file_path << ") and no idemb_path (" << idemb_path << "). Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
-   } else if (sent_type == "unit") {
+   } else if (sent_type == "unit" || sent_type == "bert") {
       if (file_path.empty() or unit_delim.empty() or ! idemb_path.empty()) {
          cerr << "ERROR: sent_type '" << sent_type << "' requires file_path ("
             << file_path << ") and unit_delim (" << unit_delim
@@ -188,7 +189,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       }
    } else {
       cerr << "ERROR: bad sent_type '" << sent_type << "'. "
-         << "sent_type must be one of: word, unit, uemb. Exiting..." << endl;
+         << "sent_type must be one of: word, unit, uemb, bert. Exiting..." << endl;
       exit(EXIT_FAILURE);
    }
 
@@ -213,21 +214,34 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       }
    }
 
-   auto file_strs = read_file(file_path);
-
+   size_t num_sents;
+   // For sent_type == "bert"
+   bert_t *bert_p = NULL;
+   size_t bert_id = 0;
+   // For sent_type != "bert"
+   vector<string> file_strs;
    ifstream idemb_fin;
-   if (! idemb_path.empty()) {
-      idemb_fin.open(idemb_path);
-      if (! idemb_fin) {
-         cerr << "ERROR: Failed to open idemb file (" << idemb_path << "). Exiting..." << endl;
-         exit(EXIT_FAILURE);
+   size_t idemb_lineno = 0;
+
+   if( sent_type == "bert") {
+      bert_p = new bert_t("");
+      bert_id = bert_p->apply_model(file_path);
+      num_sents = bert_p->get_size(bert_id);
+   } else {
+      file_strs = read_file(file_path);
+      num_sents = file_strs.size();
+      if (! idemb_path.empty()) {
+         idemb_fin.open(idemb_path);
+         if (! idemb_fin) {
+            cerr << "ERROR: Failed to open idemb file (" << idemb_path << "). Exiting..." << endl;
+            exit(EXIT_FAILURE);
+         }
       }
    }
 
    vector<double> unit_emb;
    size_t emb_dim = 0;
-   size_t idemb_lineno = 0;
-   result.reserve(file_strs.size());
+   result.reserve(num_sents);
 
    auto check_value = [&](size_t actual, size_t expected, string desc) {
       if (actual != expected) {
@@ -240,13 +254,21 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       }
    };
 
-   for (auto ft = file_strs.begin(); ft != file_strs.end(); ft++) {
-      sent_t* sent_p = new sent_t(sent_type);
-      vector<string> sent_tokens(tokenize(*ft));
+   for (size_t sent_idx = 0; sent_idx < num_sents; ++ sent_idx) {
+      sent_t *sent_p = new sent_t(sent_type);
+      vector<string> sent_tokens;
       vector<string> sent_units;
+      if (sent_type == "bert") {
+         sent_units = bert_p->get_units(bert_id, sent_idx);
+      } else {
+         sent_tokens = tokenize(file_strs.at(sent_idx));
+         if (sent_type != "word")
+            sent_units.swap(sent_tokens);
+      }
 
+      // Recover sent_tokens from sent_units by merging according to unit_delim.
+      // Set tid2uspan (sent_t2u) and uid2tid (sent_u2t) in the process.
       if (sent_type != "word") {
-         sent_units.swap(sent_tokens);
          sent_p->set_units(sent_units);
          sent_tokens.reserve(sent_units.size());  // about the same size
          size_t unit_idx = 0;
@@ -261,7 +283,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
                   // continuation of previous token
                   if (unit_idx == 0) {
                      cerr << "Warning: First unit starts with continuation delimiter ("
-                          << unit_delim << ") at line " << ft - file_strs.begin() + 1
+                          << unit_delim << ") at line " << sent_idx + 1
                           << " in units file (" << file_path << ")." << endl;
                      sent_tokens.push_back("");
                      sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx));
@@ -287,7 +309,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
                unit_cont = delim_idx != string::npos;
                if (unit_cont && ut+1 == sent_units.end()) {
                   cerr << "Warning: Last unit ends with continuation delimiter ("
-                       << unit_delim << ") at line " << ft - file_strs.begin() + 1
+                       << unit_delim << ") at line " << sent_idx + 1
                        << " in units file (" << file_path << ")." << endl;
                }
             }
@@ -300,7 +322,10 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
 
       sent_p->set_tokens(sent_tokens);
 
-      if (sent_type == "uemb") {
+      // Determine the embeddings for the sentence.
+      if (sent_type == "bert") {
+         sent_emb = bert_p->get_embeddings(bert_id, sent_idx);
+      } else if (sent_type == "uemb") {
          string emb_line;
          while (getline(idemb_fin, emb_line)) {  // one line per unit
             ++idemb_lineno;
@@ -314,35 +339,43 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
             check_value(uid, sent_emb.size(), "uid");
             check_value(tid, sent_p->uspan2tspan(sent_t::span_type(uid, uid+1)).first, "tid");
 
-            // Retrieve and normalize the embedding values for the current unit.
+            // Retrieve the embedding values for the current unit.
             unit_emb.clear();
             unit_emb.reserve(emb_dim);
-            double len = 0.0;
             while (!emb_iss.eof()) {
                double v;
                emb_iss >> v;
                unit_emb.push_back(v);
-               len += v * v;
-            }
-            len = sqrt(len);
-            for (size_t i = 0; i < unit_emb.size(); i++) {
-               unit_emb[i] /= len;
             }
 
-            if (emb_dim == 0)
-               emb_dim = unit_emb.size();
-            check_value(unit_emb.size(), emb_dim, "Embeddings dimension");
             sent_emb.push_back(unit_emb);
-            unit_emb.clear();
          } // while getline
+      }
+
+      // Normalize and set the embeddings: sent_p->set_embs(sent_emb)
+      if (sent_type == "uemb" || sent_type == "bert") {
+         for (auto ue_it = sent_emb.begin(); ue_it != sent_emb.end(); ue_it++) {
+            if (emb_dim == 0)
+               emb_dim = ue_it->size();
+            check_value(ue_it->size(), emb_dim, "Embeddings dimension");
+            double len = 0.0;
+            for (size_t i = 0; i < ue_it->size(); i++) {
+               len += ue_it->at(i) * ue_it->at(i);
+            }
+            len = sqrt(len);
+            for (size_t i = 0; i < ue_it->size(); i++) {
+               ue_it->at(i) /= len;
+            }
+         }
          check_value(sent_emb.size(), sent_units.size(), "Number of embeddings");
          sent_p->set_embs(sent_emb);
          sent_emb.clear();
-      } // if (sent_type == "uemb")
+      }
 
       result.push_back(sent_p);
    } // for ft
 
-   idemb_fin.close();
+   if (idemb_fin)
+      idemb_fin.close();
    return result;
 }

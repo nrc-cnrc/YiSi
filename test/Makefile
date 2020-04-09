@@ -57,15 +57,18 @@ SIMPLE_TEST_PROGS += yisiscorer_test
 SIMPLE_TEST_PROGS += read_sent_test.1 read_sent_test.2 read_sent_test.3
 
 ifdef WITH_SRLMATE
-   SIMPLE_SRL_TEST_PROGS += srl_test
+   SIMPLE_SRL_TEST_PROGS := srl_test
    SIMPLE_SRL_TEST_PROGS += srlmate_test
 endif
 
 ifdef WITH_BERT
    BERT_TEST_PROGS := call_bert_test
+   BERT_TEST_PROGS += bert_test
+   BERT_TEST_PROGS += read_sent_test.4
 endif
 
-ALL_SIMPLE_TEST_PROGS := $(CMDLP_TEST_PROGS) $(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS) $(BERT_TEST_PROGS)
+ALL_SIMPLE_TEST_PROGS := $(CMDLP_TEST_PROGS) $(SIMPLE_TEST_PROGS)
+ALL_SIMPLE_TEST_PROGS += $(SIMPLE_SRL_TEST_PROGS) $(BERT_TEST_PROGS)
 
 all: $(ALL_SIMPLE_TEST_PROGS)
 all: test_yisi
@@ -73,7 +76,7 @@ all: test_yisi
 TMP_FILES += $(addsuffix .out, $(ALL_SIMPLE_TEST_PROGS))
 TMP_FILES += test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
 TMP_FILES += test_ref.en.srl
-TMP_FILES += test_hyp.en.bert.tok.emb
+TMP_FILES += test_hyp.en.bert.tok.emb*
 
 TMP_DIRS += tmp[0-9a-z]*
 
@@ -136,16 +139,24 @@ srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
 read_sent_test.1.out: ARGS = word ../test/test_hyp.en.bert.tok
 read_sent_test.2.out: ARGS = uemb ../test/test_hyp.en.bert.unit '\#\#T' ../test/test_hyp.en.bert.emb
 read_sent_test.3.out: ARGS = unit ../test/test_hyp.en.bert.unit
+read_sent_test.4.out: ARGS = bert ../test/test_hyp.en.bert.tok
 
 call_bert_test.out: ARGS = ../test/test_hyp.en.bert.tok
 
+bert_test.out: ARGS = ../test/test_hyp.en.bert.tok
+
 $(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
-$(SIMPLE_TEST_PROGS) $(SIMPLE_SRL_TEST_PROGS) $(BERT_TEST_PROGS): BIN = ../bin
+$(filter-out $(CMDLP_TEST_PROGS),$(ALL_SIMPLE_TEST_PROGS)): BIN = ../bin
 
 # call_bert_test produces an extra output file.
 compare_w_bert_log.call_bert_test.out: compare.test_hyp.en.bert.tok.emb
 
 test_hyp.en.bert.tok.emb: call_bert_test.out ;
+
+# bert_test produces an extra output file.
+compare_w_bert_log.bert_test.out: compare.test_hyp.en.bert.tok.emb2
+
+test_hyp.en.bert.tok.emb2: bert_test.out ;
 
 # srl_test produces an extra output file.
 compare_w_java_log.srl_test.out: compare_w_alt.test_ref.en.srl

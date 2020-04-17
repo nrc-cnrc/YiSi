@@ -7,8 +7,8 @@
  * Multilingual Text Processing / Traitement multilingue de textes
  * Digital Technologies Research Centre / Centre de recherche en technologies numériques
  * National Research Council Canada / Conseil national de recherches Canada
- * Copyright 2019, Her Majesty in Right of Canada /
- * Copyright 2019, Sa Majeste la Reine du Chef du Canada
+ * Copyright 2020, Her Majesty in Right of Canada /
+ * Copyright 2020, Sa Majeste la Reine du Chef du Canada
  */
 
 #define PY_SSIZE_T_CLEAN
@@ -34,6 +34,8 @@ const bool default_do_lower_case = false;
 PyObject *call_bert(string file_path) {
    PyObject *pName, *pModule, *pClass, *pModelObject;
    PyObject *pArgs, *pValue, *pResult;
+
+   cerr << "Setting up BERT ..." << endl;
 
    Py_SetProgramName(Py_DecodeLocale("python3", NULL));
 
@@ -108,6 +110,9 @@ PyObject *call_bert(string file_path) {
       exit(EXIT_FAILURE);
    }
    cerr << "BERT_model instance created." << endl;
+
+   cerr << "Done setting up BERT." << endl;
+
    cerr << "Calling BERT_model.extract_features_2_yisi." << endl;
    pResult = PyObject_CallMethod(pModelObject, (char *)"extract_features_2_yisi", (char *)"(s)", file_path.c_str());
    if (pResult == NULL) {

@@ -164,12 +164,14 @@ size_t bert_t::apply_model(string text_path) {
                                            text_path.c_str());
    if (pResult == NULL) {
       PyErr_Print();
-      cerr << "Python ERROR: Method call failed: BERT_model.extract_features_2_yisi. Exiting..." << endl;
+      cerr << "Python ERROR: Method call failed: BERT_model.extract_features_2_yisi."
+           << " Exiting..." << endl;
       exit(EXIT_FAILURE);
    }
 
    if (! PySequence_Check(pResult)) {
-      cerr << "Python ERROR: BERT_model.extract_features_2_yisi did not return a sequence. Exiting..." << endl;
+      cerr << "Python ERROR: BERT_model.extract_features_2_yisi did not return a sequence."
+           << " Exiting..." << endl;
       exit(EXIT_FAILURE);
    }
 
@@ -178,7 +180,11 @@ size_t bert_t::apply_model(string text_path) {
    Py_DECREF(pResult);
 
    p_results_m.push_back(pResultF);
-   return p_results_m.size();
+   size_t results_id = p_results_m.size();
+   cerr << "BERT_model.extract_features_2_yisi returned "
+        << get_size(results_id) << " sentences." << endl;
+
+   return results_id;
 } // apply_model
 
 PyObject *bert_t::get_results(size_t results_id) {

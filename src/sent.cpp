@@ -160,7 +160,7 @@ size_t sent_t::get_token_size() {
    return token_m.size();
 }
 
-vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path) {
+vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path, string context_config) {
    vector<sent_t*> result;
    vector<vector<double> > sent_emb;
    vector<sent_t::span_type> sent_t2u;
@@ -224,7 +224,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
    size_t idemb_lineno = 0;
 
    if( sent_type == "bert") {
-      bert_p = new bert_t("");
+      bert_p = new bert_t(context_config);
       bert_id = bert_p->apply_model(file_path);
       num_sents = bert_p->get_size(bert_id);
    } else {

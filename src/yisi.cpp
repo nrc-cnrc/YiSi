@@ -52,7 +52,8 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
 
    cerr << "Reading hyp sents... ";
    vector<sent_t*> hypsents = read_sent(eval_opt.hyp_type_m, eval_opt.hyp_file_m,
-                                        eval_opt.hyp_unit_delim_m, eval_opt.hypidemb_file_m);
+                                        eval_opt.hyp_unit_delim_m, eval_opt.hypidemb_file_m,
+					eval_opt.context_config_m);
    cerr << "Done." << endl;
 
    vector < vector<sent_t*> > refsents;
@@ -71,7 +72,7 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
       refsents.resize(hypsents.size());
       for (size_t i = 0; i < reffiles.size(); i++) {
          auto rs = read_sent(eval_opt.ref_type_m, reffiles[i],
-                             eval_opt.ref_unit_delim_m, refidemb[i]);
+                             eval_opt.ref_unit_delim_m, refidemb[i], eval_opt.context_config_m);
          if (rs.size() != hypsents.size()) {
             cerr << "ERROR: No. of sentences in ref-file " << i << " (" << rs.size()
                << ") does not match with no. of sentences in hyp-file " << i
@@ -90,7 +91,7 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
    if (! eval_opt.inp_file_m.empty()) {
       cerr << "Reading inp sents... ";
       inpsents = read_sent(eval_opt.inp_type_m, eval_opt.inp_file_m,
-                           eval_opt.inp_unit_delim_m, eval_opt.inpidemb_file_m);
+                           eval_opt.inp_unit_delim_m, eval_opt.inpidemb_file_m, eval_opt.context_config_m);
       if (inpsents.size() != hypsents.size()) {
          cerr << "ERROR: No. of sentences in inp-file (" << inpsents.size()
             << ") does not match with no. of sentences in hyp-file ("

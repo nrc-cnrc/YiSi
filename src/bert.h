@@ -29,7 +29,7 @@ namespace yisi {
    public:
       bert_t() {}
       /// Contructor with config info provided
-      bert_t(std::string config_path);
+      bert_t(std::string config);
       ~bert_t();
       /// Apply a Bert model to a text file.
       /// @return Results ID (1-based) identifying the results set to query methods.

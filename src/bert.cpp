@@ -37,12 +37,30 @@ const int bert_bert_default_max_seq_length = 512;
 const int bert_bert_default_batch_size = 8;
 const bool bert_bert_default_do_lower_case = false;
 
-bert_t::bert_t(string config_path) {
+bert_t::bert_t(string config) {
    PyObject *pName, *pModule, *pClass, *pModelObject;
    PyObject *pArgs, *pValue;
 
    cerr << "Setting up BERT ..." << endl;
 
+   auto bert_configs = tokenize(config, ':');
+   string bert_model, layers;
+   int max_seq_length,  batch_size;
+   bool do_lower_case;
+   if (bert_configs.size() < 5 ){
+     bert_model = string(bert_bert_default_bert_model);
+     layers = string(bert_bert_default_layers);
+     max_seq_length = bert_bert_default_max_seq_length;
+     batch_size = bert_bert_default_batch_size;
+     do_lower_case = bert_bert_default_do_lower_case;
+   } else {
+     bert_model = bert_configs[0];
+     layers = bert_configs[1];
+     max_seq_length = stoi(bert_configs[2]);
+     batch_size = stoi(bert_configs[3]);
+     do_lower_case = (bert_configs[4] != "1");
+   }
+   
    // Read the BERT config file.
 //   ifstream fin(config_path.c_str());
 //   if (!fin) {
@@ -124,16 +142,16 @@ bert_t::bert_t(string config_path) {
       cerr << "Python ERROR: Cannot create pArgs tuple of size 5. Exiting..." << endl;
       exit(EXIT_FAILURE);
    }
-   pValue = PyUnicode_FromString(bert_bert_default_bert_model);
-   check_and_set_pArgs(0, "string", bert_bert_default_bert_model);
-   pValue = PyUnicode_FromString(bert_bert_default_layers);
-   check_and_set_pArgs(1, "string", bert_bert_default_layers);
-   pValue = PyLong_FromLong(bert_bert_default_max_seq_length);
-   check_and_set_pArgs(2, "int", to_string(bert_bert_default_max_seq_length));
-   pValue = PyLong_FromLong(bert_bert_default_batch_size);
-   check_and_set_pArgs(3, "int", to_string(bert_bert_default_batch_size));
-   pValue = PyBool_FromLong(bert_bert_default_do_lower_case);
-   check_and_set_pArgs(4, "bool", to_string(bert_bert_default_do_lower_case));
+   pValue = PyUnicode_FromString(bert_model.c_str());
+   check_and_set_pArgs(0, "string", bert_model.c_str());
+   pValue = PyUnicode_FromString(layers.c_str());
+   check_and_set_pArgs(1, "string", layers.c_str());
+   pValue = PyLong_FromLong(max_seq_length);
+   check_and_set_pArgs(2, "int", to_string(max_seq_length));
+   pValue = PyLong_FromLong(batch_size);
+   check_and_set_pArgs(3, "int", to_string(batch_size));
+   pValue = PyBool_FromLong(do_lower_case);
+   check_and_set_pArgs(4, "bool", to_string(do_lower_case));
    pModelObject = PyObject_CallObject(pClass, pArgs);
    Py_DECREF(pArgs);
    if (pModelObject == NULL) {

@@ -23,6 +23,7 @@
 #define DEFAULT_REF_TYPE "word"
 #define DEFAULT_HYP_TYPE "word"
 #define DEFAULT_INP_TYPE "word"
+#define DEFAULT_CONTEXT_CONFIG "multi_cased_L-12_H-768_A-12:-4:512:8:0"
 #define DEFAULT_UNIT_DELIMITER "##T"    // BERT unit separator
 #define DEFAULT_MODE "yisi"
 
@@ -31,6 +32,7 @@ namespace yisi {
       std::string ref_type_m = DEFAULT_REF_TYPE;
       std::string hyp_type_m = DEFAULT_HYP_TYPE;
       std::string inp_type_m = DEFAULT_INP_TYPE;
+      std::string context_config_m = DEFAULT_CONTEXT_CONFIG;
 
       std::string ref_file_m;
       std::string hyp_file_m;
@@ -64,6 +66,12 @@ namespace yisi {
             .desc("Type of input. [word(default)|unit|uemb]")
             .name("inp-type")
             ;
+	 p.add(make_knob(context_config_m))
+            .fallback(DEFAULT_CONTEXT_CONFIG)
+            .desc("Configuration for extracting features from pretrained context model separated by ':'.")
+            .name("context-config")
+            ;
+
 
          p.add(make_knob(ref_file_m))
             .fallback("")

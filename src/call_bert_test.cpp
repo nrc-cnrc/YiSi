@@ -156,6 +156,7 @@ void process_bert_result(PyObject *pResult, string output_path) {
    cerr << "BERT_model.extract_features_2_yisi returned " << sents_len << " sentences." << endl;
 
    for (auto sent_idx = 0; sent_idx < sents_len; ++sent_idx) {
+     cerr<<"Extracting features for sentence "<<sent_idx <<"...";
       PyObject *pSentF = PySequence_Fast(PySequence_Fast_GET_ITEM(pResultF, sent_idx),
                                         "Expected sent to be a sequence.");
       if (PySequence_Fast_GET_SIZE(pSentF) != 3) {      // Sanity check

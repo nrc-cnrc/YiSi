@@ -483,7 +483,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
       auto hu = hypsrlgraph_m.get_role_filler_units(hyproot);
       //std::cerr << "Got h " << hu.size() << std::endl;
       std::pair<double, double> sentsim;
-      if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+      if ((refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") && 
+	  (refsrlgraph_m[refid].get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")){
          //std::cerr<<"computing sentsim on word"<<std::endl;
          sentsim = (*phrasesim)(ru, hu, yisi::REF_MODE);
       } else {
@@ -520,7 +521,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                if (hyppredspan.first != hyppredspan.second) {
                   auto hyppredphrase = hypsrlgraph_m.get_role_filler_units(hyppredid);
                   std::pair<double, double> predsim;
-                  if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  if ((refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") &&
+		      (refsrlgraph_m[refid].get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
                      predsim = (*phrasesim)(refpredphrase, hyppredphrase, yisi::REF_MODE);
                   } else {
                      auto rpredemb = refsrlgraph_m[refid].get_role_filler_embs(refpredid);
@@ -554,7 +556,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                auto hypargid = *jt;
                auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
                std::pair<double, double> argsim;
-               if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+               if ((refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") && 
+		   (refsrlgraph_m[refid].get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")){
                   argsim = (*phrasesim)(refargphrase, hypargphrase, yisi::REF_MODE);
                } else {
                   auto rargemb = refsrlgraph_m[refid].get_role_filler_embs(refargid);
@@ -594,7 +597,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                auto hypargid = *jt;
                auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
                std::pair<double, double> argsim;
-               if (refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+               if ((refsrlgraph_m[refid].get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") &&
+		   (refsrlgraph_m[refid].get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
                   argsim = (*phrasesim)(refargphrase, hypargphrase, yisi::REF_MODE);
                } else {
                   auto rargemb = refsrlgraph_m[refid].get_role_filler_embs(refargid);
@@ -628,7 +632,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
       auto h = hypsrlgraph_m.get_role_filler_units(hyproot);
       //std::cerr<< h.size();
       std::pair<double, double> sentsim;
-      if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+      if ((inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") && 
+	  (inpsrlgraph_m.get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
          sentsim = (*phrasesim)(r, h, yisi::INP_MODE);
       } else {
          auto remb = inpsrlgraph_m.get_role_filler_embs(inproot);
@@ -658,7 +663,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                if (hyppredspan.first != hyppredspan.second) {
                   auto hyppredphrase = hypsrlgraph_m.get_role_filler_units(hyppredid);
                   std::pair<double, double> predsim;
-                  if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+                  if ((inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") && 
+		      (inpsrlgraph_m.get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
                      predsim = (*phrasesim)(inppredphrase, hyppredphrase, yisi::INP_MODE);
                   } else {
                      auto ipredemb = inpsrlgraph_m.get_role_filler_embs(inppredid);
@@ -688,7 +694,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                auto hypargid = *jt;
                auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
                std::pair<double, double> argsim;
-               if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+               if ((inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") && 
+		   (inpsrlgraph_m.get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
                   argsim = (*phrasesim)(inpargphrase, hypargphrase, yisi::INP_MODE);
                } else {
                   auto iargemb = inpsrlgraph_m.get_role_filler_embs(inpargid);
@@ -726,7 +733,8 @@ void yisigraph_t::align(phrasesim_t* phrasesim) {
                auto hypargid = *jt;
                auto hypargphrase = hypsrlgraph_m.get_role_filler_units(hypargid);
                std::pair<double, double> argsim;
-               if (inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") {
+               if ((inpsrlgraph_m.get_sent_type() != "uemb" ||  hypsrlgraph_m.get_sent_type() != "uemb") &&
+		   (inpsrlgraph_m.get_sent_type() != "bert" ||  hypsrlgraph_m.get_sent_type() != "bert")) {
                   argsim = (*phrasesim)(inpargphrase, hypargphrase, yisi::INP_MODE);
                } else {
                   auto iargemb = inpsrlgraph_m.get_role_filler_embs(inpargid);

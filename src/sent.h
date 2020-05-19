@@ -18,6 +18,7 @@
 #ifndef SENT_H
 #define SENT_H
 
+#include "contextual.h"
 #include "util.h"
 
 #include <utility>
@@ -42,9 +43,11 @@ namespace yisi {
       std::vector<std::string> get_tokens();
       std::vector<std::string> get_units(span_type uspan);
       std::vector<std::vector<double> > get_embs(span_type uspan);
+      double get_lmscore();
       void set_tokens(std::vector<std::string> t);
       void set_units(std::vector<std::string> u);
       void set_embs(std::vector<std::vector<double> > e);
+      void set_lmscore(double s);
       void set_tid2uspan(std::vector<span_type> t2u);
       void set_uid2tid(std::vector<size_t> u2t);
       span_type tspan2uspan(span_type tspan);
@@ -57,11 +60,12 @@ namespace yisi {
       std::vector<std::vector<double> > emb_m;
       std::vector<span_type> tid2uspan_m;
       std::vector<size_t> uid2tid_m;
+      double lmscore_m=0.0;
    }; // class sent_t
 
 
 //   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
-   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##T", std::string idemb_path="", std::string bert_config="");
+   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##T", std::string idemb_path="", std::string bert_config="", contextual_t* c=NULL);
 
 } // yisi
 

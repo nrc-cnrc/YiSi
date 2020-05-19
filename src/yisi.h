@@ -24,7 +24,7 @@
 #define DEFAULT_HYP_TYPE "word"
 #define DEFAULT_INP_TYPE "word"
 #define DEFAULT_CONTEXT_CONFIG "multi_cased_L-12_H-768_A-12:-4:512:8:0"
-#define DEFAULT_UNIT_DELIMITER "##T"    // BERT unit separator
+#define DEFAULT_UNIT_DELIMITER "##U"    // BERT unit separator
 #define DEFAULT_MODE "yisi"
 
 namespace yisi {
@@ -53,17 +53,17 @@ namespace yisi {
          using namespace com::masaers::cmdlp;
          p.add(make_knob(ref_type_m))
             .fallback(DEFAULT_REF_TYPE)
-            .desc("Type of reference sentences. [word(default)|unit|uemb]")
+            .desc("Type of reference sentences. [word(default)|unit|uemb|contextual]")
             .name("ref-type")
             ;
          p.add(make_knob(hyp_type_m))
             .fallback(DEFAULT_HYP_TYPE)
-            .desc("Type of hypothesis sentences. [word(default)|unit|uemb]")
+            .desc("Type of hypothesis sentences. [word(default)|unit|uemb|contextual]")
             .name("hyp-type")
             ;
          p.add(make_knob(inp_type_m))
             .fallback(DEFAULT_INP_TYPE)
-            .desc("Type of input. [word(default)|unit|uemb]")
+            .desc("Type of input. [word(default)|unit|uemb|contextual]")
             .name("inp-type")
             ;
 	 p.add(make_knob(context_config_m))
@@ -102,17 +102,17 @@ namespace yisi {
 
          p.add(make_knob(inp_unit_delim_m))
             .fallback(DEFAULT_UNIT_DELIMITER)
-            .desc("Unit delimiter for input segmented in subword units. (default: ##T)")
+            .desc("Unit delimiter for input segmented in subword units. (default: ##U)")
             .name("inp-unit-delim")
             ;
          p.add(make_knob(hyp_unit_delim_m))
             .fallback(DEFAULT_UNIT_DELIMITER)
-            .desc("Unit delimiter for hypotheses segmented in subword units. (default: ##T)")
+            .desc("Unit delimiter for hypotheses segmented in subword units. (default: ##U)")
             .name("hyp-unit-delim")
             ;
          p.add(make_knob(ref_unit_delim_m))
             .fallback(DEFAULT_UNIT_DELIMITER)
-            .desc("Unit delimiter for reference segmented in subword units separated by ':'. (default: ##T)")
+            .desc("Unit delimiter for reference segmented in subword units separated by ':'. (default: ##U)")
             .name("ref-unit-delim")
             ;
 

@@ -12,8 +12,8 @@
 # Override the value of MATEPLUS_HOME with a command line definition, or
 # consider defining MATEPLUS_HOME in your .profile, for example:
 #   export MATEPLUS_HOME=~/u/sandboxes/mateplus
-MATEPLUS_HOME ?= /home/loc982/u/tools/mateplus
 
+MATEPLUS_HOME ?=
 MATETOOLS_HOME ?= $(MATEPLUS_HOME)
 
 JAVA_HOME ?= /space/group/nrc_ict/pkgs/centos6/gcc-4.9.3/jdk1.8.0_131
@@ -54,7 +54,7 @@ PROG_NAMES := yisi
 TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
 	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
 	      emap_test oov_test ngram_test overlapvocab_test \
-	      yisiscorer_test testbin read_sent_test call_bert_test bert_test
+	      yisiscorer_test testbin read_sent_test call_bert_test bert_test contextual_test
 CMDLP_TEST_NAMES := cmdlp_test
 
 ifdef WITH_SRLMATE

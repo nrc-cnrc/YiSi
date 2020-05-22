@@ -26,18 +26,21 @@ from torch.nn import CrossEntropyLoss
 
 class Contextual_t:
     def __init__(self, modelname_str, layer_str):
+
         self.tokenizer = AutoTokenizer.from_pretrained(modelname_str)
         #NOTE: we use `output_hidden_states=True` to get the intermediate layers' output.
         config = AutoConfig.from_pretrained(modelname_str, output_hidden_states=True)
         self.model = AutoModelWithLMHead.from_pretrained(modelname_str, config=config)
         self.layer = int(layer_str)
+        #self.max_seq = config.to_dict()["max_position_embeddings"]
 
         # extract features (left-to-right LM scores at the last layer
         # and the intermediate states at any given layer) from loaded model for one sentence at a time
     def get_features(self, sentence):
         # Encode text
         # Add special tokens takes care of adding [CLS], [SEP], <s>... tokens in the right way for each model.
-        input_ids = torch.tensor([self.tokenizer.encode(sentence, add_special_tokens=True)])
+        tids = self.tokenizer.encode(sentence, add_special_tokens=True, max_length=self.tokenizer.max_len)
+        input_ids = torch.tensor([tids])
         
         with torch.no_grad():
             # Calling model(), i.e. model.forward(), returns the last layer prediction scores and all hidden states

@@ -42,6 +42,7 @@ namespace yisi {
       std::vector<std::string> get_tokens(span_type tspan);
       std::vector<std::string> get_tokens();
       std::vector<std::string> get_units(span_type uspan);
+      std::vector<std::string> get_units();
       std::vector<std::vector<double> > get_embs(span_type uspan);
       double get_lmscore();
       void set_tokens(std::vector<std::string> t);

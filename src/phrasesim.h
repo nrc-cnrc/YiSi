@@ -158,14 +158,18 @@ namespace yisi {
                                      int mode);
       double exact(std::vector<std::string>& reftokens, std::vector<std::string>& hyptokens);
       double mean(std::vector<std::string>& reftokens, std::vector<std::string>& hyptokens);
-
+      void learn_reflexweight(std::vector<std::vector<std::string> > sents);
+      void learn_hyplexweight(std::vector<std::vector<std::string> > sents);
+      void set_hyplexweight();
+      void learn_inplexweight(std::vector<std::vector<std::string> > sents);
+      std::string reflexweight_name_m;
+      std::string hyplexweight_name_m;
+      std::string inplexweight_name_m;
    private:
       lexsim_t* lexsim_p;
       lexweight_t* inplexweight_p;
       lexweight_t* reflexweight_p;
       lexweight_t* hyplexweight_p;
-      std::string hyplexweight_name_m;
-      std::string inplexweight_name_m;
       std::string phrasesim_name_m;
       int n_m;
    }; // class phrasesim_t

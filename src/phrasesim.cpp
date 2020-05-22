@@ -27,8 +27,12 @@ phrasesim_t::phrasesim_t(phrasesim_options opt) {
    lexsim_p = new lexsim_t(opt.lexsim_name_m, opt.outlexsim_path_m, opt.inplexsim_path_m);
    //std::cerr << "reflw_name\t" << opt.reflexweight_name_m << "\treflw_path\t" << opt.reflexweight_path_m
    //   << "\treflw_threshold\t" << opt.reflexweight_threshold_m << std::endl;
-   reflexweight_p = new lexweight_t(opt.reflexweight_name_m, opt.reflexweight_path_m);
-   if (opt.hyplexweight_name_m != "") {
+   reflexweight_p = hyplexweight_p = inplexweight_p = NULL;
+
+   if (opt.reflexweight_name_m != "learn"){
+     reflexweight_p = new lexweight_t(opt.reflexweight_name_m, opt.reflexweight_path_m);
+   }
+   if (opt.hyplexweight_name_m != "" && opt.hyplexweight_name_m != "learn") {
       //std::cerr << "hyplw_name\t" << opt.hyplexweight_name_m << "\thyplw_path\t" << opt.hyplexweight_path_m
       //   << "\thyplw_threshold\t" << opt.hyplexweight_threshold_m << std::endl;
       hyplexweight_p = new lexweight_t(opt.hyplexweight_name_m, opt.hyplexweight_path_m);
@@ -36,11 +40,12 @@ phrasesim_t::phrasesim_t(phrasesim_options opt) {
       hyplexweight_p = reflexweight_p;
    }
 
-   if (opt.inplexweight_name_m != "") {
+   if (opt.inplexweight_name_m != "" && opt.inplexweight_name_m != "learn") {
       inplexweight_p = new lexweight_t(opt.inplexweight_name_m, opt.inplexweight_path_m);
    }
 
    phrasesim_name_m = opt.phrasesim_name_m;
+   reflexweight_name_m = opt.reflexweight_name_m;
    hyplexweight_name_m = opt.hyplexweight_name_m;
    inplexweight_name_m = opt.inplexweight_name_m;
    n_m = opt.n_m;
@@ -51,6 +56,7 @@ phrasesim_t::phrasesim_t(phrasesim_t& rhs) {
    reflexweight_p = new lexweight_t(*(rhs.reflexweight_p));
    hyplexweight_p = new lexweight_t(*(rhs.hyplexweight_p));
    inplexweight_p = new lexweight_t(*(rhs.inplexweight_p));
+   reflexweight_name_m = rhs.reflexweight_name_m;
    hyplexweight_name_m = rhs.hyplexweight_name_m;
    inplexweight_name_m = rhs.inplexweight_name_m;
    phrasesim_name_m = rhs.phrasesim_name_m;
@@ -463,4 +469,24 @@ double phrasesim_t::mean(std::vector<std::string>& reftokens, std::vector<std::s
    double result = lexsim_p->get_sim(ref, hyp);
    //std::cerr << "Done" << std::endl;
    return result;
+}
+
+void phrasesim_t::learn_reflexweight(vector<vector<string> > sents){
+   reflexweight_p = new lexweight_t(sents);
+}
+
+void phrasesim_t::learn_hyplexweight(vector<vector<string> > sents){
+   if (hyplexweight_name_m != ""){
+      hyplexweight_p = new lexweight_t(sents);
+   }
+}
+
+void phrasesim_t::set_hyplexweight(){
+   if (reflexweight_p != NULL){
+      hyplexweight_p = reflexweight_p;
+   }
+}
+
+void phrasesim_t::learn_inplexweight(vector<vector<string> > sents){
+  inplexweight_p = new lexweight_t(sents);
 }

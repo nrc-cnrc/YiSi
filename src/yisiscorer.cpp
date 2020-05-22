@@ -146,7 +146,20 @@ void yisiscorer_t::estimate_weight(std::vector<std::vector<srlgraph_t> > msrls) 
    }
 }
 
-std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents) {
+std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents) { 
+   if (phrasesim_p->inplexweight_name_m == "learn"){
+      cerr << "Learning inp lex weight ... ";
+      vector<vector<string> > tokens;
+      for (auto it=inpsents.begin(); it!=inpsents.end(); it++){
+	if ((*it)->get_type() == "word"){
+	   tokens.push_back((*it)->get_tokens());
+	} else {
+	   tokens.push_back((*it)->get_units());
+	}
+      } 
+      phrasesim_p->learn_inplexweight(tokens);
+      cerr << "Done." <<endl;
+   }
    //std::cerr << "Tokenizing/SRL-ing the input ...";
    std::vector<srlgraph_t> result = inpsrl_p->parse(inpsents);
    //std::cerr << "Done." << std::endl;
@@ -157,6 +170,19 @@ std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents)
 }
 
 std::vector<srlgraph_t> yisiscorer_t::refsrlparse(std::vector<sent_t*> refsents) {
+   if (phrasesim_p->reflexweight_name_m == "learn"){
+      cerr << "Learning ref lex weight ... ";
+      vector<vector<string> > tokens;
+      for (auto it=refsents.begin(); it!=refsents.end(); it++){
+	if ((*it)->get_type() == "word"){
+	   tokens.push_back((*it)->get_tokens());
+	} else {
+	   tokens.push_back((*it)->get_units());
+	}
+      }
+      phrasesim_p->learn_reflexweight(tokens);
+      cerr << "Done." <<endl;
+   }
    //std::cerr << "Tokenizing/SRL-ing the references ... ";
    std::vector<srlgraph_t> result = refsrl_p->parse(refsents);
    //std::cerr << "Done." << std::endl;
@@ -167,6 +193,21 @@ std::vector<srlgraph_t> yisiscorer_t::refsrlparse(std::vector<sent_t*> refsents)
 }
 
 std::vector<srlgraph_t> yisiscorer_t::hypsrlparse(std::vector<sent_t*> hypsents) {
+   if (phrasesim_p->hyplexweight_name_m == "learn"){
+      cerr << "Learning hyp lex weight ... ";
+      vector<vector<string> > tokens;
+      for (auto it=hypsents.begin(); it!=hypsents.end(); it++){
+	if ((*it)->get_type() == "word"){
+	   tokens.push_back((*it)->get_tokens());
+	} else {
+	   tokens.push_back((*it)->get_units());
+	}
+      }
+      phrasesim_p->learn_hyplexweight(tokens);
+      cerr << "Done." <<endl;
+   } else if (phrasesim_p->hyplexweight_name_m == ""){
+      phrasesim_p->set_hyplexweight();
+   }
    //std::cerr << "Tokenizing/SRL-ing the hypotheses ... ";
    std::vector<srlgraph_t> result = hypsrl_p->parse(hypsents);
    //std::cerr << "Done." << std::endl;

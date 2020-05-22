@@ -31,14 +31,6 @@ using namespace std;
 bool contextual_t::is_python_init_m = false;
 int contextual_t::obj_cnt_m = 0;
 
-/*
-const char* bert_bert_default_bert_model = "multi_cased_L-12_H-768_A-12";
-const char* bert_bert_default_layers = "-4";
-const int bert_bert_default_max_seq_length = 512;
-const int bert_bert_default_batch_size = 8;
-const bool bert_bert_default_do_lower_case = false;
-*/
-
 contextual_t::contextual_t(string config_str) {
    auto configs = tokenize(config_str, ':');
    string modelname, layer;
@@ -149,7 +141,7 @@ contextual_t::~contextual_t() {
 } // ~contextual_t
 
 contextualfeatures_t contextual_t::get_features(string sent) {
-  //cerr << "Calling Contextual_t.get_features ... " << endl;
+   //cerr << "Calling Contextual_t.get_features ... " << endl;
    contextualfeatures_t result;
    PyObject *pResult = PyObject_CallMethod(p_contextual_model_object_m,
                                            (char *)"get_features",

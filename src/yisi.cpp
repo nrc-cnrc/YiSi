@@ -108,14 +108,10 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
       cerr << "Done." << endl;
    }
 
-   cerr << "Creating hyp srlgraphs... ";
-   vector<srlgraph_t> hypsrlgraphs = yisi.hypsrlparse(hypsents);
-   cerr << "Done." << endl;
-
-   vector < vector<srlgraph_t> > refsrlgraphs(hypsrlgraphs.size());
+   vector < vector<srlgraph_t> > refsrlgraphs(hypsents.size());
    if (refsents.size() > 0) {
       cerr << "Creating ref srlgraphs... ";
-      for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
+      for (size_t i = 0; i < hypsents.size(); i++) {
          refsrlgraphs[i] = yisi.refsrlparse(refsents[i]);
       }
       cerr << "Done." << endl;
@@ -127,6 +123,10 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
       inpsrlgraphs = yisi.inpsrlparse(inpsents);
       cerr << "Done." << endl;
    }
+
+   cerr << "Creating hyp srlgraphs... ";
+   vector<srlgraph_t> hypsrlgraphs = yisi.hypsrlparse(hypsents);
+   cerr << "Done." << endl;
 
    double docscore = 0.0;
 

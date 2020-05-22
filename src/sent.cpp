@@ -94,6 +94,10 @@ vector<string> sent_t::get_units(span_type uspan) {
    return result;
 }
 
+vector<string> sent_t::get_units() {
+   return unit_m;
+} 
+
 vector<vector<double> > sent_t::get_embs(span_type uspan) {
    if (sent_type_m == "uemb" || sent_type_m == "bert" || sent_type_m == "contextual") {
       vector<vector<double> > result;

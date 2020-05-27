@@ -26,11 +26,11 @@ from torch.nn import CrossEntropyLoss
 
 class Contextual_t:
     def __init__(self, modelname_str, layer_str):
-
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.tokenizer = AutoTokenizer.from_pretrained(modelname_str)
         #NOTE: we use `output_hidden_states=True` to get the intermediate layers' output.
         config = AutoConfig.from_pretrained(modelname_str, output_hidden_states=True)
-        self.model = AutoModelWithLMHead.from_pretrained(modelname_str, config=config)
+        self.model = AutoModelWithLMHead.from_pretrained(modelname_str, config=config).to(self.device)
         self.layer = int(layer_str)
         #self.max_seq = config.to_dict()["max_position_embeddings"]
 
@@ -40,7 +40,7 @@ class Contextual_t:
         # Encode text
         # Add special tokens takes care of adding [CLS], [SEP], <s>... tokens in the right way for each model.
         tids = self.tokenizer.encode(sentence, add_special_tokens=True, max_length=self.tokenizer.max_len)
-        input_ids = torch.tensor([tids])
+        input_ids = torch.tensor([tids]).to(self.device)
         
         with torch.no_grad():
             # Calling model(), i.e. model.forward(), returns the last layer prediction scores and all hidden states

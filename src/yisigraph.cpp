@@ -18,6 +18,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 using namespace yisi;
 using namespace std;
@@ -435,6 +436,44 @@ yisigraph_t::label_type yisigraph_t::get_alignlabel(srlnid_type roleid, int mode
          cerr << "ERROR: Unknown mode in get align label. Contact Jackie. Exiting..." << endl;
          exit(1);
    }
+}
+
+double yisigraph_t::get_refnormlmscore(){
+  vector<double> s;
+  // return the min lm score of multiple references
+  for (auto it=refsrlgraph_m.begin(); it != refsrlgraph_m.end(); it++){
+    s.push_back(it->get_normlmscore());
+  }
+  if (s.size() > 0){
+    return *min_element(s.begin(), s.end());
+  } else return 0.0;
+}
+
+double yisigraph_t::get_hypnormlmscore(){
+  return hypsrlgraph_m.get_normlmscore();
+}
+
+double yisigraph_t::get_inpnormlmscore(){
+  return inpsrlgraph_m.get_normlmscore();
+}
+
+double yisigraph_t::get_reflmscore(){
+   vector<double> s;
+   // return the min lm score of multiple references
+   for (auto it=refsrlgraph_m.begin(); it != refsrlgraph_m.end(); it++){
+      s.push_back(it->get_lmscore());
+   }
+   if (s.size() > 0){
+      return *min_element(s.begin(), s.end());
+   } else return 0.0;
+}
+
+double yisigraph_t::get_hyplmscore(){
+   return hypsrlgraph_m.get_lmscore();
+}
+
+double yisigraph_t::get_inplmscore(){
+   return inpsrlgraph_m.get_lmscore();
 }
 
 double yisigraph_t::spanlength(span_type span) {

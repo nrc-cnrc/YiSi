@@ -132,26 +132,26 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
 
    for (size_t i = 0; i < hypsrlgraphs.size(); i++) {
       cout << "Evaluating line " << i + 1 << endl;
-      yisigraph_t m;
+      yisigraph_t yg;
       if (! eval_opt.inp_file_m.empty()) {
          // cerr << "inpsrlgraph:" << endl;
          // inpsrlgraphs[i].print(cout, i);
          // cerr << "hypsrlgraph:" << endl;
          // hypsrlgraphs[i].print(cout, i);
          // cerr << "yisigraph:" << endl;
-         m = yisi.align(refsrlgraphs[i], hypsrlgraphs[i], inpsrlgraphs[i]);
+         yg = yisi.align(refsrlgraphs[i], hypsrlgraphs[i], inpsrlgraphs[i]);
          // m.print(cout);
       } else {
          // hypsrlgraphs[i].print(cout, i);
-         m = yisi.align(refsrlgraphs[i], hypsrlgraphs[i]);
+         yg = yisi.align(refsrlgraphs[i], hypsrlgraphs[i]);
          // m.print(cout);
       }
       if (eval_opt.mode_m != "features") {
-         double s = yisi.score(m);
+	 double s = yisi.score(yg, eval_opt.mode_m);
          sntout << s << endl;
          docscore += s;
       } else {
-         auto f = yisi.features(m);
+         auto f = yisi.features(yg);
          for (auto it = f.begin(); it != f.end(); it++) {
             sntout << *it << " ";
          }

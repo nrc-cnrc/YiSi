@@ -150,6 +150,14 @@ size_t srlgraph_t::get_sent_length() {
    return sent_p->get_token_size();
 }
 
+double srlgraph_t::get_normlmscore() {
+  return sent_p->get_normlmscore();
+}
+
+double srlgraph_t::get_lmscore() {
+   return sent_p->get_lmscore();
+}
+
 
 void srlgraph_t::set_tokens(vector<string>& tokens) {
    //cerr<<"Setting new tokens...";

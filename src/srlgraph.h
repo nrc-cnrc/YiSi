@@ -64,6 +64,8 @@ namespace yisi {
       span_type get_role_span(srlnid_type roleid);
       std::string get_sent_type(){return sent_p->get_type();};
       size_t get_sent_length();
+      double get_normlmscore();
+      double get_lmscore();
 
       void set_tokens(std::vector<std::string>& tokens);
       void set_sent(sent_t* sent);

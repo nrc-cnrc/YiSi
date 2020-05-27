@@ -15,6 +15,7 @@
  */
 
 #include "yisiscorer.h"
+#include <algorithm>
 
 using namespace yisi;
 using namespace std;
@@ -22,10 +23,10 @@ using namespace std;
 yisiscorer_t::yisiscorer_t() {}
 
 yisiscorer_t::yisiscorer_t(yisi_options yisi_opt, phrasesim_options phrase_opt) {
-   alpha_m = yisi_opt.alpha_m;
    frameweight_name_m = yisi_opt.frameweight_name_m;
    alpha_m = yisi_opt.alpha_m;
    beta_m = yisi_opt.beta_m;
+   gamma_m = yisi_opt.gamma_m;
 
    int i = 0;
    if (yisi_opt.labelconfig_path_m != "") {
@@ -252,58 +253,39 @@ double yisiscorer_t::score(std::string input, std::string hyp) {
       std::vector< srlgraph_t > inpsrlgraphs = inpsrlparse(std::vector< sent_t* >{sent_inp});
       srlgraph_t hypsrlgraphs = hypsrlparse(sent_hyp);
       yisigraph_t m = align(dummy, hypsrlgraphs, inpsrlgraphs.at(0));
-      return score(m);
+      return score(m, "yisi");
 }
 
-double yisiscorer_t::score(yisigraph_t& yg) {
+double yisiscorer_t::score(yisigraph_t& yg, string yisi_mode) {
    double precision = score(yg, yisi::HYP_MODE);
    double recall = score(yg, yisi::REF_MODE);
+
    double yisi = 0.0;
    if (precision == 0.0 || recall == 0.0) {
       yisi = 0.0;
-   } else {
+   } else if (yisi_mode == "yisi"){
+      yisi = (precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall);
+   } else if (yisi_mode == "yisi+nlm"){
+      // linear combination of semantic score and hyp normalized lm score weighted by gamma
+      yisi = ((1.0-gamma_m) * ((precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall))) +
+             (gamma_m * yg.get_hypnormlmscore());
+   } else if (yisi_mode == "yisi+lm"){
+      // linear combination of semantic score and hyp normalized lm score weighted by gamma
+      yisi = ((1.0-gamma_m) * ((precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall))) +
+	     (gamma_m * yg.get_hyplmscore());
+   } else if (yisi_mode == "yisi_lm"){
+      double hyplmscore = yg.get_hyplmscore();
+      double reflmscore = yg.get_reflmscore();
+      double inplmscore = 1.0;
+      if (yg.withinp()) {
+	 inplmscore = yg.get_inplmscore();
+      }
+      double denom = min(reflmscore, inplmscore);
+      precision = (1.0-gamma_m) * precision + gamma_m * hyplmscore;
+      recall = (1.0-gamma_m) * recall + gamma_m * (hyplmscore/max(denom, hyplmscore));
       yisi = (precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall);
    }
    return yisi;
-   //double flat = yg.get_sentsim();
-   //if (mode_m == "flat") {
-   //   return flat;
-   //} else {
-   //   //std::cerr<<"Computing YiSi precision ... ";
-   //   double precision = score(yg, yisi::HYP_MODE);
-   //   //std::cerr<<"Done."<<std::endl;
-   //   //std::cerr<<"Computing YiSi recall ... ";
-   //   double recall = score(yg, yisi::REF_MODE);
-   //   //std::cerr<<"Done."<<std::endl;
-   //   double yisi = 0.0;
-   //   if (precision == 0.0 || recall == 0.0) {
-   //      yisi = 0.0;
-   //   } else {
-   //      yisi = (precision * recall)
-   //             / (alpha_m * precision + (1.0 - alpha_m) * recall);
-
-   //      if (prfunc_name_m == "f" || prfunc_name_m == "lexexp") {
-   //         yisi = (precision * recall)
-   //                / (alpha_m * precision + (1.0 - alpha_m) * recall);
-   //      } else if (prfunc_name_m == "max") {
-   //         yisi = std::max(precision, recall);
-   //      } else {
-   //         std::cerr
-   //            << "ERROR: unknown precision/recall agg function name. Exiting ..."
-   //            << std::endl;
-   //         exit(1);
-   //      }
-   //   }
-   //   if (mode_m == "yisi" || mode_m == "yisi_flat"
-   //      || mode_m == "features") {
-   //      return yisi;
-   //   } else if (mode_m == "yisi+float") {
-   //      return (yisi + flat) / 2.0;
-   //   } else {
-   //      double w = std::atof(mode_m.c_str());
-   //      return w * yisi + (1 - w) * flat;
-   //   }
-   //}
 }
 
 std::vector<double> yisiscorer_t::features(yisigraph_t& yg) {
@@ -331,93 +313,6 @@ double yisiscorer_t::score(yisigraph_t yg, int mode) {
    //std::cerr <<"Done."<<std::endl;
    return beta_m * structure + (1 - beta_m) * flat;
 
-   //double nom = 0.0;
-   //double denom = 0.0;
-   //if (yg.get_sentlength(mode) == 0.0) {
-   //   return 0.0;
-   //}
-   //if (mode_m == "yisi_flat") {
-   //   if (frameweight_name_m == "coverage") {
-   //      nom += yg.get_sentlength(mode) * yg.get_sentsim();
-   //      denom += yg.get_sentlength(mode);
-   //   } else {
-   //      nom += yg.get_sentsim();
-   //      denom += 1;
-   //   }
-   //}
-
-   //auto preds = yg.get_preds(mode);
-
-   //for (auto it = preds.begin(); it != preds.end(); it++) {
-   //   auto predid = *it;
-   //   double sanity_check = yg.get_rolespanlength(predid, mode);
-   //   double predsim = yg.get_alignsim(predid, mode);
-   //   auto predlabel = yg.get_rolelabel(predid, mode);
-   //   double predweight = get_roleweight(yg, predid, mode);
-
-   //   if (sanity_check > 0) {
-   //      // if (prfunc_name_m=="f" || prfunc_name_m=="max"){
-   //      double fw = yg.get_rolespanlength(predid, mode);
-   //      double fn = 0.0;
-   //      if (predsim >= rolesim_threshold_m) {
-   //         fn = predweight * predsim;
-   //      }
-   //      double fd = predweight;
-   //      auto args = yg.get_args(predid, mode);
-   //      for (auto jt = args.begin(); jt != args.end(); jt++) {
-   //         auto argid = *jt;
-   //         fw += yg.get_rolespanlength(argid, mode);
-
-   //         auto arglabel = yg.get_rolelabel(argid, mode);
-   //         auto alignlabel = yg.get_alignlabel(argid, mode);
-   //         double argsim = yg.get_alignsim(argid, mode);
-   //         double argweight = get_roleweight(yg, argid, mode);
-   //         if (argsim >= rolesim_threshold_m
-   //            && match(arglabel, alignlabel)) {
-   //            fn += argweight * argsim;
-   //         }
-   //         fd += argweight;
-   //      }
-   //      if (fn > 0 && fd > 0) {
-   //         if (frameweight_name_m == "coverage") {
-   //            nom += fw * (fn / fd);
-   //         } else {
-   //            nom += fn / fd;
-   //         }
-   //      }
-   //      if (frameweight_name_m == "coverage") {
-   //         denom += fw;
-   //      } else {
-   //         denom += 1;
-   //      }
-   //   } else {
-   //      if (predsim >= rolesim_threshold_m) {
-   //         nom = predweight * predsim;
-   //      }
-   //      denom += predweight;
-   //      auto args = yg.get_args(predid, mode);
-   //      for (auto jt = args.begin(); jt != args.end(); jt++) {
-   //         auto argid = *jt;
-   //         auto arglabel = yg.get_rolelabel(argid, mode);
-   //         auto alignlabel = yg.get_alignlabel(argid, mode);
-   //         double argsim = yg.get_alignsim(argid, mode);
-   //         double argweight = get_roleweight(yg, argid, mode);
-   //         if (argsim >= rolesim_threshold_m
-   //            && match(arglabel, alignlabel)) {
-   //            nom += argweight * argsim;
-   //         }
-   //         denom += argweight;
-   //      }
-
-   //   }
-
-   //}
-   //}
-   //if (nom > 0 && denom > 0) {
-   //   return nom/denom;
-   //} else {
-   //   return 0.0;
-   //}
 }
 
 std::vector<double> yisiscorer_t::features(yisigraph_t yg, int mode) {

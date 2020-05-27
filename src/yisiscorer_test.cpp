@@ -49,7 +49,7 @@ int main(const int argc, const char* argv[])
       rs.push_back(r1[i]);
       yisigraph_t m = yisi.align(rs,r2[i]);
 
-      cout << "YiSi score is:" << yisi.score(m) << endl;
+      cout << "YiSi score is:" << yisi.score(m, "yisi") << endl;
    }
    for (auto it = refsents.begin(); it != refsents.end(); it++) {
       delete *it;

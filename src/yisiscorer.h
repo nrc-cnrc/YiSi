@@ -30,6 +30,7 @@
 
 #define DEFAULT_ALPHA 0.5
 #define DEFAULT_BETA 0.0
+#define DEFAULT_GAMMA 0.0
 #define DEFAULT_FRAMEWEIGHT_NAME "coverage"
 
 
@@ -49,6 +50,7 @@ namespace yisi {
 
       double alpha_m = DEFAULT_ALPHA;
       double beta_m = DEFAULT_BETA;
+      double gamma_m = DEFAULT_GAMMA;
 
       void init(com::masaers::cmdlp::parser& p) {
          using namespace com::masaers::cmdlp;
@@ -117,6 +119,11 @@ namespace yisi {
 	   .desc("Ratio of precision & recall in YiSi")
 	   .name("alpha")
 	   ;
+	 p.add(make_knob(gamma_m))
+	   .fallback(DEFAULT_GAMMA)
+	   .desc("Ratio of semantic similarity and LM [0.0 (default)]")
+	   .name("gamma")
+	   ;
       }
    }; // struct yisi_options
 
@@ -135,7 +142,7 @@ namespace yisi {
       yisigraph_t align(const std::vector<srlgraph_t> refsrlgraph,
                         const srlgraph_t hypsrlgraph, const srlgraph_t inpsrlgraph);
       double score(std::string input, std::string hyp);
-      double score(yisigraph_t& yg);
+      double score(yisigraph_t& yg, std::string yisi_mode);
       std::vector<double> features(yisigraph_t& yg);
 
    private:
@@ -165,6 +172,7 @@ namespace yisi {
       std::vector<double> weight_m;
       double alpha_m;
       double beta_m;
+      double gamma_m;
    }; // class yisiscorer_t
 
 } // yisi

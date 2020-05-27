@@ -60,6 +60,12 @@ namespace yisi {
       std::vector<std::pair<int, alignment_type> > get_hypalignment(srlnid_type roleid);
       double get_alignsim(srlnid_type roleid, int mode, int refid=-1);
       label_type get_alignlabel(srlnid_type roleid, int mode, int refid=-1);
+      double get_refnormlmscore();
+      double get_hypnormlmscore();
+      double get_inpnormlmscore();
+      double get_reflmscore();
+      double get_hyplmscore();
+      double get_inplmscore();
 
       void print(std::ostream& os);
 

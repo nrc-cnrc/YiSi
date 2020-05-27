@@ -112,8 +112,15 @@ vector<vector<double> > sent_t::get_embs(span_type uspan) {
    }
 }
 
+double sent_t::get_normlmscore(){
+   // return the normalized lm prob 
+   double result = lmscore_m / unit_m.size();
+   
+   return exp2(-result);
+}
+
 double sent_t::get_lmscore(){
-   return lmscore_m;
+  return exp2(-lmscore_m);
 }
 
 sent_t::span_type sent_t::tspan2uspan(span_type tspan) {

@@ -275,7 +275,10 @@ double yisiscorer_t::score(yisigraph_t& yg, string yisi_mode) {
 	     (gamma_m * yg.get_hyplmscore());
    } else if (yisi_mode == "yisi_lm"){
       double hyplmscore = yg.get_hyplmscore();
-      double reflmscore = yg.get_reflmscore();
+      double reflmscore = 1.0;
+      if (yg.get_refsize() > 0) {
+	reflmscore = yg.get_reflmscore();
+      }
       double inplmscore = 1.0;
       if (yg.withinp()) {
 	 inplmscore = yg.get_inplmscore();

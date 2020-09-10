@@ -179,7 +179,7 @@ size_t sent_t::get_token_size() {
    return token_m.size();
 }
 
-vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path, string context_config, contextual_t* contextual_p) {
+vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path, string context_config, contextual_t* contextual_p, int mode) {
    vector<sent_t*> result;
    vector<vector<double> > sent_emb;
    vector<sent_t::span_type> sent_t2u;
@@ -236,12 +236,14 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
          }
          unit_delim = unit_delim.substr(1);
       }
+      /*
       txt_idx = unit_delim.find_first_of(alphabet);  // should have no alphabetic left
       if (txt_idx != string::npos) {
          cerr << "ERROR: unit_delim (" << orig_delim << ") must contain at most 1 "
               << "alphabetic character at either the start or end. Exiting..." << endl;
          exit(EXIT_FAILURE);
       }
+      */
    }
 
    size_t num_sents;
@@ -295,7 +297,11 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       if (sent_type == "bert") {
          sent_units = bert_p->get_units(bert_id, sent_idx);
       } else if (sent_type == "contextual"){
-	 features = contextual_p->get_features(file_strs.at(sent_idx));
+	 if (mode==yisi::INP_MODE){
+	    features = contextual_p->get_proj_features(file_strs.at(sent_idx));
+	 } else {
+	    features = contextual_p->get_features(file_strs.at(sent_idx));
+	 }
 	 sent_units = features.units_m;
 	 sent_p->set_lmscore(features.lmscore_m);
       } else {

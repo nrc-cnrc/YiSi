@@ -33,13 +33,21 @@ int contextual_t::obj_cnt_m = 0;
 
 contextual_t::contextual_t(string config_str) {
    auto configs = tokenize(config_str, ':');
-   string modelname, layer;
+   string modelname, layer, projection, proj_type;
+   projection="";
+   proj_type="";
    if (configs.size()<2){
      cerr <<"ERROR: Too few parameters for contextual model. Exiting...";
      exit(EXIT_FAILURE);
    } else {
      modelname = configs[0];
      layer = configs[1];
+     if (configs.size() >2){
+       projection = configs[2];
+     }
+     if (configs.size() == 4){
+       proj_type = configs[3];
+     }
    }
    
    PyObject *pName, *pModule, *pClass, *pModelObject;
@@ -101,21 +109,32 @@ contextual_t::contextual_t(string config_str) {
       PyTuple_SetItem(pArgs, idx, pValue);
    };
 
-   pArgs = PyTuple_New(2);
+   pArgs = PyTuple_New(configs.size());
    if (pArgs == NULL) {
       PyErr_Print();
-      cerr << "Python ERROR: Cannot create pArgs tuple of size 2. Exiting..." << endl;
+      cerr << "Python ERROR: Cannot create pArgs tuple of size 4. Exiting..." << endl;
       exit(EXIT_FAILURE);
    }
-   
+   cerr << "Done." << endl;
+
+   cerr << "Loading " << modelname;   
    pValue = PyUnicode_FromString(modelname.c_str());
    check_and_set_pArgs(0, "string", modelname.c_str());
    pValue = PyUnicode_FromString(layer.c_str());
    check_and_set_pArgs(1, "string", layer.c_str());
+   if (configs.size() > 2){
+     cerr<<" and " << projection;
+     pValue = PyUnicode_FromString(projection.c_str());
+     check_and_set_pArgs(2, "string", projection.c_str());
+   }
 
-   cerr << "Done." << endl;
+   if (configs.size() == 4){
+     cerr<<" " << proj_type;
+     pValue = PyUnicode_FromString(proj_type.c_str());
+     check_and_set_pArgs(3, "string", proj_type.c_str());
+   }
 
-   cerr << "Loading " << modelname << " ... ";
+   cerr << " ... ";
 
    pModelObject = PyObject_CallObject(pClass, pArgs);
    Py_DECREF(pArgs);
@@ -197,4 +216,63 @@ contextualfeatures_t contextual_t::get_features(string sent) {
    Py_DECREF(pResultF);
    Py_DECREF(pResult);
    return result;
+} // get_features
+
+contextualfeatures_t contextual_t::get_proj_features(string sent) {
+  //cerr << "Calling Contextual_t.get_features ... " << endl;
+  contextualfeatures_t result;
+  PyObject *pResult = PyObject_CallMethod(p_contextual_model_object_m,
+					  (char *)"get_proj_features",
+					  (char *)"(s)",
+					  sent.c_str());
+  if (pResult == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Method call failed: Contextual_t.get_proj_features."
+	 << " Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (! PySequence_Check(pResult)) {
+    cerr << "Python ERROR: Contextual_t.get_proj_features did not return a sequence."
+	 << " Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  PyObject *pResultF = PySequence_Fast(pResult, "Expected result to be a sequence.");
+
+  PyObject *pLmscore = PySequence_Fast_GET_ITEM(pResultF, 0);
+  result.lmscore_m = PyFloat_AsDouble(pLmscore);
+
+  PyObject *pUnits = PySequence_Fast_GET_ITEM(pResultF, 1);
+  PyObject *pUnitsF = PySequence_Fast(pUnits, "Expected result to be a sequence.");
+  Py_ssize_t units_len = PySequence_Fast_GET_SIZE(pUnitsF);
+  result.units_m.reserve((size_t)units_len);
+  for (auto i=0; i < units_len; i++) {
+    PyObject *pUnit = PySequence_Fast_GET_ITEM(pUnitsF, i);
+    result.units_m.push_back(string(PyUnicode_AsUTF8(pUnit)));
+  }
+
+  PyObject *pEmbeddings = PySequence_Fast_GET_ITEM(pResultF, 2);
+  PyObject *pEmbeddingsF = PySequence_Fast(pEmbeddings, "Expected embeddings to be a sequence.");
+  Py_ssize_t embeddings_len = PySequence_Fast_GET_SIZE(pEmbeddingsF);
+  result.embeddings_m.reserve((size_t)embeddings_len);
+
+  for (auto i=0; i< embeddings_len; i++){
+    vector<double> unit_emb;
+    PyObject *pEmbedding = PySequence_Fast_GET_ITEM(pEmbeddingsF, i);
+    PyObject *pEmbeddingF = PySequence_Fast(pEmbedding, "Expected embedding to be a sequence.");
+    Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pEmbeddingF);
+    unit_emb.reserve((size_t)unit_emb_len);
+    for (auto j=0; j<unit_emb_len; j++){
+      PyObject *pValue = PySequence_Fast_GET_ITEM(pEmbeddingF, j);
+      unit_emb.push_back(PyFloat_AsDouble(pValue));
+    }
+    result.embeddings_m.push_back(unit_emb);
+    Py_DECREF(pEmbeddingF);
+  }
+  Py_DECREF(pEmbeddingsF);
+  Py_DECREF(pUnitsF);
+  Py_DECREF(pResultF);
+  Py_DECREF(pResult);
+  return result;
 } // get_features

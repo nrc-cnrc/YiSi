@@ -135,7 +135,7 @@ namespace yisi {
       void estimate_weight(std::vector<srlgraph_t> srls);
       void estimate_weight(std::vector<std::vector<srlgraph_t> > msrls);
       std::vector<srlgraph_t> inpsrlparse(std::vector<sent_t*> inpsents);
-      std::vector<srlgraph_t> refsrlparse(std::vector<sent_t*> refsents);
+      std::vector<std::vector<srlgraph_t> > refsrlparse(std::vector<std::vector<sent_t*> > refsents);
       std::vector<srlgraph_t> hypsrlparse(std::vector<sent_t*> hypsents);
       srlgraph_t hypsrlparse(sent_t* hypsent);
       yisigraph_t align(const std::vector<srlgraph_t> refsrlgraph, const srlgraph_t hypsrlgraph);

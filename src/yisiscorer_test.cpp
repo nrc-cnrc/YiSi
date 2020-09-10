@@ -37,23 +37,29 @@ int main(const int argc, const char* argv[])
 
    string reffile("test_ref.en");
    string hypfile("test_hyp.en");
-   vector<sent_t*> refsents = read_sent("word", reffile);
+   vector<sent_t*> refsent = read_sent("word", reffile);
    vector<sent_t*> hypsents = read_sent("word", hypfile);
+   vector<vector<sent_t*> > refsents;
+   for (size_t i=0; i<refsent.size(); i++){
+     vector<sent_t*> r;
+     r.push_back(refsent[i]);
+     refsents.push_back(r);
+   }
 
    auto r1 = yisi.refsrlparse(refsents);
    auto r2 = yisi.hypsrlparse(hypsents);
 
    for (size_t i=0; i < r1.size(); i++) {
       //cerr << "Building YiSi graph" << endl;
-      vector<srlgraph_t> rs;
-      rs.push_back(r1[i]);
-      yisigraph_t m = yisi.align(rs,r2[i]);
+      yisigraph_t m = yisi.align(r1[i],r2[i]);
 
       cout << "YiSi score is:" << yisi.score(m, "yisi") << endl;
    }
    for (auto it = refsents.begin(); it != refsents.end(); it++) {
-      delete *it;
-      *it = NULL;
+     for (auto jt = it->begin(); jt != it->end(); jt++){
+       delete *jt;
+       *jt = NULL;
+     }
    }
    for (auto it = hypsents.begin(); it != hypsents.end(); it++) {
       delete *it;

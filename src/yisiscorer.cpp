@@ -170,22 +170,27 @@ std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents)
    return result;
 }
 
-std::vector<srlgraph_t> yisiscorer_t::refsrlparse(std::vector<sent_t*> refsents) {
+std::vector<std::vector<srlgraph_t> > yisiscorer_t::refsrlparse(std::vector<std::vector<sent_t*> > refsents) {
    if (phrasesim_p->reflexweight_name_m == "learn"){
       cerr << "Learning ref lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=refsents.begin(); it!=refsents.end(); it++){
-	if ((*it)->get_type() == "word"){
-	   tokens.push_back((*it)->get_tokens());
-	} else {
-	   tokens.push_back((*it)->get_units());
+	for (auto jt=it->begin(); jt!=it->end(); jt++){
+	  if ((*jt)->get_type() == "word"){
+	    tokens.push_back((*jt)->get_tokens());
+	  } else {
+	    tokens.push_back((*jt)->get_units());
+	  }
 	}
       }
       phrasesim_p->learn_reflexweight(tokens);
       cerr << "Done." <<endl;
    }
    //std::cerr << "Tokenizing/SRL-ing the references ... ";
-   std::vector<srlgraph_t> result = refsrl_p->parse(refsents);
+   std::vector<std::vector<srlgraph_t> > result;
+   for (size_t i=0; i<refsents.size(); i++){
+     result.push_back(refsrl_p->parse(refsents[i]));
+   }
    //std::cerr << "Done." << std::endl;
    if (weightconfig_path_m == "") {
       this->estimate_weight(result);

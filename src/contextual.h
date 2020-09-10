@@ -38,6 +38,7 @@ namespace yisi {
       /// Get contextualized features of a sentence
       /// @return contextual feature object
       contextualfeatures_t get_features(std::string sent);
+      contextualfeatures_t get_proj_features(std::string sent);
    private:
       /// Has Python been initialized?
       static bool is_python_init_m;

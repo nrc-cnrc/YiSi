@@ -94,7 +94,9 @@ compare_w_alt.%: %
 
 BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
            s/ 0x[0-9a-f]\+/ 0x00000000/g; \
-           s/[0-9]\+-[0-9]\+-[0-9]\+ [0-9:.]\+/2020-01-01 00:00:00.000000/g;"
+           s/[0-9]\+-[0-9]\+-[0-9]\+ [0-9:.]\+/2020-01-01 00:00:00.000000/g; \
+           s/CPU Frequency: 2[0-9]\+ Hz/CPU Frequency: 2300000000 Hz/g; \
+           s/with [0-9][0-9][0-9][0-9][0-9] MB memory/with 10780 MB memory/g;"
 
 compare_w_bert_log.%: %
 	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB)) \

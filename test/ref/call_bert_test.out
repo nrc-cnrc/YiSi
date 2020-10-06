@@ -7,7 +7,7 @@ ImportedBERT_wrapper.
 BERT_model instance created.
 Done setting up BERT.
 Calling BERT_model.extract_features_2_yisi.
-*** Timer: importing bert.extract_features took 3.621 seconds.
+*** Timer: importing bert.extract_features took 3.303 seconds.
 INFO:tensorflow:*** Example ***
 INFO:tensorflow:unique_id: 0
 INFO:tensorflow:tokens: [CLS] A Republican strategy to con ##front the re - election of Obama [SEP]
@@ -38,18 +38,18 @@ INFO:tensorflow:tokens: [CLS] One thing is for sure : these new provisions will 
 INFO:tensorflow:input_ids: 101 11340 40414 10124 10142 62452 131 11762 10751 67623 11337 10840 27198 10454 60600 10105 17440 11159 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-WARNING:tensorflow:Estimator's model_fn (<function model_fn_builder.<locals>.model_fn at 0x2b0cb1e1d840>) includes params argument, but params are not passed to Estimator.
-WARNING:tensorflow:Using temporary folder as model directory: ./tmp76jexhzk
-INFO:tensorflow:Using config: {'_model_dir': './tmp76jexhzk', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+WARNING:tensorflow:Estimator's model_fn (<function model_fn_builder.<locals>.model_fn at 0x2b4d51f50840>) includes params argument, but params are not passed to Estimator.
+WARNING:tensorflow:Using temporary folder as model directory: ./tmphn7a36mp
+INFO:tensorflow:Using config: {'_model_dir': './tmphn7a36mp', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
 graph_options {
   rewrite_options {
     meta_optimizer_iterations: ONE
   }
 }
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': None, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x2b0cb4576198>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1, '_tpu_config': TPUConfig(iterations_per_loop=2, num_shards=8, num_cores_per_replica=None, per_host_input_for_training=3, tpu_job_name=None, initial_infeed_sleep_secs=None, input_partition_dims=None), '_cluster': None}
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': None, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x2b4d54665588>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1, '_tpu_config': TPUConfig(iterations_per_loop=2, num_shards=8, num_cores_per_replica=None, per_host_input_for_training=3, tpu_job_name=None, initial_infeed_sleep_secs=None, input_partition_dims=None), '_cluster': None}
 INFO:tensorflow:_TPUContext: eval_on_tpu True
 WARNING:tensorflow:eval_on_tpu ignored because use_tpu is False.
-INFO:tensorflow:Could not find trained model in model_dir: ./tmp76jexhzk, running initialization to predict.
+INFO:tensorflow:Could not find trained model in model_dir: ./tmphn7a36mp, running initialization to predict.
 WARNING:tensorflow:From /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/BERT/lib/python3.7/site-packages/tensorflow/python/ops/resource_variable_ops.py:435: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
 Instructions for updating:
 Colocations handled automatically by placer.
@@ -260,28 +260,28 @@ INFO:tensorflow:  name = bert/pooler/dense/kernel:0, shape = (768, 768), *INIT_F
 INFO:tensorflow:  name = bert/pooler/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
 INFO:tensorflow:Done calling model_fn.
 INFO:tensorflow:Graph was finalized.
-2020-04-17 11:48:01.796938: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
-2020-04-17 11:48:01.811260: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2300180000 Hz
-2020-04-17 11:48:01.811648: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x39e35e0 executing computations on platform Host. Devices:
-2020-04-17 11:48:01.811688: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
-2020-04-17 11:48:01.861689: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x358a890 executing computations on platform CUDA. Devices:
-2020-04-17 11:48:01.861735: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): Tesla K80, Compute Capability 3.7
-2020-04-17 11:48:01.862362: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+2020-10-06 16:31:52.529646: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2020-10-06 16:31:52.543506: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2299970000 Hz
+2020-10-06 16:31:52.543882: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x403ab40 executing computations on platform Host. Devices:
+2020-10-06 16:31:52.543909: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2020-10-06 16:31:52.585540: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x1a3fc40 executing computations on platform CUDA. Devices:
+2020-10-06 16:31:52.585566: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): Tesla K80, Compute Capability 3.7
+2020-10-06 16:31:52.585755: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
 name: Tesla K80 major: 3 minor: 7 memoryClockRate(GHz): 0.8235
 pciBusID: 0000:06:00.0
 totalMemory: 11.17GiB freeMemory: 11.08GiB
-2020-04-17 11:48:01.862417: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
-2020-04-17 11:48:01.864057: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
-2020-04-17 11:48:01.864080: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
-2020-04-17 11:48:01.864091: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
-2020-04-17 11:48:01.864416: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10779 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:06:00.0, compute capability: 3.7)
+2020-10-06 16:31:52.585776: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-10-06 16:31:52.587977: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-10-06 16:31:52.587995: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-10-06 16:31:52.588002: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-10-06 16:31:52.588093: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10780 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:06:00.0, compute capability: 3.7)
 INFO:tensorflow:Running local_init_op.
 INFO:tensorflow:Done running local_init_op.
-2020-04-17 11:48:04.007398: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+2020-10-06 16:31:54.826473: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
 INFO:tensorflow:prediction_loop marked as finished
 INFO:tensorflow:prediction_loop marked as finished
 BERT_model.extract_features_2_yisi returned 10 sentences.
-
+Extracting features for sentence 0...
 Sentence 0 lengths: units=12 toks=11 embeddings=12
   Units: A Republican strategy to con ##front the re - election of Obama
   Toks: A Republican strategy to confront the re - election of Obama
@@ -297,7 +297,7 @@ Unit embedding 8: 7 len: 768:  0.4805 0.1627 0.1947 0.9351 -0.4596 -0.3772 -0.40
 Unit embedding 9: 8 len: 768:  -0.5010 0.4457 -0.8332 -0.1351 -0.6792 -0.3413 -0.6355 -0.5367
 Unit embedding 10: 9 len: 768:  -0.8845 0.2515 -0.6363 0.3947 -0.7266 -0.2140 -0.2924 -0.4322
 Unit embedding 11: 10 len: 768:  -1.1988 0.4477 -1.3543 -0.3145 -0.7602 0.2753 -1.1263 0.1716
-
+Extracting features for sentence 1...
 Sentence 1 lengths: units=17 toks=16 embeddings=17
   Units: The leaders of the Republicans just ##ify their policy with the need to combat the fraud .
   Toks: The leaders of the Republicans justify their policy with the need to combat the fraud .
@@ -318,7 +318,7 @@ Unit embedding 13: 12 len: 768:  -0.9852 0.7374 -0.6108 1.1581 0.3062 0.2184 0.2
 Unit embedding 14: 13 len: 768:  -0.9301 -0.6894 -0.3446 0.0073 0.6403 -0.5060 0.2386 -0.4302
 Unit embedding 15: 14 len: 768:  -1.0532 -0.4468 -0.6145 0.1157 0.8004 -0.0640 -0.2861 -0.6362
 Unit embedding 16: 15 len: 768:  -1.1362 -0.4040 -0.4290 0.8570 1.1212 -0.1569 -0.5191 -0.0690
-
+Extracting features for sentence 2...
 Sentence 2 lengths: units=38 toks=32 embeddings=38
   Units: The latter , the br ##enna ##n Center for a my ##th , as it con ##fir ##ms that the electoral fraud in the United States is less than the number of people killed by light ##ning .
   Toks: The latter , the brennan Center for a myth , as it confirms that the electoral fraud in the United States is less than the number of people killed by lightning .
@@ -360,7 +360,7 @@ Unit embedding 34: 29 len: 768:  -0.2067 0.3198 -0.2223 1.0041 0.5883 -0.8404 -0
 Unit embedding 35: 30 len: 768:  -0.9437 0.4559 -1.1295 1.2540 0.3068 -1.4987 0.1437 0.2158
 Unit embedding 36: 30 len: 768:  -0.8415 0.9644 -0.2090 1.0150 0.0946 -1.0796 -0.0086 -0.0158
 Unit embedding 37: 31 len: 768:  -1.0130 -0.6771 -0.5937 1.1636 0.1992 -0.0531 -0.5925 -0.2361
-
+Extracting features for sentence 3...
 Sentence 3 lengths: units=26 toks=24 embeddings=26
   Units: The lawyer ##s of the Republicans have recorded in 10 years in the United States , more ##over , only 300 cases of electoral fraud .
   Toks: The lawyers of the Republicans have recorded in 10 years in the United States , moreover , only 300 cases of electoral fraud .
@@ -390,7 +390,7 @@ Unit embedding 22: 20 len: 768:  -0.6134 0.0620 -1.0055 0.4624 1.0685 0.0115 0.5
 Unit embedding 23: 21 len: 768:  -1.1140 0.6475 -0.3760 0.5414 0.4873 -1.2015 -0.3834 0.1395
 Unit embedding 24: 22 len: 768:  -0.7568 0.3211 -0.5951 0.0550 0.6454 -0.6618 -0.3736 -0.6407
 Unit embedding 25: 23 len: 768:  -0.9526 -0.5265 -0.3516 0.8689 0.4695 -0.2747 -0.2741 0.0729
-
+Extracting features for sentence 4...
 Sentence 4 lengths: units=18 toks=15 embeddings=18
   Units: One thing is for sure : these new provisions will ad ##verse ##ly affect the turno ##ut .
   Toks: One thing is for sure : these new provisions will adversely affect the turnout .
@@ -412,7 +412,7 @@ Unit embedding 14: 12 len: 768:  -1.2531 -0.4922 -0.5080 0.5350 -0.2279 -0.0516 
 Unit embedding 15: 13 len: 768:  -0.1526 -0.0732 -0.9782 1.0283 0.6547 -0.3587 -0.6280 0.6603
 Unit embedding 16: 13 len: 768:  -0.4776 0.0452 -0.4048 0.8817 0.1285 -0.1782 -1.2955 1.0373
 Unit embedding 17: 14 len: 768:  -1.0452 -0.8043 -0.3006 1.2740 0.4064 0.0662 -0.6859 0.2188
-
+Extracting features for sentence 5...
 Sentence 5 lengths: units=20 toks=18 embeddings=20
   Units: In this sense , some of these measures are under ##mini ##ng the democratic system of the United States .
   Toks: In this sense , some of these measures are undermining the democratic system of the United States .
@@ -436,7 +436,7 @@ Unit embedding 16: 14 len: 768:  -1.5898 -0.1502 -0.0241 0.8309 0.2246 -0.5636 0
 Unit embedding 17: 15 len: 768:  -0.8267 0.4466 0.1735 1.1395 0.5987 -0.5760 -1.0898 -0.3622
 Unit embedding 18: 16 len: 768:  -0.9907 0.5117 -0.0680 1.0323 0.8968 -0.1854 -0.9375 -0.2022
 Unit embedding 19: 17 len: 768:  -1.0279 -0.0279 -0.5597 1.4830 0.5142 -0.2210 -0.7663 -0.1346
-
+Extracting features for sentence 6...
 Sentence 6 lengths: units=19 toks=19 embeddings=19
   Units: In contrast to Canada are the States responsible for the conduct of the elections in the individual States .
   Toks: In contrast to Canada are the States responsible for the conduct of the elections in the individual States .
@@ -459,7 +459,7 @@ Unit embedding 15: 15 len: 768:  -2.0411 -0.8421 0.5446 0.7326 -0.3918 0.1165 -0
 Unit embedding 16: 16 len: 768:  -0.9384 0.0035 0.0113 1.0129 -0.5051 0.3384 -0.8547 -0.3150
 Unit embedding 17: 17 len: 768:  -1.1767 0.6961 0.7338 0.2770 0.4911 0.6422 -1.2749 0.1437
 Unit embedding 18: 18 len: 768:  -1.0705 -0.4516 -0.2698 1.2244 -0.2643 -0.3807 -0.5837 -0.2635
-
+Extracting features for sentence 7...
 Sentence 7 lengths: units=28 toks=26 embeddings=28
   Units: In this sense , the majority of American governments since 2009 announced new laws , the procedures for the registration or com ##pli ##cate the ballot box .
   Toks: In this sense , the majority of American governments since 2009 announced new laws , the procedures for the registration or complicate the ballot box .
@@ -491,7 +491,7 @@ Unit embedding 24: 22 len: 768:  -0.1766 -0.2974 -0.2249 0.2147 -0.4667 0.2804 0
 Unit embedding 25: 23 len: 768:  -0.8371 0.3511 -1.1754 0.8436 0.0045 0.7819 -0.3589 -0.3950
 Unit embedding 26: 24 len: 768:  0.5332 0.2645 -0.9793 0.8240 -0.7595 0.9394 -0.4675 -0.2733
 Unit embedding 27: 25 len: 768:  -0.7908 -0.5703 -0.1646 1.3166 0.3319 -0.1041 -0.3645 -0.3725
-
+Extracting features for sentence 8...
 Sentence 8 lengths: units=25 toks=25 embeddings=25
   Units: This phenomenon has gained importance after the elections in November 2010 , in which 675 new Republican representatives in 26 states could be recorded .
   Toks: This phenomenon has gained importance after the elections in November 2010 , in which 675 new Republican representatives in 26 states could be recorded .
@@ -520,7 +520,7 @@ Unit embedding 21: 21 len: 768:  -0.6231 0.3442 -0.6562 0.4517 -1.7485 0.2077 0.
 Unit embedding 22: 22 len: 768:  -0.5685 0.5028 -1.1764 0.1596 -0.5353 0.5294 0.6291 -1.3801
 Unit embedding 23: 23 len: 768:  -1.2683 1.6198 -1.5463 0.8097 -1.0505 0.4239 -0.0040 0.0011
 Unit embedding 24: 24 len: 768:  -1.1080 0.0063 -0.5629 0.5551 0.2109 0.1069 -0.4212 -0.2546
-
+Extracting features for sentence 9...
 Sentence 9 lengths: units=25 toks=24 embeddings=25
   Units: As a result , 180 bill ##s introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .
   Toks: As a result , 180 bills introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .

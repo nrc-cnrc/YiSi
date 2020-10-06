@@ -2,8 +2,8 @@ Constructing lcs lexsim model
 Learning lex weight from test_ref.en ... Done.
 Reading hyp sents... Done.
 Reading ref sents... Done.
-Creating hyp srlgraphs... Done.
 Creating ref srlgraphs... Done.
+Creating hyp srlgraphs... Done.
 Evaluating line 1
 Evaluating line 2
 Evaluating line 3

@@ -137,7 +137,7 @@ srlmate_test.out: ARGS = ../src/en.mplsconfig <<<'Hello there'
 # BERT produces embeddings vectors of size 768; for testing read_sent we keep
 # only the first 16 entries.
 read_sent_test.1.out: ARGS = word ../test/test_hyp.en.bert.tok
-read_sent_test.2.out: ARGS = uemb ../test/test_hyp.en.bert.unit '\#\#T' ../test/test_hyp.en.bert.emb
+read_sent_test.2.out: ARGS = uemb ../test/test_hyp.en.bert.unit '\#\#u' ../test/test_hyp.en.bert.emb
 read_sent_test.3.out: ARGS = unit ../test/test_hyp.en.bert.unit
 read_sent_test.4.out: ARGS = bert ../test/test_hyp.en.bert.tok
 

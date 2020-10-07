@@ -165,6 +165,9 @@ namespace yisi {
       std::string reflexweight_name_m;
       std::string hyplexweight_name_m;
       std::string inplexweight_name_m;
+      std::string reflexweight_path_m;
+      std::string hyplexweight_path_m;
+      std::string inplexweight_path_m;
    private:
       lexsim_t* lexsim_p;
       lexweight_t* inplexweight_p;

@@ -27,6 +27,7 @@ using namespace yisi;
 
 extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_options phrasesim_opt)
 {
+  /*
    if (phrasesim_opt.reflexweight_name_m == "learn" && phrasesim_opt.reflexweight_path_m.empty()) {
       phrasesim_opt.reflexweight_path_m = eval_opt.ref_file_m;
    }
@@ -36,7 +37,7 @@ extern "C" int eval(eval_options eval_opt, yisi_options yisi_opt, phrasesim_opti
    if (phrasesim_opt.inplexweight_name_m == "learn" && phrasesim_opt.inplexweight_path_m.empty()) {
       phrasesim_opt.inplexweight_path_m = eval_opt.inp_file_m;
    }
-
+  */
    yisiscorer_t yisi(yisi_opt, phrasesim_opt);
 
    if (eval_opt.sntscore_file_m.empty()) {

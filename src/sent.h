@@ -67,7 +67,7 @@ namespace yisi {
 
 
 //   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
-   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##T", std::string idemb_path="", std::string bert_config="", contextual_t* c=NULL, int mode=yisi::HYP_MODE);
+   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##u", std::string idemb_path="", std::string bert_config="", contextual_t* c=NULL, int mode=yisi::HYP_MODE);
 
 } // yisi
 

@@ -148,7 +148,7 @@ void yisiscorer_t::estimate_weight(std::vector<std::vector<srlgraph_t> > msrls) 
 }
 
 std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents) { 
-   if (phrasesim_p->inplexweight_name_m == "learn"){
+   if (phrasesim_p->inplexweight_name_m == "learn" && phrasesim_p->inplexweight_path_m == ""){
       cerr << "Learning inp lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=inpsents.begin(); it!=inpsents.end(); it++){
@@ -171,7 +171,7 @@ std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents)
 }
 
 std::vector<std::vector<srlgraph_t> > yisiscorer_t::refsrlparse(std::vector<std::vector<sent_t*> > refsents) {
-   if (phrasesim_p->reflexweight_name_m == "learn"){
+   if (phrasesim_p->reflexweight_name_m == "learn" && phrasesim_p->reflexweight_path_m == ""){
       cerr << "Learning ref lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=refsents.begin(); it!=refsents.end(); it++){
@@ -199,7 +199,7 @@ std::vector<std::vector<srlgraph_t> > yisiscorer_t::refsrlparse(std::vector<std:
 }
 
 std::vector<srlgraph_t> yisiscorer_t::hypsrlparse(std::vector<sent_t*> hypsents) {
-   if (phrasesim_p->hyplexweight_name_m == "learn"){
+   if (phrasesim_p->hyplexweight_name_m == "learn" && phrasesim_p->hyplexweight_path_m==""){
       cerr << "Learning hyp lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=hypsents.begin(); it!=hypsents.end(); it++){

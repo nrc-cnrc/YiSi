@@ -105,12 +105,12 @@ BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
            s/with [0-9][0-9][0-9][0-9][0-9] MB memory/with 10780 MB memory/g;"
 
 C4_2_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9]\b/\1/g;"
-
-C7_3_SUB := "s/\(-\?[0-9]\.[0-9][0-9][0-9]\)[0-9][0-9][0-9][0-9]\b/\1/g;"
+C5_3_SUB := "s/\(-\?[0-9]\.[0-9][0-9][0-9]\)[0-9][0-9][0-9]*\b/\1/g;"
+C5_E_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9][0-9]*\(e-[0-9][0-9]\)\b/\1\2/g;"
 
 compare_w_bert_log.%: %
-	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C7_3_SUB)) \
-	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C7_3_SUB)) -q
+	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C5_3_SUB) -e $(C5_E_SUB)) \
+	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C5_3_SUB) -e $(C5_E_SUB)) -q
 
 # Simple tests
 

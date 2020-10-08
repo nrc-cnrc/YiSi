@@ -83,6 +83,11 @@ TMP_DIRS += tmp[0-9a-z]*
 compare.%: %
 	diff $< ref/$< -q
 
+C6_2_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9][0-9][0-9]\b/\1/g;"
+
+compare_2.%: %
+	diff <(cat $< | sed -e $(C6_2_SUB)) <(cat ref/$< | sed -e $(C6_2_SUB)) -q
+
 JL_SUB := "s/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*  */00.00.000 /"
 
 compare_w_java_log.%: %
@@ -95,12 +100,17 @@ compare_w_alt.%: %
 BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
            s/ 0x[0-9a-f]\+/ 0x00000000/g; \
            s/[0-9]\+-[0-9]\+-[0-9]\+ [0-9:.]\+/2020-01-01 00:00:00.000000/g; \
+           s/Python version: 3.*/Python version: 3./g; \
            s/CPU Frequency: 2[0-9]\+ Hz/CPU Frequency: 2300000000 Hz/g; \
            s/with [0-9][0-9][0-9][0-9][0-9] MB memory/with 10780 MB memory/g;"
 
+C4_2_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9]\b/\1/g;"
+
+C7_3_SUB := "s/\(-\?[0-9]\.[0-9][0-9][0-9]\)[0-9][0-9][0-9][0-9]\b/\1/g;"
+
 compare_w_bert_log.%: %
-	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB)) \
-	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB)) -q
+	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB)-e $(C7_3_SUB)) \
+	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB)-e $(C7_3_SUB)) -q
 
 # Simple tests
 
@@ -151,12 +161,12 @@ $(CMDLP_TEST_PROGS): BIN = ../src/cmdlp/build/bin
 $(filter-out $(CMDLP_TEST_PROGS),$(ALL_SIMPLE_TEST_PROGS)): BIN = ../bin
 
 # call_bert_test produces an extra output file.
-compare_w_bert_log.call_bert_test.out: compare.test_hyp.en.bert.tok.emb
+compare_w_bert_log.call_bert_test.out: compare_2.test_hyp.en.bert.tok.emb
 
 test_hyp.en.bert.tok.emb: call_bert_test.out ;
 
 # bert_test produces an extra output file.
-compare_w_bert_log.bert_test.out: compare.test_hyp.en.bert.tok.emb2
+compare_w_bert_log.bert_test.out: compare_2.test_hyp.en.bert.tok.emb2
 
 test_hyp.en.bert.tok.emb2: bert_test.out ;
 

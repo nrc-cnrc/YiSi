@@ -1,13 +1,13 @@
 Setting up BERT ...
 Python program: python3
 Python program full path: /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/BERT/bin/python3
-Python version: 3.7.3 (default, Mar 27 2019, 22:11:17) 
+Python version: 3.7.3 (default, Mar 27 2019, 22:15:47) 
 [GCC 7.3.0]
 ImportedBERT_wrapper.
 BERT_model instance created.
 Done setting up BERT.
 Calling BERT_model.extract_features_2_yisi.
-*** Timer: importing bert.extract_features took 3.303 seconds.
+*** Timer: importing bert.extract_features took 22.144 seconds.
 INFO:tensorflow:*** Example ***
 INFO:tensorflow:unique_id: 0
 INFO:tensorflow:tokens: [CLS] A Republican strategy to con ##front the re - election of Obama [SEP]
@@ -38,18 +38,18 @@ INFO:tensorflow:tokens: [CLS] One thing is for sure : these new provisions will 
 INFO:tensorflow:input_ids: 101 11340 40414 10124 10142 62452 131 11762 10751 67623 11337 10840 27198 10454 60600 10105 17440 11159 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-WARNING:tensorflow:Estimator's model_fn (<function model_fn_builder.<locals>.model_fn at 0x2b4d51f50840>) includes params argument, but params are not passed to Estimator.
-WARNING:tensorflow:Using temporary folder as model directory: ./tmphn7a36mp
-INFO:tensorflow:Using config: {'_model_dir': './tmphn7a36mp', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+WARNING:tensorflow:Estimator's model_fn (<function model_fn_builder.<locals>.model_fn at 0x2b0df8a4eb70>) includes params argument, but params are not passed to Estimator.
+WARNING:tensorflow:Using temporary folder as model directory: ./tmpna98xzfi
+INFO:tensorflow:Using config: {'_model_dir': './tmpna98xzfi', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
 graph_options {
   rewrite_options {
     meta_optimizer_iterations: ONE
   }
 }
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': None, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x2b4d54665588>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1, '_tpu_config': TPUConfig(iterations_per_loop=2, num_shards=8, num_cores_per_replica=None, per_host_input_for_training=3, tpu_job_name=None, initial_infeed_sleep_secs=None, input_partition_dims=None), '_cluster': None}
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': None, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x2b0df8d05da0>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1, '_tpu_config': TPUConfig(iterations_per_loop=2, num_shards=8, num_cores_per_replica=None, per_host_input_for_training=3, tpu_job_name=None, initial_infeed_sleep_secs=None, input_partition_dims=None), '_cluster': None}
 INFO:tensorflow:_TPUContext: eval_on_tpu True
 WARNING:tensorflow:eval_on_tpu ignored because use_tpu is False.
-INFO:tensorflow:Could not find trained model in model_dir: ./tmphn7a36mp, running initialization to predict.
+INFO:tensorflow:Could not find trained model in model_dir: ./tmpna98xzfi, running initialization to predict.
 WARNING:tensorflow:From /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/BERT/lib/python3.7/site-packages/tensorflow/python/ops/resource_variable_ops.py:435: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
 Instructions for updating:
 Colocations handled automatically by placer.
@@ -260,24 +260,24 @@ INFO:tensorflow:  name = bert/pooler/dense/kernel:0, shape = (768, 768), *INIT_F
 INFO:tensorflow:  name = bert/pooler/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
 INFO:tensorflow:Done calling model_fn.
 INFO:tensorflow:Graph was finalized.
-2020-10-06 16:31:52.529646: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
-2020-10-06 16:31:52.543506: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2299970000 Hz
-2020-10-06 16:31:52.543882: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x403ab40 executing computations on platform Host. Devices:
-2020-10-06 16:31:52.543909: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
-2020-10-06 16:31:52.585540: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x1a3fc40 executing computations on platform CUDA. Devices:
-2020-10-06 16:31:52.585566: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): Tesla K80, Compute Capability 3.7
-2020-10-06 16:31:52.585755: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
-name: Tesla K80 major: 3 minor: 7 memoryClockRate(GHz): 0.8235
-pciBusID: 0000:06:00.0
-totalMemory: 11.17GiB freeMemory: 11.08GiB
-2020-10-06 16:31:52.585776: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
-2020-10-06 16:31:52.587977: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
-2020-10-06 16:31:52.587995: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
-2020-10-06 16:31:52.588002: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
-2020-10-06 16:31:52.588093: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10780 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:06:00.0, compute capability: 3.7)
+2020-10-08 12:19:26.214984: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2020-10-08 12:19:26.230190: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2294705000 Hz
+2020-10-08 12:19:26.230444: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x55e60ea86400 executing computations on platform Host. Devices:
+2020-10-08 12:19:26.230467: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2020-10-08 12:19:26.381911: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1433] Found device 0 with properties: 
+name: Tesla V100-SXM2-16GB major: 7 minor: 0 memoryClockRate(GHz): 1.53
+pciBusID: 0000:1d:00.0
+totalMemory: 15.78GiB freeMemory: 15.45GiB
+2020-10-08 12:19:26.381951: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1512] Adding visible gpu devices: 0
+2020-10-08 12:19:26.383031: I tensorflow/core/common_runtime/gpu/gpu_device.cc:984] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-10-08 12:19:26.383041: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990]      0 
+2020-10-08 12:19:26.383047: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1003] 0:   N 
+2020-10-08 12:19:26.383122: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15025 MB memory) -> physical GPU (device: 0, name: Tesla V100-SXM2-16GB, pci bus id: 0000:1d:00.0, compute capability: 7.0)
+2020-10-08 12:19:26.384700: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x55e610ed7340 executing computations on platform CUDA. Devices:
+2020-10-08 12:19:26.384726: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): Tesla V100-SXM2-16GB, Compute Capability 7.0
 INFO:tensorflow:Running local_init_op.
 INFO:tensorflow:Done running local_init_op.
-2020-10-06 16:31:54.826473: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
+2020-10-08 12:19:41.517545: I tensorflow/stream_executor/dso_loader.cc:152] successfully opened CUDA library libcublas.so.10.0 locally
 INFO:tensorflow:prediction_loop marked as finished
 INFO:tensorflow:prediction_loop marked as finished
 BERT_model.extract_features_2_yisi returned 10 sentences.
@@ -286,11 +286,11 @@ Sentence 0 lengths: units=12 toks=11 embeddings=12
   Units: A Republican strategy to con ##front the re - election of Obama
   Toks: A Republican strategy to confront the re - election of Obama
 Unit embedding 0: 0 len: 768:  -0.5827 0.4042 -0.0135 0.6750 -0.9031 -0.7822 0.4186 0.4887
-Unit embedding 1: 1 len: 768:  -0.0776 1.1635 -0.9911 1.0901 -0.3929 -0.3776 -1.3000 -0.2225
+Unit embedding 1: 1 len: 768:  -0.0776 1.1635 -0.9911 1.0901 -0.3930 -0.3776 -1.3000 -0.2225
 Unit embedding 2: 2 len: 768:  -0.4721 1.3161 -1.3388 1.2890 -0.5649 -0.6167 -0.2330 0.1624
 Unit embedding 3: 3 len: 768:  -0.7274 1.0293 -0.7419 1.1616 -0.3991 -0.9028 0.5768 -0.9219
 Unit embedding 4: 4 len: 768:  -0.5606 1.0026 -1.5825 0.9782 -0.0814 0.8056 -0.7967 -0.8587
-Unit embedding 5: 4 len: 768:  -0.2765 1.1551 -0.7841 0.7128 -0.2875 0.1959 -0.0504 0.4487
+Unit embedding 5: 4 len: 768:  -0.2765 1.1551 -0.7841 0.7128 -0.2875 0.1959 -0.0504 0.4486
 Unit embedding 6: 5 len: 768:  -0.1103 0.2714 -0.7991 0.5890 -0.4949 -0.1624 0.6579 -0.2420
 Unit embedding 7: 6 len: 768:  -0.2477 0.7105 -1.2454 0.4850 -0.9414 0.1011 -0.6976 -0.1620
 Unit embedding 8: 7 len: 768:  0.4805 0.1627 0.1947 0.9351 -0.4596 -0.3772 -0.4038 0.3003
@@ -305,7 +305,7 @@ Unit embedding 0: 0 len: 768:  -0.8777 -0.6555 1.0790 1.4695 -0.2952 -0.1876 0.2
 Unit embedding 1: 1 len: 768:  -1.0840 -0.2170 0.2664 1.5790 0.3255 0.1375 -1.4191 -0.3422
 Unit embedding 2: 2 len: 768:  -1.1938 -0.2429 1.5415 0.8726 0.7514 -0.2523 -0.7467 -0.2675
 Unit embedding 3: 3 len: 768:  -2.2341 -0.0168 1.1873 1.0537 0.3351 0.1560 -0.1796 0.1502
-Unit embedding 4: 4 len: 768:  -0.8590 0.6470 -0.1339 1.5796 0.5400 -0.2122 -1.4929 0.0131
+Unit embedding 4: 4 len: 768:  -0.8590 0.6469 -0.1339 1.5796 0.5400 -0.2122 -1.4929 0.0131
 Unit embedding 5: 5 len: 768:  -1.4628 -0.4534 -1.0544 1.1985 1.0082 -0.4791 -1.0554 -0.8059
 Unit embedding 6: 5 len: 768:  -1.3118 -0.3326 -0.8172 1.2064 -0.1319 -0.7061 -0.4590 0.0650
 Unit embedding 7: 6 len: 768:  -1.3859 -0.3396 0.1560 0.3748 -0.0760 -1.0545 0.3468 0.1490
@@ -322,7 +322,7 @@ Extracting features for sentence 2...
 Sentence 2 lengths: units=38 toks=32 embeddings=38
   Units: The latter , the br ##enna ##n Center for a my ##th , as it con ##fir ##ms that the electoral fraud in the United States is less than the number of people killed by light ##ning .
   Toks: The latter , the brennan Center for a myth , as it confirms that the electoral fraud in the United States is less than the number of people killed by lightning .
-Unit embedding 0: 0 len: 768:  -0.9726 -1.0636 -0.3499 0.5425 0.1840 -0.9822 0.3043 0.9250
+Unit embedding 0: 0 len: 768:  -0.9726 -1.0636 -0.3499 0.5425 0.1840 -0.9822 0.3043 0.9249
 Unit embedding 1: 1 len: 768:  -1.1717 -0.8839 -1.2716 0.9371 -0.2804 0.4438 0.2486 0.9597
 Unit embedding 2: 2 len: 768:  -1.4993 0.2019 -0.2509 1.0791 0.7044 -0.8999 -1.0328 -0.5666
 Unit embedding 3: 3 len: 768:  -1.0125 -0.2388 0.1754 0.8676 0.3045 -1.1613 0.2169 -0.4624
@@ -365,7 +365,7 @@ Sentence 3 lengths: units=26 toks=24 embeddings=26
   Units: The lawyer ##s of the Republicans have recorded in 10 years in the United States , more ##over , only 300 cases of electoral fraud .
   Toks: The lawyers of the Republicans have recorded in 10 years in the United States , moreover , only 300 cases of electoral fraud .
 Unit embedding 0: 0 len: 768:  -0.8933 -0.5752 1.1313 0.3227 -0.4664 -0.5552 1.0973 -0.1173
-Unit embedding 1: 1 len: 768:  -0.6461 0.1526 0.2411 0.1616 -0.2892 -0.0686 -0.1538 0.0905
+Unit embedding 1: 1 len: 768:  -0.6461 0.1526 0.2411 0.1616 -0.2893 -0.0686 -0.1538 0.0905
 Unit embedding 2: 1 len: 768:  -0.6460 -0.0903 1.6374 0.6678 0.2046 -0.3878 0.0390 -0.3597
 Unit embedding 3: 2 len: 768:  -1.0041 0.2252 1.1705 0.7546 0.5897 -0.6849 0.2231 -0.8527
 Unit embedding 4: 3 len: 768:  -1.6816 1.0396 0.7810 0.8961 0.1205 -0.5122 1.0300 -0.7045
@@ -379,7 +379,7 @@ Unit embedding 11: 10 len: 768:  -1.0808 0.5214 -0.3895 0.5996 0.0784 -0.6586 0.
 Unit embedding 12: 11 len: 768:  -1.1783 -0.3297 -0.0598 0.4238 0.4824 -0.0654 1.0807 -0.1153
 Unit embedding 13: 12 len: 768:  0.0051 0.3973 -0.1203 0.6138 0.9997 -0.2597 -0.7274 0.0156
 Unit embedding 14: 13 len: 768:  -0.0414 0.5150 -0.5701 0.4551 1.2061 -0.0009 -0.0997 0.3943
-Unit embedding 15: 14 len: 768:  -0.5210 -0.2821 -1.4467 1.4640 -0.9900 -0.9835 -0.0912 -0.2317
+Unit embedding 15: 14 len: 768:  -0.5210 -0.2821 -1.4467 1.4640 -0.9900 -0.9836 -0.0912 -0.2317
 Unit embedding 16: 15 len: 768:  -0.5773 0.0817 -0.1570 1.5845 -0.4617 -0.3551 -0.1570 0.9591
 Unit embedding 17: 15 len: 768:  0.3175 0.7734 -0.8269 1.2114 1.0664 -0.9528 -1.8213 0.5581
 Unit embedding 18: 16 len: 768:  -1.1156 -0.1199 -0.5588 0.9984 -0.4331 -0.2712 -0.3382 0.0873
@@ -389,7 +389,7 @@ Unit embedding 21: 19 len: 768:  -0.1598 0.1365 -0.7856 0.7914 0.8910 -0.7675 -0
 Unit embedding 22: 20 len: 768:  -0.6134 0.0620 -1.0055 0.4624 1.0685 0.0115 0.5670 -0.0331
 Unit embedding 23: 21 len: 768:  -1.1140 0.6475 -0.3760 0.5414 0.4873 -1.2015 -0.3834 0.1395
 Unit embedding 24: 22 len: 768:  -0.7568 0.3211 -0.5951 0.0550 0.6454 -0.6618 -0.3736 -0.6407
-Unit embedding 25: 23 len: 768:  -0.9526 -0.5265 -0.3516 0.8689 0.4695 -0.2747 -0.2741 0.0729
+Unit embedding 25: 23 len: 768:  -0.9525 -0.5265 -0.3516 0.8689 0.4695 -0.2747 -0.2741 0.0729
 Extracting features for sentence 4...
 Sentence 4 lengths: units=18 toks=15 embeddings=18
   Units: One thing is for sure : these new provisions will ad ##verse ##ly affect the turno ##ut .
@@ -424,7 +424,7 @@ Unit embedding 4: 4 len: 768:  -1.4677 -0.3082 0.3493 1.8008 -0.6596 -0.4623 -0.
 Unit embedding 5: 5 len: 768:  -1.3923 -0.5960 -0.3094 1.3659 0.0858 0.3054 -0.0151 0.2297
 Unit embedding 6: 6 len: 768:  -0.6822 0.1334 -0.2227 1.4118 -0.2684 -0.9015 -0.1879 0.1236
 Unit embedding 7: 7 len: 768:  -1.2131 0.1969 -0.5212 1.0541 -0.1080 0.4296 -0.3498 0.0765
-Unit embedding 8: 8 len: 768:  -0.4105 1.0001 -0.9137 1.2101 0.2612 0.2527 0.7439 -0.0448
+Unit embedding 8: 8 len: 768:  -0.4106 1.0001 -0.9137 1.2101 0.2612 0.2527 0.7439 -0.0448
 Unit embedding 9: 9 len: 768:  -0.5946 0.7068 -0.7624 2.2002 -0.1574 -0.7127 -0.4309 0.9269
 Unit embedding 10: 9 len: 768:  -0.8587 0.9451 -1.8446 2.3846 -0.0660 -0.4143 0.0250 0.9390
 Unit embedding 11: 9 len: 768:  -0.7706 0.7965 -0.3284 1.7707 -0.5388 -0.6825 0.8533 0.5790
@@ -443,7 +443,7 @@ Sentence 6 lengths: units=19 toks=19 embeddings=19
 Unit embedding 0: 0 len: 768:  0.0488 -0.6948 0.6097 0.3583 0.0875 -1.0365 -0.0772 -0.1725
 Unit embedding 1: 1 len: 768:  0.1722 0.0326 1.2028 0.8581 -1.0047 0.1200 -0.5199 0.4630
 Unit embedding 2: 2 len: 768:  -0.6460 -0.6260 0.8901 1.2239 -0.3071 -0.6675 0.4773 -0.6589
-Unit embedding 3: 3 len: 768:  -0.0721 0.1387 -0.8591 1.1060 -0.6302 0.4579 0.4301 -0.4081
+Unit embedding 3: 3 len: 768:  -0.0721 0.1387 -0.8591 1.1060 -0.6302 0.4579 0.4300 -0.4081
 Unit embedding 4: 4 len: 768:  -0.8028 0.7983 -0.4599 0.8798 -0.0872 -0.7485 -0.0534 -1.7216
 Unit embedding 5: 5 len: 768:  -1.4232 0.4333 0.2022 1.2653 -0.7575 -1.3224 0.5866 -1.8691
 Unit embedding 6: 6 len: 768:  0.1365 0.5969 -0.2851 0.7976 0.2467 -0.2954 0.3786 -1.0911
@@ -452,7 +452,7 @@ Unit embedding 8: 8 len: 768:  -0.1391 0.2038 -0.4015 0.6821 -0.1204 -0.9205 0.3
 Unit embedding 9: 9 len: 768:  -0.8866 -0.3301 0.0566 -0.0711 -0.0585 -0.5169 0.4898 -0.6559
 Unit embedding 10: 10 len: 768:  -0.3214 0.5746 -0.7491 -0.1069 0.2913 -0.2758 -0.5262 -0.4514
 Unit embedding 11: 11 len: 768:  -1.0932 0.2910 0.1016 0.0910 -0.0964 -0.2686 -0.4983 -0.6497
-Unit embedding 12: 12 len: 768:  -1.3324 0.1406 -0.3094 -0.1538 -0.5787 -0.3817 0.2410 -0.6180
+Unit embedding 12: 12 len: 768:  -1.3324 0.1406 -0.3094 -0.1538 -0.5787 -0.3817 0.2410 -0.6179
 Unit embedding 13: 13 len: 768:  -0.7540 0.2534 -0.6667 -0.3430 -0.6260 -0.3302 -0.2938 -0.5140
 Unit embedding 14: 14 len: 768:  -1.0719 0.0249 -0.0037 0.2420 -0.3985 -0.9111 -0.5608 -0.1251
 Unit embedding 15: 15 len: 768:  -2.0411 -0.8421 0.5446 0.7326 -0.3918 0.1165 -0.5456 0.0084
@@ -468,10 +468,10 @@ Unit embedding 1: 1 len: 768:  -0.0625 -0.2747 0.0777 0.9203 0.1055 0.0723 -0.93
 Unit embedding 2: 2 len: 768:  -0.6398 0.9184 0.2278 1.0783 0.5629 1.0611 -1.4861 -0.1184
 Unit embedding 3: 3 len: 768:  -1.5015 0.1414 -0.1718 0.9109 0.2647 -0.5163 0.1539 -0.2241
 Unit embedding 4: 4 len: 768:  -1.3586 -0.9714 0.2899 0.7169 -0.0835 -0.7523 0.9747 -0.2893
-Unit embedding 5: 5 len: 768:  -1.0144 -0.7040 0.6327 1.4379 -0.7703 -0.6683 -0.1887 -0.3911
+Unit embedding 5: 5 len: 768:  -1.0143 -0.7040 0.6327 1.4379 -0.7703 -0.6683 -0.1887 -0.3911
 Unit embedding 6: 6 len: 768:  -1.3764 -0.5235 0.9580 1.3796 0.9043 -0.2387 0.3427 0.0424
 Unit embedding 7: 7 len: 768:  -0.7958 -0.8231 -0.4446 0.4684 1.3171 -0.7426 -0.3593 0.8526
-Unit embedding 8: 8 len: 768:  -1.0099 -0.1449 -0.1341 1.2619 0.1718 -0.4813 -0.3999 -0.3010
+Unit embedding 8: 8 len: 768:  -1.0099 -0.1449 -0.1341 1.2619 0.1719 -0.4813 -0.3999 -0.3010
 Unit embedding 9: 9 len: 768:  0.6082 0.4535 0.1852 0.9920 -0.6331 -0.6761 0.1067 -0.7359
 Unit embedding 10: 10 len: 768:  0.1183 0.1447 -0.2609 -0.0339 0.1594 0.1689 1.3122 -0.0245
 Unit embedding 11: 11 len: 768:  -1.2054 -0.1375 -1.0558 1.1124 0.1812 -1.1515 -0.3533 -0.3670
@@ -501,7 +501,7 @@ Unit embedding 2: 2 len: 768:  -0.3654 -0.1858 -0.1694 0.3690 -0.0155 0.3121 0.1
 Unit embedding 3: 3 len: 768:  -0.2034 -0.5028 -0.2241 0.6264 -1.0905 0.0909 -0.0932 0.0196
 Unit embedding 4: 4 len: 768:  -0.6217 -0.7295 -0.0471 0.8774 -0.2691 -0.7484 -0.9850 -0.3440
 Unit embedding 5: 5 len: 768:  -0.0876 -0.3095 0.4624 0.3168 -0.3462 -0.6843 -0.4503 0.6861
-Unit embedding 6: 6 len: 768:  -0.3552 -0.5995 0.0186 1.0113 -0.0970 -0.2422 0.5847 -0.6421
+Unit embedding 6: 6 len: 768:  -0.3552 -0.5995 0.0186 1.0113 -0.0970 -0.2422 0.5848 -0.6421
 Unit embedding 7: 7 len: 768:  0.0938 -0.1527 -0.7312 0.3559 0.0276 -0.4633 -0.3004 -1.0231
 Unit embedding 8: 8 len: 768:  -0.1874 -0.3825 -0.0635 0.3644 -0.4687 -0.6324 -0.2833 -0.7435
 Unit embedding 9: 9 len: 768:  0.3388 -0.6744 -0.3334 0.7644 -0.2639 1.0539 -1.3467 0.2243
@@ -511,8 +511,8 @@ Unit embedding 12: 12 len: 768:  0.1520 -0.5707 -0.1833 0.5011 -0.7333 0.2998 0.
 Unit embedding 13: 13 len: 768:  -0.2072 -0.0632 0.2653 0.9847 -1.0895 0.9969 0.8544 0.7809
 Unit embedding 14: 14 len: 768:  0.0389 0.0737 -0.5332 0.3842 -1.0921 0.2675 1.6456 -0.8579
 Unit embedding 15: 15 len: 768:  -0.7198 1.0375 0.1294 -0.6472 -0.7071 -0.7821 1.0251 -0.3407
-Unit embedding 16: 16 len: 768:  -0.0926 0.7480 -0.1332 0.3779 0.1919 0.0645 -0.6002 -0.4988
-Unit embedding 17: 17 len: 768:  -0.3241 0.7843 0.1775 -0.0209 -0.8145 -1.0708 -0.1737 -0.0150
+Unit embedding 16: 16 len: 768:  -0.0926 0.7481 -0.1332 0.3779 0.1919 0.0645 -0.6002 -0.4988
+Unit embedding 17: 17 len: 768:  -0.3241 0.7843 0.1775 -0.0208 -0.8145 -1.0708 -0.1737 -0.0150
 Unit embedding 18: 18 len: 768:  -1.3555 -0.2682 0.5359 0.3746 -0.9333 -0.6173 -0.4902 -0.1990
 Unit embedding 19: 19 len: 768:  -0.9076 -0.1625 0.3054 1.0536 -0.4455 0.7909 0.8368 -1.0279
 Unit embedding 20: 20 len: 768:  -0.0713 0.2645 0.2989 -0.1188 0.9254 0.1591 -0.2153 -0.4987
@@ -524,9 +524,9 @@ Extracting features for sentence 9...
 Sentence 9 lengths: units=25 toks=24 embeddings=25
   Units: As a result , 180 bill ##s introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .
   Toks: As a result , 180 bills introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .
-Unit embedding 0: 0 len: 768:  -0.6135 -0.2609 0.6724 1.0721 -0.1753 -0.7194 -0.7120 0.5423
-Unit embedding 1: 1 len: 768:  -0.1359 -0.6086 0.0955 1.2134 1.0276 0.2261 -0.0996 0.2427
-Unit embedding 2: 2 len: 768:  0.2956 -0.1782 0.7172 0.6318 1.1490 0.4620 -0.8448 1.0033
+Unit embedding 0: 0 len: 768:  -0.6135 -0.2609 0.6724 1.0721 -0.1753 -0.7195 -0.7120 0.5423
+Unit embedding 1: 1 len: 768:  -0.1359 -0.6086 0.0955 1.2134 1.0275 0.2261 -0.0996 0.2427
+Unit embedding 2: 2 len: 768:  0.2956 -0.1782 0.7172 0.6318 1.1490 0.4619 -0.8448 1.0033
 Unit embedding 3: 3 len: 768:  -1.1731 0.5332 -0.3108 0.9891 0.7979 -0.2936 0.8695 0.2025
 Unit embedding 4: 4 len: 768:  -0.3090 -0.2859 0.1415 1.1162 -1.0231 0.3103 1.2672 -0.4768
 Unit embedding 5: 5 len: 768:  -0.4879 0.1970 0.0964 1.0443 -0.4481 1.0746 -0.4885 -1.1350
@@ -537,10 +537,10 @@ Unit embedding 9: 8 len: 768:  -0.3560 -0.1509 0.4801 0.3838 -0.6582 0.8838 0.62
 Unit embedding 10: 9 len: 768:  -0.0265 0.4726 -1.4256 1.4468 0.0421 0.6586 -0.5820 -0.1369
 Unit embedding 11: 10 len: 768:  -1.1638 0.2294 -0.8981 1.5841 -0.2496 0.2379 -0.8358 -0.5453
 Unit embedding 12: 11 len: 768:  -1.8068 0.0038 0.1136 0.9225 -0.4122 -0.4832 0.7525 -0.2382
-Unit embedding 13: 12 len: 768:  -0.9755 0.1826 -1.5477 0.7491 0.3545 -0.2655 0.0391 0.1859
+Unit embedding 13: 12 len: 768:  -0.9755 0.1826 -1.5477 0.7491 0.3545 -0.2654 0.0391 0.1859
 Unit embedding 14: 13 len: 768:  -0.6854 0.0782 -0.2701 0.4967 0.7403 0.0016 1.0780 -0.8659
 Unit embedding 15: 14 len: 768:  0.2150 -0.0986 -1.1546 1.2666 0.4162 -0.1626 0.1238 -0.7838
-Unit embedding 16: 15 len: 768:  -0.5468 -0.5690 0.2356 0.7951 0.3143 0.1550 0.4800 -0.4352
+Unit embedding 16: 15 len: 768:  -0.5468 -0.5690 0.2356 0.7951 0.3142 0.1550 0.4800 -0.4352
 Unit embedding 17: 16 len: 768:  -0.6155 -0.8175 0.1268 0.2159 0.2514 -0.6554 0.6707 0.0064
 Unit embedding 18: 17 len: 768:  -0.1093 -0.1847 -0.2752 0.3649 -0.2499 -1.2436 -0.0123 -0.4057
 Unit embedding 19: 18 len: 768:  0.0418 -0.9517 0.3175 -0.1806 0.4887 -1.1995 0.4343 -1.4715

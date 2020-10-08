@@ -95,7 +95,7 @@ OBJECTS := $(filter-out $(SRLMATE_OBJS),$(ALL_OBJECTS))
 .PRECIOUS: ../dep/%.d ../obj/%.o
 
 .PHONY: all binaries scripts
-all: binaries scripts
+all: binaries bash_scripts python_scripts
 ifdef WITH_SRLMATE
 all: ../obj/srlmate.jar
 all: en.mplsconfig de.mplsconfig es.mplsconfig zh.mplsconfig
@@ -105,11 +105,16 @@ binaries: $(BIN_NAMES:%=../bin/%)
 
 YISIBIN_SUB := "s~^YISIBIN=/path/to/your/yisi/bin$$~YISIBIN=$(dir $(CURDIR))bin~"
 
-.PHONY: scripts
-scripts: | ../bin
+.PHONY: bash_scripts
+bash_scripts: | ../bin
 	cp -p ../src/scripts/resolve_yisicmd.sh ../bin
 	sed -e $(YISIBIN_SUB) scripts/run_yisi.sh > ../bin/run_yisi.sh
 	chmod a+x ../bin/*.sh
+
+.PHONY: python_scripts
+python_scripts: | ../lib/python
+	cp -p ../src/*.py ../lib/python
+	chmod a+x ../lib/python/*.py
 
 ../obj/srlmate.jar: *.java
 	mkdir -pv ../obj/java
@@ -155,12 +160,12 @@ endif
 test:
 	$(MAKE) -C ../test MATEPLUS_PATH=$(MATEPLUS_PATH)
 
-../dep ../obj ../bin:
+../dep ../obj ../bin ../lib/python:
 	mkdir -p $@
 
 .PHONY: clean cleaner clean.mplsconfig clean.cmdlp cleaner.cmdlp clean.test
 clean: clean.mplsconfig clean.cmdlp
-	$(RM) -r ../bin
+	$(RM) -r ../bin ../lib
 	$(RM) *~
 
 clean.mplsconfig:

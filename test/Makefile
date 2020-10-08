@@ -109,8 +109,8 @@ C4_2_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9]\b/\1/g;"
 C7_3_SUB := "s/\(-\?[0-9]\.[0-9][0-9][0-9]\)[0-9][0-9][0-9][0-9]\b/\1/g;"
 
 compare_w_bert_log.%: %
-	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB)-e $(C7_3_SUB)) \
-	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB)-e $(C7_3_SUB)) -q
+	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C7_3_SUB)) \
+	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C7_3_SUB)) -q
 
 # Simple tests
 

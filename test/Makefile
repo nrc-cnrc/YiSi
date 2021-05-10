@@ -78,7 +78,7 @@ TMP_FILES += test_yisi_[0-2]*.out test_hyp.docyisi[0-2]* test_hyp.sntyisi[0-2]*
 TMP_FILES += test_ref.en.srl
 TMP_FILES += test_hyp.en.bert.tok.emb*
 
-TMP_DIRS += tmp[0-9a-z]*
+TMP_DIRS += tmp[0-9a-z_]*
 
 compare.%: %
 	diff $< ref/$< -q
@@ -104,15 +104,24 @@ BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
            s/CPU Frequency: 2[0-9]\+ Hz/CPU Frequency: 2300000000 Hz/g; \
            s/with [0-9][0-9][0-9][0-9][0-9] MB memory/with 10780 MB memory/g; \
            s/pciBusID: 0000:[0-9a-f][0-9a-f]:00.0/pciBusID: 0000:00:00.0/g; \
-           s/pci bus id: 0000:[0-9a-f][0-9a-f]:00.0/pciBusID: 0000:00:00.0/g;"
+           s/pci bus id: 0000:[0-9a-f][0-9a-f]:00.0/pciBusID: 0000:00:00.0/g; \
+           s/TensorFlow binary was not compiled to use:.*/TensorFlow binary was not compiled to use:/g; \
+           s/ \/space\/[^ \t]\+/ <pathname>/g;"
 
 C4_2_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9]\b/\1/g;"
 C5_3_SUB := "s/\(-\?[0-9]\.[0-9][0-9][0-9]\)[0-9][0-9][0-9]*\b/\1/g;"
 C5_E_SUB := "s/\(-\?[0-9]\.[0-9][0-9]\)[0-9][0-9][0-9]*\(e-[0-9][0-9]\)\b/\1\2/g;"
 
+ifeq ($(shell nvidia-smi &> /dev/null; echo $$?),0)
+	BERT_LOG_EXT := gpu
+else
+	BERT_LOG_EXT := cpu
+endif
+
 compare_w_bert_log.%: %
 	diff <(cat $< | grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C5_3_SUB) -e $(C5_E_SUB)) \
-	     <(cat ref/$< |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C5_3_SUB) -e $(C5_E_SUB)) -q
+	     <(cat ref/$<.$(BERT_LOG_EXT) |  grep -v '^\*\*\* Timer:' | sed -e $(BL_SUB) -e $(C4_2_SUB) -e $(C5_3_SUB) -e $(C5_E_SUB)) \
+	     -q
 
 # Simple tests
 

@@ -1,0 +1,541 @@
+Setting up BERT ...
+Python program: python3
+Python program full path: /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/YiSi/bin/python3
+Python version: 3.7.3 (default, Mar 27 2019, 22:11:17) 
+[GCC 7.3.0]
+ImportedBERT_wrapper.
+BERT_model instance created.
+Done setting up BERT.
+Calling BERT_model.extract_features_2_yisi.
+*** Timer: importing bert.extract_features took 5.063 seconds.
+INFO:tensorflow:*** Example ***
+INFO:tensorflow:unique_id: 0
+INFO:tensorflow:tokens: [CLS] A Republican strategy to con ##front the re - election of Obama [SEP]
+INFO:tensorflow:input_ids: 101 138 21776 40919 10114 10173 31044 10105 11639 118 13685 10108 28353 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:*** Example ***
+INFO:tensorflow:unique_id: 1
+INFO:tensorflow:tokens: [CLS] The leaders of the Republicans just ##ify their policy with the need to combat the fraud . [SEP]
+INFO:tensorflow:input_ids: 101 10117 24155 10108 10105 93700 12820 48281 10455 14368 10169 10105 17367 10114 18159 10105 93070 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:*** Example ***
+INFO:tensorflow:unique_id: 2
+INFO:tensorflow:tokens: [CLS] The latter , the br ##enna ##n Center for a my ##th , as it con ##fir ##ms that the electoral fraud in the United States is less than the number of people killed by light ##ning . [SEP]
+INFO:tensorflow:input_ids: 101 10117 21692 117 10105 33989 60286 10115 11719 10142 169 15127 11143 117 10146 10271 10173 61644 12387 10189 10105 29125 93070 10106 10105 10609 10859 10124 15306 11084 10105 11487 10108 11426 15875 10155 15765 11269 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:*** Example ***
+INFO:tensorflow:unique_id: 3
+INFO:tensorflow:tokens: [CLS] The lawyer ##s of the Republicans have recorded in 10 years in the United States , more ##over , only 300 cases of electoral fraud . [SEP]
+INFO:tensorflow:input_ids: 101 10117 38055 10107 10108 10105 93700 10529 14227 10106 10150 10855 10106 10105 10609 10859 117 10798 16666 117 10893 11093 16480 10108 29125 93070 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:*** Example ***
+INFO:tensorflow:unique_id: 4
+INFO:tensorflow:tokens: [CLS] One thing is for sure : these new provisions will ad ##verse ##ly affect the turno ##ut . [SEP]
+INFO:tensorflow:input_ids: 101 11340 40414 10124 10142 62452 131 11762 10751 67623 11337 10840 27198 10454 60600 10105 17440 11159 119 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+INFO:tensorflow:input_type_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+WARNING:tensorflow:Estimator's model_fn (<function model_fn_builder.<locals>.model_fn at 0x14a7dbed69d8>) includes params argument, but params are not passed to Estimator.
+WARNING:tensorflow:Using temporary folder as model directory: ./tmp70kr66_x
+INFO:tensorflow:Using config: {'_model_dir': './tmp70kr66_x', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+graph_options {
+  rewrite_options {
+    meta_optimizer_iterations: ONE
+  }
+}
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': None, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_service': None, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x14a7d97cfb70>, '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1, '_tpu_config': TPUConfig(iterations_per_loop=2, num_shards=8, num_cores_per_replica=None, per_host_input_for_training=3, tpu_job_name=None, initial_infeed_sleep_secs=None, input_partition_dims=None), '_cluster': None}
+INFO:tensorflow:_TPUContext: eval_on_tpu True
+WARNING:tensorflow:eval_on_tpu ignored because use_tpu is False.
+INFO:tensorflow:Could not find trained model in model_dir: ./tmp70kr66_x, running initialization to predict.
+WARNING:tensorflow:From /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/YiSi/lib/python3.7/site-packages/tensorflow/python/ops/resource_variable_ops.py:435: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Running infer on CPU
+WARNING:tensorflow:From /space/group/nrc_ict/project/pkgs/ubuntu18/gcc-7.3.0/miniconda3/envs/YiSi/lib/python3.7/site-packages/bert/modeling.py:671: dense (from tensorflow.python.layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.dense instead.
+INFO:tensorflow:**** Trainable Variables ****
+INFO:tensorflow:  name = bert/embeddings/word_embeddings:0, shape = (119547, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/embeddings/token_type_embeddings:0, shape = (2, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/embeddings/position_embeddings:0, shape = (512, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/embeddings/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/embeddings/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_0/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_1/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_2/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_3/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_4/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_5/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_6/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_7/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_8/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_9/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_10/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/query/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/query/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/key/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/key/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/value/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/self/value/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/output/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/attention/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/intermediate/dense/kernel:0, shape = (768, 3072), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/intermediate/dense/bias:0, shape = (3072,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/output/dense/kernel:0, shape = (3072, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/output/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/output/LayerNorm/beta:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/encoder/layer_11/output/LayerNorm/gamma:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/pooler/dense/kernel:0, shape = (768, 768), *INIT_FROM_CKPT*
+INFO:tensorflow:  name = bert/pooler/dense/bias:0, shape = (768,), *INIT_FROM_CKPT*
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Graph was finalized.
+2021-05-10 11:02:54.287163: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+2021-05-10 11:02:54.316514: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2600245000 Hz
+2021-05-10 11:02:54.317023: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x4c53cf0 executing computations on platform Host. Devices:
+2021-05-10 11:02:54.317066: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+2021-05-10 11:02:54.354129: E tensorflow/stream_executor/cuda/cuda_driver.cc:300] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2021-05-10 11:02:54.354315: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:148] kernel driver does not appear to be running on this host (nrc-inter-ubuntu-18.04-amd64.science.gc.ca): /proc/driver/nvidia/version does not exist
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:prediction_loop marked as finished
+INFO:tensorflow:prediction_loop marked as finished
+BERT_model.extract_features_2_yisi returned 10 sentences.
+
+Sentence 0 lengths: units=12 toks=11 embeddings=12
+  Units: A Republican strategy to con ##front the re - election of Obama
+  Toks: A Republican strategy to confront the re - election of Obama
+Unit embedding 0: 0 len: 768:  -0.5827 0.4042 -0.0135 0.6750 -0.9031 -0.7822 0.4186 0.4887
+Unit embedding 1: 1 len: 768:  -0.0776 1.1635 -0.9911 1.0901 -0.3929 -0.3776 -1.3000 -0.2225
+Unit embedding 2: 2 len: 768:  -0.4721 1.3161 -1.3388 1.2890 -0.5649 -0.6167 -0.2330 0.1624
+Unit embedding 3: 3 len: 768:  -0.7274 1.0293 -0.7419 1.1616 -0.3991 -0.9028 0.5768 -0.9219
+Unit embedding 4: 4 len: 768:  -0.5606 1.0026 -1.5825 0.9782 -0.0814 0.8056 -0.7967 -0.8587
+Unit embedding 5: 4 len: 768:  -0.2765 1.1551 -0.7841 0.7128 -0.2875 0.1959 -0.0504 0.4486
+Unit embedding 6: 5 len: 768:  -0.1103 0.2714 -0.7991 0.5890 -0.4949 -0.1624 0.6579 -0.2420
+Unit embedding 7: 6 len: 768:  -0.2477 0.7105 -1.2454 0.4850 -0.9414 0.1011 -0.6976 -0.1620
+Unit embedding 8: 7 len: 768:  0.4805 0.1627 0.1947 0.9351 -0.4596 -0.3772 -0.4038 0.3003
+Unit embedding 9: 8 len: 768:  -0.5010 0.4457 -0.8332 -0.1351 -0.6792 -0.3413 -0.6355 -0.5367
+Unit embedding 10: 9 len: 768:  -0.8845 0.2515 -0.6363 0.3947 -0.7266 -0.2140 -0.2924 -0.4322
+Unit embedding 11: 10 len: 768:  -1.1988 0.4477 -1.3543 -0.3145 -0.7602 0.2753 -1.1263 0.1716
+
+Sentence 1 lengths: units=17 toks=16 embeddings=17
+  Units: The leaders of the Republicans just ##ify their policy with the need to combat the fraud .
+  Toks: The leaders of the Republicans justify their policy with the need to combat the fraud .
+Unit embedding 0: 0 len: 768:  -0.8777 -0.6555 1.0790 1.4695 -0.2952 -0.1876 0.2401 -0.1528
+Unit embedding 1: 1 len: 768:  -1.0840 -0.2170 0.2664 1.5790 0.3255 0.1375 -1.4191 -0.3422
+Unit embedding 2: 2 len: 768:  -1.1938 -0.2429 1.5415 0.8726 0.7514 -0.2523 -0.7467 -0.2675
+Unit embedding 3: 3 len: 768:  -2.2341 -0.0168 1.1873 1.0537 0.3351 0.1560 -0.1796 0.1502
+Unit embedding 4: 4 len: 768:  -0.8590 0.6470 -0.1339 1.5796 0.5400 -0.2122 -1.4929 0.0131
+Unit embedding 5: 5 len: 768:  -1.4628 -0.4534 -1.0544 1.1985 1.0082 -0.4791 -1.0554 -0.8059
+Unit embedding 6: 5 len: 768:  -1.3118 -0.3326 -0.8172 1.2064 -0.1319 -0.7061 -0.4590 0.0650
+Unit embedding 7: 6 len: 768:  -1.3859 -0.3396 0.1560 0.3747 -0.0760 -1.0545 0.3468 0.1490
+Unit embedding 8: 7 len: 768:  -1.3609 0.1095 -1.8491 0.1746 -0.3232 0.5911 0.3871 -0.0503
+Unit embedding 9: 8 len: 768:  -0.7705 -0.5133 -0.8520 0.7170 -0.1925 -0.8964 -0.6913 -0.9210
+Unit embedding 10: 9 len: 768:  -0.4496 -0.6140 -0.3641 0.7905 0.2224 -0.4117 0.2520 -0.4759
+Unit embedding 11: 10 len: 768:  -0.3178 -0.1396 -0.5434 1.1272 0.7589 -0.6292 0.3121 -0.7283
+Unit embedding 12: 11 len: 768:  -0.8714 0.2584 0.0359 1.3189 0.3250 -0.5714 0.6898 -0.6401
+Unit embedding 13: 12 len: 768:  -0.9852 0.7374 -0.6108 1.1581 0.3062 0.2184 0.2801 0.4385
+Unit embedding 14: 13 len: 768:  -0.9301 -0.6894 -0.3446 0.0073 0.6403 -0.5060 0.2386 -0.4302
+Unit embedding 15: 14 len: 768:  -1.0532 -0.4468 -0.6145 0.1157 0.8004 -0.0640 -0.2861 -0.6362
+Unit embedding 16: 15 len: 768:  -1.1362 -0.4040 -0.4290 0.8570 1.1212 -0.1569 -0.5191 -0.0690
+
+Sentence 2 lengths: units=38 toks=32 embeddings=38
+  Units: The latter , the br ##enna ##n Center for a my ##th , as it con ##fir ##ms that the electoral fraud in the United States is less than the number of people killed by light ##ning .
+  Toks: The latter , the brennan Center for a myth , as it confirms that the electoral fraud in the United States is less than the number of people killed by lightning .
+Unit embedding 0: 0 len: 768:  -0.9726 -1.0636 -0.3499 0.5425 0.1840 -0.9822 0.3043 0.9249
+Unit embedding 1: 1 len: 768:  -1.1717 -0.8839 -1.2716 0.9371 -0.2804 0.4438 0.2486 0.9597
+Unit embedding 2: 2 len: 768:  -1.4993 0.2019 -0.2509 1.0791 0.7044 -0.8999 -1.0328 -0.5666
+Unit embedding 3: 3 len: 768:  -1.0125 -0.2388 0.1754 0.8676 0.3045 -1.1613 0.2169 -0.4624
+Unit embedding 4: 4 len: 768:  -1.4611 -0.5870 -1.0844 0.8475 1.2095 -1.1829 -0.5683 -1.2831
+Unit embedding 5: 4 len: 768:  -0.8650 -0.6692 -1.2602 1.2223 0.6999 -1.3095 -1.1313 -0.2042
+Unit embedding 6: 4 len: 768:  -1.9614 -0.2429 -1.1759 1.1594 0.8056 -0.5883 -0.7528 -1.1316
+Unit embedding 7: 5 len: 768:  -0.5186 0.8496 0.5924 0.5608 0.6181 0.0595 -1.4482 0.3898
+Unit embedding 8: 6 len: 768:  0.6378 0.9403 -1.4730 -0.0099 -0.4638 -0.0574 -0.9667 -0.9959
+Unit embedding 9: 7 len: 768:  -0.0132 -0.6405 -1.7667 -0.2024 -0.3835 -0.8744 -0.3911 -1.0920
+Unit embedding 10: 8 len: 768:  -0.1081 0.0641 -1.4324 0.7132 -0.0613 -0.8564 -0.6948 -0.4321
+Unit embedding 11: 8 len: 768:  -0.2502 0.2509 -1.0245 0.0611 0.8087 -1.1422 -0.4291 -1.4868
+Unit embedding 12: 9 len: 768:  -1.3212 0.2989 0.1326 0.9244 0.8421 -0.2554 -0.8243 0.0074
+Unit embedding 13: 10 len: 768:  -0.3823 0.7443 -0.0981 -0.1146 0.2532 -0.8375 -0.1993 0.1389
+Unit embedding 14: 11 len: 768:  -0.1411 -0.0243 0.3336 0.8272 0.0417 0.6287 0.2403 -0.0081
+Unit embedding 15: 12 len: 768:  -0.2221 -0.5543 -0.5948 0.6590 0.1017 0.8346 -0.9188 -0.4971
+Unit embedding 16: 12 len: 768:  0.0312 0.4665 -0.2578 0.7537 0.9217 0.4381 0.1348 0.1923
+Unit embedding 17: 12 len: 768:  -0.1381 1.1233 -0.4803 0.4282 0.2390 0.3746 0.0853 0.5945
+Unit embedding 18: 13 len: 768:  -0.4343 -0.1737 -0.3834 0.7587 -0.5681 0.7958 0.6989 0.0900
+Unit embedding 19: 14 len: 768:  -0.6952 -1.0465 -0.3761 -0.1785 -0.4503 -0.0829 0.8949 -0.1025
+Unit embedding 20: 15 len: 768:  -1.1637 -0.5804 -1.1121 0.8038 0.0182 -0.5087 -0.2537 0.2458
+Unit embedding 21: 16 len: 768:  -0.5721 -0.2447 -0.5277 0.3163 -0.4664 -0.1228 0.0970 -0.2792
+Unit embedding 22: 17 len: 768:  -0.4436 -0.8182 -0.1016 0.7130 -0.5301 -0.7422 0.2420 -0.4920
+Unit embedding 23: 18 len: 768:  -0.7108 -0.8235 -0.4018 0.6691 0.2696 -0.0938 0.1621 -0.3017
+Unit embedding 24: 19 len: 768:  0.1468 0.1288 -1.0137 0.7694 0.7606 -0.2401 -0.8383 0.1602
+Unit embedding 25: 20 len: 768:  0.0476 0.1751 -1.0848 0.6532 1.1235 -0.1170 -0.4194 0.3097
+Unit embedding 26: 21 len: 768:  -0.0538 -0.4413 -0.7142 1.0010 -0.6040 0.4642 0.5080 0.1114
+Unit embedding 27: 22 len: 768:  -0.7850 -0.5503 -2.0296 2.0934 -0.1577 -0.4707 -0.2573 -0.8994
+Unit embedding 28: 23 len: 768:  0.6101 0.0046 -1.5766 1.5750 -0.3473 -1.1047 -1.1489 -1.1186
+Unit embedding 29: 24 len: 768:  0.0334 -0.9331 -0.8692 1.2148 0.0743 -0.0060 0.3166 0.3710
+Unit embedding 30: 25 len: 768:  0.4187 -0.5339 -0.6712 1.2286 -0.7704 0.4190 0.3018 -0.3487
+Unit embedding 31: 26 len: 768:  -0.0305 -0.0213 0.1499 0.7788 0.0202 -0.0219 0.9807 -0.5002
+Unit embedding 32: 27 len: 768:  -0.4407 0.2720 -0.0128 0.6195 -0.2075 -0.1582 0.2310 -0.6746
+Unit embedding 33: 28 len: 768:  -0.2290 0.2695 -0.1158 0.7426 0.4649 -1.0248 -0.4281 0.4427
+Unit embedding 34: 29 len: 768:  -0.2067 0.3198 -0.2223 1.0041 0.5883 -0.8404 -0.8189 -0.5671
+Unit embedding 35: 30 len: 768:  -0.9437 0.4559 -1.1295 1.2540 0.3068 -1.4987 0.1437 0.2158
+Unit embedding 36: 30 len: 768:  -0.8415 0.9644 -0.2090 1.0150 0.0946 -1.0796 -0.0086 -0.0158
+Unit embedding 37: 31 len: 768:  -1.0130 -0.6771 -0.5937 1.1636 0.1992 -0.0531 -0.5925 -0.2361
+
+Sentence 3 lengths: units=26 toks=24 embeddings=26
+  Units: The lawyer ##s of the Republicans have recorded in 10 years in the United States , more ##over , only 300 cases of electoral fraud .
+  Toks: The lawyers of the Republicans have recorded in 10 years in the United States , moreover , only 300 cases of electoral fraud .
+Unit embedding 0: 0 len: 768:  -0.8933 -0.5752 1.1313 0.3227 -0.4664 -0.5552 1.0973 -0.1173
+Unit embedding 1: 1 len: 768:  -0.6461 0.1526 0.2411 0.1616 -0.2893 -0.0686 -0.1538 0.0905
+Unit embedding 2: 1 len: 768:  -0.6460 -0.0903 1.6374 0.6678 0.2046 -0.3878 0.0390 -0.3597
+Unit embedding 3: 2 len: 768:  -1.0041 0.2252 1.1705 0.7546 0.5897 -0.6849 0.2231 -0.8527
+Unit embedding 4: 3 len: 768:  -1.6816 1.0396 0.7810 0.8961 0.1205 -0.5122 1.0300 -0.7045
+Unit embedding 5: 4 len: 768:  -0.6489 1.4510 -0.1288 1.6077 0.0847 -0.5275 -0.3605 -0.6645
+Unit embedding 6: 5 len: 768:  -0.3163 -0.0900 -0.1840 0.5792 -0.5024 -0.3773 1.4857 -0.1783
+Unit embedding 7: 6 len: 768:  -1.2028 -0.2401 -1.4166 0.5211 -0.4606 -0.1725 0.3466 0.2555
+Unit embedding 8: 7 len: 768:  -0.2953 -0.0435 -1.4695 1.2729 -1.2717 -0.7641 0.3206 -0.3316
+Unit embedding 9: 8 len: 768:  -0.6776 0.4150 -0.0658 1.0163 -0.2863 -0.2035 1.3037 -0.7477
+Unit embedding 10: 9 len: 768:  0.1086 0.3117 0.1062 0.3342 -0.1947 0.5308 0.7034 -0.7199
+Unit embedding 11: 10 len: 768:  -1.0808 0.5214 -0.3895 0.5996 0.0784 -0.6586 0.8799 -0.6268
+Unit embedding 12: 11 len: 768:  -1.1783 -0.3297 -0.0598 0.4238 0.4824 -0.0654 1.0807 -0.1153
+Unit embedding 13: 12 len: 768:  0.0051 0.3973 -0.1203 0.6138 0.9997 -0.2597 -0.7274 0.0156
+Unit embedding 14: 13 len: 768:  -0.0414 0.5150 -0.5701 0.4551 1.2061 -0.0009 -0.0997 0.3943
+Unit embedding 15: 14 len: 768:  -0.5210 -0.2821 -1.4467 1.4640 -0.9900 -0.9835 -0.0912 -0.2317
+Unit embedding 16: 15 len: 768:  -0.5773 0.0817 -0.1570 1.5845 -0.4617 -0.3551 -0.1570 0.9591
+Unit embedding 17: 15 len: 768:  0.3175 0.7734 -0.8269 1.2114 1.0664 -0.9528 -1.8213 0.5581
+Unit embedding 18: 16 len: 768:  -1.1156 -0.1199 -0.5588 0.9984 -0.4331 -0.2712 -0.3382 0.0873
+Unit embedding 19: 17 len: 768:  -1.5873 -0.0527 -1.6855 1.3269 -0.6242 -0.3903 1.1466 -0.2058
+Unit embedding 20: 18 len: 768:  -0.2908 0.2456 -0.7822 1.5429 -0.7480 -0.8970 1.3192 -0.8661
+Unit embedding 21: 19 len: 768:  -0.1598 0.1365 -0.7856 0.7914 0.8910 -0.7675 -0.3262 -0.5780
+Unit embedding 22: 20 len: 768:  -0.6134 0.0620 -1.0055 0.4624 1.0685 0.0115 0.5670 -0.0331
+Unit embedding 23: 21 len: 768:  -1.1140 0.6475 -0.3760 0.5414 0.4873 -1.2015 -0.3834 0.1395
+Unit embedding 24: 22 len: 768:  -0.7568 0.3211 -0.5951 0.0550 0.6454 -0.6618 -0.3736 -0.6407
+Unit embedding 25: 23 len: 768:  -0.9525 -0.5265 -0.3516 0.8689 0.4695 -0.2747 -0.2741 0.0729
+
+Sentence 4 lengths: units=18 toks=15 embeddings=18
+  Units: One thing is for sure : these new provisions will ad ##verse ##ly affect the turno ##ut .
+  Toks: One thing is for sure : these new provisions will adversely affect the turnout .
+Unit embedding 0: 0 len: 768:  -0.4866 -1.2776 -0.0400 0.6946 0.4848 0.5512 -1.0411 0.7761
+Unit embedding 1: 1 len: 768:  0.0442 -0.9463 -0.4493 1.2679 1.0437 0.3828 -1.4640 0.9055
+Unit embedding 2: 2 len: 768:  -0.2535 -0.4280 -0.3439 0.9287 1.2159 0.1076 -0.9826 1.4032
+Unit embedding 3: 3 len: 768:  0.4025 -0.4071 -1.5287 1.0019 0.3505 -0.5596 -0.7018 1.2764
+Unit embedding 4: 4 len: 768:  0.1234 0.0607 -1.2950 1.5023 0.9205 -0.3748 -1.2498 0.6262
+Unit embedding 5: 5 len: 768:  -0.7753 -0.9317 -0.2918 1.0194 -0.1062 -0.0997 -0.6772 0.6783
+Unit embedding 6: 6 len: 768:  -0.0471 -0.7354 -0.3319 0.8453 -1.2344 -0.1972 -0.5053 0.1195
+Unit embedding 7: 7 len: 768:  0.3636 -0.1086 -1.0731 0.5967 -0.4485 -0.8577 0.1019 0.1961
+Unit embedding 8: 8 len: 768:  -0.3216 0.4928 -0.9667 1.1699 -0.1970 -0.4693 -0.3106 -0.3241
+Unit embedding 9: 9 len: 768:  -0.0549 -0.6245 -0.2644 0.9809 -1.0203 -0.0038 0.2563 -0.4191
+Unit embedding 10: 10 len: 768:  -0.5122 -0.6736 -0.0155 1.1840 -1.0955 0.0273 -1.0232 -0.1481
+Unit embedding 11: 10 len: 768:  -1.2040 -0.4485 -1.0861 1.4975 -0.8669 0.6945 -0.4983 -0.0433
+Unit embedding 12: 10 len: 768:  -0.5895 -0.5028 0.1554 1.0208 -0.5225 1.1164 0.4677 -0.5725
+Unit embedding 13: 11 len: 768:  -0.7999 -0.2677 -0.7104 0.3486 -0.8843 -0.9344 -1.1825 -0.0331
+Unit embedding 14: 12 len: 768:  -1.2531 -0.4922 -0.5080 0.5350 -0.2279 -0.0516 0.1912 0.1590
+Unit embedding 15: 13 len: 768:  -0.1526 -0.0732 -0.9782 1.0283 0.6547 -0.3587 -0.6280 0.6603
+Unit embedding 16: 13 len: 768:  -0.4776 0.0452 -0.4048 0.8817 0.1285 -0.1782 -1.2955 1.0373
+Unit embedding 17: 14 len: 768:  -1.0452 -0.8043 -0.3006 1.2740 0.4064 0.0662 -0.6859 0.2188
+
+Sentence 5 lengths: units=20 toks=18 embeddings=20
+  Units: In this sense , some of these measures are under ##mini ##ng the democratic system of the United States .
+  Toks: In this sense , some of these measures are undermining the democratic system of the United States .
+Unit embedding 0: 0 len: 768:  -0.2496 -0.4993 0.4779 1.1951 -0.7691 -0.4513 -0.6767 0.0434
+Unit embedding 1: 1 len: 768:  -0.2337 -0.2101 -0.0610 1.1320 0.0449 0.0256 -1.5175 0.4009
+Unit embedding 2: 2 len: 768:  -0.7339 1.0185 0.0677 0.9325 0.4977 1.0162 -1.8622 -0.1772
+Unit embedding 3: 3 len: 768:  -1.4957 -0.0075 -0.3953 1.2043 0.2453 -0.4352 -0.0318 -0.1551
+Unit embedding 4: 4 len: 768:  -1.4677 -0.3082 0.3493 1.8008 -0.6596 -0.4623 -0.7446 0.0469
+Unit embedding 5: 5 len: 768:  -1.3923 -0.5960 -0.3094 1.3659 0.0858 0.3054 -0.0151 0.2297
+Unit embedding 6: 6 len: 768:  -0.6822 0.1334 -0.2227 1.4118 -0.2684 -0.9015 -0.1879 0.1236
+Unit embedding 7: 7 len: 768:  -1.2131 0.1969 -0.5212 1.0541 -0.1080 0.4296 -0.3498 0.0765
+Unit embedding 8: 8 len: 768:  -0.4106 1.0001 -0.9137 1.2101 0.2612 0.2527 0.7439 -0.0448
+Unit embedding 9: 9 len: 768:  -0.5946 0.7068 -0.7624 2.2002 -0.1574 -0.7127 -0.4309 0.9269
+Unit embedding 10: 9 len: 768:  -0.8587 0.9451 -1.8446 2.3846 -0.0660 -0.4143 0.0250 0.9390
+Unit embedding 11: 9 len: 768:  -0.7706 0.7965 -0.3284 1.7707 -0.5388 -0.6825 0.8533 0.5790
+Unit embedding 12: 10 len: 768:  -0.8786 -0.4954 -0.1930 1.2912 -0.0663 -0.5236 0.3030 0.3142
+Unit embedding 13: 11 len: 768:  -0.7012 0.0963 -0.8519 1.5171 0.3812 -1.3957 -1.2334 -0.0191
+Unit embedding 14: 12 len: 768:  -0.5446 0.1855 -0.5849 1.4873 0.3104 -0.3848 -0.8478 -0.2420
+Unit embedding 15: 13 len: 768:  -0.5477 0.1555 0.2386 0.8580 0.2128 -0.5652 -0.5305 -0.6913
+Unit embedding 16: 14 len: 768:  -1.5898 -0.1502 -0.0241 0.8309 0.2246 -0.5636 0.0682 -0.8225
+Unit embedding 17: 15 len: 768:  -0.8267 0.4466 0.1735 1.1395 0.5987 -0.5760 -1.0898 -0.3622
+Unit embedding 18: 16 len: 768:  -0.9907 0.5117 -0.0680 1.0323 0.8968 -0.1854 -0.9375 -0.2022
+Unit embedding 19: 17 len: 768:  -1.0279 -0.0279 -0.5597 1.4830 0.5142 -0.2210 -0.7663 -0.1346
+
+Sentence 6 lengths: units=19 toks=19 embeddings=19
+  Units: In contrast to Canada are the States responsible for the conduct of the elections in the individual States .
+  Toks: In contrast to Canada are the States responsible for the conduct of the elections in the individual States .
+Unit embedding 0: 0 len: 768:  0.0488 -0.6948 0.6097 0.3583 0.0875 -1.0365 -0.0772 -0.1725
+Unit embedding 1: 1 len: 768:  0.1722 0.0326 1.2028 0.8581 -1.0047 0.1200 -0.5199 0.4630
+Unit embedding 2: 2 len: 768:  -0.6460 -0.6260 0.8901 1.2239 -0.3071 -0.6675 0.4773 -0.6589
+Unit embedding 3: 3 len: 768:  -0.0721 0.1387 -0.8591 1.1060 -0.6302 0.4579 0.4300 -0.4081
+Unit embedding 4: 4 len: 768:  -0.8028 0.7983 -0.4599 0.8798 -0.0872 -0.7485 -0.0534 -1.7216
+Unit embedding 5: 5 len: 768:  -1.4232 0.4333 0.2022 1.2653 -0.7575 -1.3224 0.5866 -1.8691
+Unit embedding 6: 6 len: 768:  0.1365 0.5969 -0.2851 0.7976 0.2467 -0.2954 0.3786 -1.0911
+Unit embedding 7: 7 len: 768:  -0.3412 0.7797 0.3406 0.5925 0.2765 -1.7763 -1.2673 -0.9854
+Unit embedding 8: 8 len: 768:  -0.1391 0.2038 -0.4015 0.6821 -0.1204 -0.9205 0.3198 -1.0393
+Unit embedding 9: 9 len: 768:  -0.8866 -0.3301 0.0566 -0.0711 -0.0585 -0.5169 0.4898 -0.6559
+Unit embedding 10: 10 len: 768:  -0.3214 0.5746 -0.7491 -0.1069 0.2913 -0.2758 -0.5262 -0.4514
+Unit embedding 11: 11 len: 768:  -1.0932 0.2910 0.1016 0.0910 -0.0964 -0.2686 -0.4983 -0.6497
+Unit embedding 12: 12 len: 768:  -1.3324 0.1406 -0.3094 -0.1538 -0.5787 -0.3817 0.2410 -0.6179
+Unit embedding 13: 13 len: 768:  -0.7540 0.2534 -0.6667 -0.3430 -0.6260 -0.3302 -0.2938 -0.5140
+Unit embedding 14: 14 len: 768:  -1.0719 0.0249 -0.0037 0.2420 -0.3985 -0.9111 -0.5608 -0.1251
+Unit embedding 15: 15 len: 768:  -2.0411 -0.8421 0.5446 0.7326 -0.3918 0.1165 -0.5456 0.0084
+Unit embedding 16: 16 len: 768:  -0.9384 0.0035 0.0113 1.0129 -0.5051 0.3384 -0.8547 -0.3150
+Unit embedding 17: 17 len: 768:  -1.1767 0.6961 0.7338 0.2770 0.4911 0.6422 -1.2749 0.1437
+Unit embedding 18: 18 len: 768:  -1.0705 -0.4516 -0.2698 1.2244 -0.2643 -0.3807 -0.5837 -0.2635
+
+Sentence 7 lengths: units=28 toks=26 embeddings=28
+  Units: In this sense , the majority of American governments since 2009 announced new laws , the procedures for the registration or com ##pli ##cate the ballot box .
+  Toks: In this sense , the majority of American governments since 2009 announced new laws , the procedures for the registration or complicate the ballot box .
+Unit embedding 0: 0 len: 768:  -0.2975 -0.7910 0.7048 1.2713 -0.5902 -0.5203 -0.4199 0.3459
+Unit embedding 1: 1 len: 768:  -0.0625 -0.2747 0.0777 0.9203 0.1055 0.0723 -0.9336 0.4821
+Unit embedding 2: 2 len: 768:  -0.6398 0.9184 0.2278 1.0783 0.5629 1.0611 -1.4861 -0.1184
+Unit embedding 3: 3 len: 768:  -1.5015 0.1414 -0.1718 0.9109 0.2647 -0.5163 0.1539 -0.2241
+Unit embedding 4: 4 len: 768:  -1.3586 -0.9714 0.2899 0.7169 -0.0835 -0.7523 0.9747 -0.2893
+Unit embedding 5: 5 len: 768:  -1.0143 -0.7040 0.6327 1.4379 -0.7703 -0.6683 -0.1887 -0.3911
+Unit embedding 6: 6 len: 768:  -1.3764 -0.5235 0.9580 1.3796 0.9043 -0.2387 0.3427 0.0424
+Unit embedding 7: 7 len: 768:  -0.7958 -0.8231 -0.4446 0.4684 1.3171 -0.7426 -0.3593 0.8526
+Unit embedding 8: 8 len: 768:  -1.0099 -0.1449 -0.1341 1.2619 0.1719 -0.4813 -0.3999 -0.3010
+Unit embedding 9: 9 len: 768:  0.6082 0.4535 0.1852 0.9920 -0.6331 -0.6761 0.1067 -0.7359
+Unit embedding 10: 10 len: 768:  0.1183 0.1447 -0.2609 -0.0339 0.1594 0.1689 1.3122 -0.0245
+Unit embedding 11: 11 len: 768:  -1.2054 -0.1375 -1.0558 1.1124 0.1812 -1.1515 -0.3533 -0.3670
+Unit embedding 12: 12 len: 768:  -0.3583 0.0263 -0.2872 0.8459 -0.7471 -1.0338 0.4647 -0.0429
+Unit embedding 13: 13 len: 768:  -0.6960 0.7469 -0.4619 0.6463 -0.2521 -0.6424 -0.3375 -0.2572
+Unit embedding 14: 14 len: 768:  -0.0833 0.4242 -0.8753 0.7743 0.6003 -0.0085 -0.0151 -0.6443
+Unit embedding 15: 15 len: 768:  -0.8440 0.1061 -0.1435 0.9260 -0.6963 -0.5904 1.1975 -0.1767
+Unit embedding 16: 16 len: 768:  -0.0143 0.6975 -0.1626 0.2442 -0.3801 -0.6263 -0.1222 0.5279
+Unit embedding 17: 17 len: 768:  -0.4855 0.2981 0.0839 -0.2196 -0.4137 -1.0490 0.9395 -0.1647
+Unit embedding 18: 18 len: 768:  -0.9725 0.0263 -0.3494 -0.3725 -0.2476 0.0231 1.8243 -0.2627
+Unit embedding 19: 19 len: 768:  -0.7291 0.6964 -0.0632 0.7733 -0.3532 1.2335 0.0610 -0.7543
+Unit embedding 20: 20 len: 768:  -0.0218 0.1710 -1.3004 0.6034 -0.2471 1.7943 -0.1220 0.2626
+Unit embedding 21: 21 len: 768:  -0.4357 -0.2491 -0.4703 1.3420 -0.8371 0.5087 0.2613 0.2030
+Unit embedding 22: 21 len: 768:  -0.4815 0.8758 -0.8244 0.9870 -0.8495 -0.0109 -0.3090 0.8174
+Unit embedding 23: 21 len: 768:  -1.2831 0.0712 -0.7913 0.7784 -1.1190 -0.2913 0.9740 1.1136
+Unit embedding 24: 22 len: 768:  -0.1766 -0.2974 -0.2249 0.2147 -0.4667 0.2804 0.3021 -0.5434
+Unit embedding 25: 23 len: 768:  -0.8371 0.3511 -1.1754 0.8436 0.0045 0.7819 -0.3589 -0.3950
+Unit embedding 26: 24 len: 768:  0.5332 0.2645 -0.9793 0.8240 -0.7595 0.9394 -0.4675 -0.2733
+Unit embedding 27: 25 len: 768:  -0.7908 -0.5703 -0.1646 1.3166 0.3319 -0.1041 -0.3645 -0.3725
+
+Sentence 8 lengths: units=25 toks=25 embeddings=25
+  Units: This phenomenon has gained importance after the elections in November 2010 , in which 675 new Republican representatives in 26 states could be recorded .
+  Toks: This phenomenon has gained importance after the elections in November 2010 , in which 675 new Republican representatives in 26 states could be recorded .
+Unit embedding 0: 0 len: 768:  -0.1840 -0.3050 0.4458 0.4091 -0.6813 -0.9753 0.4626 0.2830
+Unit embedding 1: 1 len: 768:  -0.3678 0.0234 0.2685 0.4233 -0.0848 -0.4895 0.2675 0.0362
+Unit embedding 2: 2 len: 768:  -0.3654 -0.1858 -0.1694 0.3690 -0.0155 0.3121 0.1290 0.1196
+Unit embedding 3: 3 len: 768:  -0.2034 -0.5028 -0.2241 0.6264 -1.0905 0.0909 -0.0932 0.0196
+Unit embedding 4: 4 len: 768:  -0.6217 -0.7295 -0.0471 0.8774 -0.2691 -0.7484 -0.9850 -0.3440
+Unit embedding 5: 5 len: 768:  -0.0876 -0.3095 0.4624 0.3168 -0.3462 -0.6843 -0.4503 0.6861
+Unit embedding 6: 6 len: 768:  -0.3552 -0.5995 0.0186 1.0113 -0.0970 -0.2422 0.5848 -0.6420
+Unit embedding 7: 7 len: 768:  0.0938 -0.1527 -0.7312 0.3559 0.0276 -0.4633 -0.3004 -1.0231
+Unit embedding 8: 8 len: 768:  -0.1874 -0.3825 -0.0635 0.3644 -0.4687 -0.6324 -0.2833 -0.7435
+Unit embedding 9: 9 len: 768:  0.3388 -0.6744 -0.3334 0.7644 -0.2639 1.0539 -1.3467 0.2243
+Unit embedding 10: 10 len: 768:  -0.3045 -0.3875 0.3965 0.5065 -0.0228 0.6637 0.1284 0.1006
+Unit embedding 11: 11 len: 768:  -0.4824 -0.1627 -0.1177 0.8610 0.4144 0.1075 0.0401 0.3977
+Unit embedding 12: 12 len: 768:  0.1520 -0.5707 -0.1833 0.5011 -0.7333 0.2998 0.2659 0.3349
+Unit embedding 13: 13 len: 768:  -0.2072 -0.0632 0.2653 0.9847 -1.0895 0.9969 0.8544 0.7809
+Unit embedding 14: 14 len: 768:  0.0389 0.0737 -0.5332 0.3842 -1.0921 0.2675 1.6456 -0.8579
+Unit embedding 15: 15 len: 768:  -0.7198 1.0375 0.1294 -0.6472 -0.7071 -0.7821 1.0251 -0.3407
+Unit embedding 16: 16 len: 768:  -0.0926 0.7480 -0.1332 0.3779 0.1919 0.0645 -0.6002 -0.4988
+Unit embedding 17: 17 len: 768:  -0.3241 0.7843 0.1775 -0.0208 -0.8145 -1.0708 -0.1737 -0.0150
+Unit embedding 18: 18 len: 768:  -1.3555 -0.2682 0.5359 0.3746 -0.9333 -0.6173 -0.4902 -0.1990
+Unit embedding 19: 19 len: 768:  -0.9076 -0.1625 0.3054 1.0536 -0.4455 0.7909 0.8368 -1.0279
+Unit embedding 20: 20 len: 768:  -0.0713 0.2645 0.2989 -0.1188 0.9254 0.1591 -0.2153 -0.4987
+Unit embedding 21: 21 len: 768:  -0.6231 0.3442 -0.6562 0.4517 -1.7485 0.2077 0.2152 -1.2475
+Unit embedding 22: 22 len: 768:  -0.5685 0.5028 -1.1764 0.1596 -0.5353 0.5294 0.6291 -1.3801
+Unit embedding 23: 23 len: 768:  -1.2683 1.6198 -1.5463 0.8097 -1.0505 0.4239 -0.0040 0.0011
+Unit embedding 24: 24 len: 768:  -1.1080 0.0063 -0.5629 0.5551 0.2109 0.1069 -0.4212 -0.2546
+
+Sentence 9 lengths: units=25 toks=24 embeddings=25
+  Units: As a result , 180 bill ##s introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .
+  Toks: As a result , 180 bills introduced in 2011 alone , the limit the exercise of the right to vote in 41 states .
+Unit embedding 0: 0 len: 768:  -0.6135 -0.2609 0.6724 1.0721 -0.1753 -0.7195 -0.7120 0.5423
+Unit embedding 1: 1 len: 768:  -0.1359 -0.6086 0.0955 1.2134 1.0276 0.2261 -0.0996 0.2427
+Unit embedding 2: 2 len: 768:  0.2956 -0.1782 0.7172 0.6318 1.1490 0.4619 -0.8448 1.0033
+Unit embedding 3: 3 len: 768:  -1.1731 0.5332 -0.3108 0.9891 0.7979 -0.2936 0.8695 0.2025
+Unit embedding 4: 4 len: 768:  -0.3090 -0.2859 0.1415 1.1162 -1.0231 0.3103 1.2672 -0.4768
+Unit embedding 5: 5 len: 768:  -0.4879 0.1970 0.0964 1.0443 -0.4481 1.0746 -0.4885 -1.1350
+Unit embedding 6: 5 len: 768:  -0.1229 0.1329 0.8568 1.1092 0.2412 0.2084 0.3322 -0.7726
+Unit embedding 7: 6 len: 768:  -0.4535 0.5423 0.2944 0.4199 -0.1783 -0.6676 -0.1108 -0.3687
+Unit embedding 8: 7 len: 768:  -0.3126 -0.6292 0.2968 0.0016 -0.6962 -0.3778 -0.1933 0.0200
+Unit embedding 9: 8 len: 768:  -0.3560 -0.1509 0.4801 0.3838 -0.6582 0.8838 0.6277 0.2478
+Unit embedding 10: 9 len: 768:  -0.0265 0.4726 -1.4256 1.4468 0.0421 0.6586 -0.5820 -0.1369
+Unit embedding 11: 10 len: 768:  -1.1638 0.2294 -0.8981 1.5841 -0.2496 0.2379 -0.8358 -0.5453
+Unit embedding 12: 11 len: 768:  -1.8068 0.0038 0.1136 0.9225 -0.4122 -0.4832 0.7525 -0.2382
+Unit embedding 13: 12 len: 768:  -0.9755 0.1826 -1.5477 0.7491 0.3545 -0.2655 0.0391 0.1859
+Unit embedding 14: 13 len: 768:  -0.6854 0.0782 -0.2701 0.4967 0.7403 0.0016 1.0780 -0.8659
+Unit embedding 15: 14 len: 768:  0.2150 -0.0986 -1.1546 1.2666 0.4162 -0.1626 0.1238 -0.7838
+Unit embedding 16: 15 len: 768:  -0.5468 -0.5690 0.2356 0.7951 0.3143 0.1550 0.4800 -0.4352
+Unit embedding 17: 16 len: 768:  -0.6155 -0.8175 0.1268 0.2159 0.2514 -0.6554 0.6707 0.0064
+Unit embedding 18: 17 len: 768:  -0.1093 -0.1847 -0.2752 0.3649 -0.2499 -1.2436 -0.0123 -0.4057
+Unit embedding 19: 18 len: 768:  0.0418 -0.9517 0.3175 -0.1806 0.4887 -1.1995 0.4343 -1.4715
+Unit embedding 20: 19 len: 768:  -1.0901 0.2051 -0.3741 -0.1866 -0.0971 -0.0540 -0.5508 -0.1451
+Unit embedding 21: 20 len: 768:  -0.8744 -0.7802 -1.0578 0.4933 -0.4005 -0.9570 -0.3624 -0.0168
+Unit embedding 22: 21 len: 768:  -1.0320 -0.3887 0.1874 1.4107 -0.4288 0.2051 0.7136 -0.4131
+Unit embedding 23: 22 len: 768:  -0.5335 0.3827 -0.3099 0.5711 1.1606 0.0024 -0.5581 -0.0839
+Unit embedding 24: 23 len: 768:  -1.0792 -0.5799 -0.2851 1.1257 0.7504 0.1333 -0.4084 -0.1835

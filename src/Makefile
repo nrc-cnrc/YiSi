@@ -45,7 +45,11 @@ LDFLAGS += -Lcmdlp/build/lib
 LIBRARIES += -Wl,-Bstatic -lcmdlp -Wl,-Bdynamic
 
 # Flags for embedding Python code
-PYTHON_CONFIG ?= python3-config
+PYTHON_CONFIG ?= python3-config --embed
+EMBED_EXIST := $(shell ${PYTHON_CONFIG} > /dev/null ; echo $$?)
+ifneq ($(EMBED_EXIST),0)
+   PYTHON_CONFIG = python3-config
+endif
 CXXFLAGS += $(shell ${PYTHON_CONFIG} --cflags)
 LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFIG} --ldflags))
 LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)

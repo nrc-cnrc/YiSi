@@ -55,10 +55,27 @@ LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFI
 LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)
 
 PROG_NAMES := yisi
-TEST_NAMES := srlgraph_test maxmatching_test lexsim_test w2v_test biw2v_test \
-	      lexweight_test phrasesim_test srl_test srlutil_test util_test \
-	      emap_test oov_test ngram_test overlapvocab_test \
-	      yisiscorer_test testbin read_sent_test call_bert_test bert_test contextual_test
+TEST_NAMES := \
+   bert_test \
+   biw2v_test \
+   call_bert_test \
+   contextual_test \
+   emap_test \
+   lexsim_test \
+   lexweight_test \
+   maxmatching_test \
+   ngram_test \
+   oov_test \
+   overlapvocab_test \
+   phrasesim_test \
+   read_sent_test \
+   srl_test \
+   srlgraph_test \
+   srlutil_test \
+   testbin \
+   util_test \
+   w2v_test \
+   yisiscorer_test
 CMDLP_TEST_NAMES := cmdlp_test
 
 ifdef WITH_SRLMATE

@@ -179,7 +179,14 @@ size_t sent_t::get_token_size() {
    return token_m.size();
 }
 
-vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_delim, string idemb_path, string context_config, contextual_t* contextual_p, int mode) {
+vector<sent_t*> yisi::read_sent(
+      string sent_type,
+      string file_path,
+      string unit_delim,
+      string idemb_path,
+      string context_config,
+      contextual_t* contextual_p,
+      int mode) {
    vector<sent_t*> result;
    vector<vector<double> > sent_emb;
    vector<sent_t::span_type> sent_t2u;
@@ -221,29 +228,29 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       size_t txt_idx = unit_delim.find_first_of(alphabet);
       if (txt_idx == string::npos || txt_idx == unit_delim.size()-1) {
          pfx_delim = true;
-	 if (unit_delim[txt_idx] == 'u' || unit_delim[txt_idx] == 'U'){
-	   unt_delim = true;
-	 } else {
-	   unt_delim = false;
-	 }
+         if (unit_delim[txt_idx] == 'u' || unit_delim[txt_idx] == 'U'){
+            unt_delim = true;
+         } else {
+            unt_delim = false;
+         }
          unit_delim = unit_delim.substr(0, txt_idx);
       } else if (txt_idx == 0) {
          pfx_delim = false;
-	 if (unit_delim[txt_idx] == 'u' || unit_delim[txt_idx] == 'U'){
-	   unt_delim = true;
+         if (unit_delim[txt_idx] == 'u' || unit_delim[txt_idx] == 'U'){
+            unt_delim = true;
          } else {
-           unt_delim = false;
+            unt_delim = false;
          }
          unit_delim = unit_delim.substr(1);
       }
       /*
-      txt_idx = unit_delim.find_first_of(alphabet);  // should have no alphabetic left
-      if (txt_idx != string::npos) {
+         txt_idx = unit_delim.find_first_of(alphabet);  // should have no alphabetic left
+         if (txt_idx != string::npos) {
          cerr << "ERROR: unit_delim (" << orig_delim << ") must contain at most 1 "
-              << "alphabetic character at either the start or end. Exiting..." << endl;
+         << "alphabetic character at either the start or end. Exiting..." << endl;
          exit(EXIT_FAILURE);
-      }
-      */
+         }
+         */
    }
 
    size_t num_sents;
@@ -297,18 +304,18 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       if (sent_type == "bert") {
          sent_units = bert_p->get_units(bert_id, sent_idx);
       } else if (sent_type == "contextual"){
-	 if (mode==yisi::INP_MODE){
-	    features = contextual_p->get_proj_features(file_strs.at(sent_idx));
-	 } else {
-	    features = contextual_p->get_features(file_strs.at(sent_idx));
-	 }
-	 sent_units = features.units_m;
-	 sent_p->set_lmscore(features.lmscore_m);
+         if (mode==yisi::INP_MODE){
+            features = contextual_p->get_proj_features(file_strs.at(sent_idx));
+         } else {
+            features = contextual_p->get_features(file_strs.at(sent_idx));
+         }
+         sent_units = features.units_m;
+         sent_p->set_lmscore(features.lmscore_m);
       } else {
-	 sent_tokens = tokenize(file_strs.at(sent_idx));
-	 if (sent_type != "word"){
-	    sent_units.swap(sent_tokens);
-	 }
+         sent_tokens = tokenize(file_strs.at(sent_idx));
+         if (sent_type != "word"){
+            sent_units.swap(sent_tokens);
+         }
       }
 
       // Recover sent_tokens from sent_units by merging according to unit_delim.
@@ -320,43 +327,43 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
          bool unit_cont = false;
          for (auto ut = sent_units.begin(); ut != sent_units.end(); ut++, unit_idx++) {
             if (pfx_delim) {
-	       if ((ut->rfind(unit_delim, 0) == string::npos) == unt_delim) { //XOR
-		  // prefix delim not found XOR word delim
-		  // start of new token
-		  if (unt_delim){
-		     sent_tokens.push_back(*ut);
-		  } else {
-		     sent_tokens.push_back(ut->substr(unit_delim.size()));
-		  }
-		  sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx+1));
-	       } else {
-		  // continuation of previous token
-		  if (unit_idx == 0) {
-		     if (unt_delim){
-		        cerr << "Warning: First unit starts with continuation delimiter ("
-			     << unit_delim << ") at line " << sent_idx + 1
-			     << " in units file (" << file_path << ")." << endl;
-		     } else {
-		        cerr << "Warning: First unit does not start with word beginning delimiter ("
-			     << unit_delim << ") at line " << sent_idx + 1
-			     << " in units file (" << file_path << ")." << endl;
-		     }
-		     sent_tokens.push_back("");
-		     sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx));
-		  }
-		  if (unt_delim){
-		     sent_tokens.back() += ut->substr(unit_delim.size());
-		  } else {
-		     sent_tokens.back() += *ut;
-		  }
-		  ++sent_t2u.back().second;
-	       }
-	       sent_u2t.push_back(sent_t2u.size()-1);
+               if ((ut->rfind(unit_delim, 0) == string::npos) == unt_delim) { //XOR
+                  // prefix delim not found XOR word delim
+                  // start of new token
+                  if (unt_delim){
+                     sent_tokens.push_back(*ut);
+                  } else {
+                     sent_tokens.push_back(ut->substr(unit_delim.size()));
+                  }
+                  sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx+1));
+               } else {
+                  // continuation of previous token
+                  if (unit_idx == 0) {
+                     if (unt_delim){
+                        cerr << "Warning: First unit starts with continuation delimiter ("
+                           << unit_delim << ") at line " << sent_idx + 1
+                           << " in units file (" << file_path << ")." << endl;
+                     } else {
+                        cerr << "Warning: First unit does not start with word beginning delimiter ("
+                           << unit_delim << ") at line " << sent_idx + 1
+                           << " in units file (" << file_path << ")." << endl;
+                     }
+                     sent_tokens.push_back("");
+                     sent_t2u.push_back(sent_t::span_type(unit_idx, unit_idx));
+                  }
+                  if (unt_delim){
+                     sent_tokens.back() += ut->substr(unit_delim.size());
+                  } else {
+                     sent_tokens.back() += *ut;
+                  }
+                  ++sent_t2u.back().second;
+               }
+               sent_u2t.push_back(sent_t2u.size()-1);
             } else {
-	       auto delim_idx = ut->rfind(unit_delim);
+               auto delim_idx = ut->rfind(unit_delim);
                if (delim_idx + unit_delim.size() < ut->size()){  // delim must end the unit
                   delim_idx = string::npos;
-	       }
+               }
                string unit_txt = delim_idx == string::npos ? *ut : ut->substr(0, delim_idx+1);
                if (! unit_cont) {
                   // start of new token
@@ -369,15 +376,15 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
                }
                unit_cont = ((delim_idx != string::npos) == unt_delim);
                if (unit_cont && ut+1 == sent_units.end()) {
-		 if (unt_delim){
-		    cerr << "Warning: Last unit ends with continuation delimiter ("
-			 << unit_delim << ") at line " << sent_idx + 1
-			 << " in units file (" << file_path << ")." << endl;
-		 } else {
-		    cerr << "Warning: Last unit does not end with word ending delimiter ("
-			 << unit_delim << ") at line " << sent_idx + 1
-			 << " in units file (" << file_path << ")." << endl;
-		 }
+                  if (unt_delim){
+                     cerr << "Warning: Last unit ends with continuation delimiter ("
+                        << unit_delim << ") at line " << sent_idx + 1
+                        << " in units file (" << file_path << ")." << endl;
+                  } else {
+                     cerr << "Warning: Last unit does not end with word ending delimiter ("
+                        << unit_delim << ") at line " << sent_idx + 1
+                        << " in units file (" << file_path << ")." << endl;
+                  }
                }
             }
          } // for ut
@@ -393,7 +400,7 @@ vector<sent_t*> yisi::read_sent(string sent_type, string file_path, string unit_
       if (sent_type == "bert") {
          sent_emb = bert_p->get_embeddings(bert_id, sent_idx);
       } else if (sent_type == "contextual"){
-	 sent_emb = features.embeddings_m;
+         sent_emb = features.embeddings_m;
       } else if (sent_type == "uemb") {
          string emb_line;
          while (getline(idemb_fin, emb_line)) {  // one line per unit

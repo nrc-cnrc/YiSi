@@ -147,17 +147,17 @@ void yisiscorer_t::estimate_weight(std::vector<std::vector<srlgraph_t> > msrls) 
    }
 }
 
-std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents) { 
+std::vector<srlgraph_t> yisiscorer_t::inpsrlparse(std::vector<sent_t*> inpsents) {
    if (phrasesim_p->inplexweight_name_m == "learn" && phrasesim_p->inplexweight_path_m == ""){
       cerr << "Learning inp lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=inpsents.begin(); it!=inpsents.end(); it++){
-	if ((*it)->get_type() == "word"){
-	   tokens.push_back((*it)->get_tokens());
-	} else {
-	   tokens.push_back((*it)->get_units());
-	}
-      } 
+         if ((*it)->get_type() == "word"){
+            tokens.push_back((*it)->get_tokens());
+         } else {
+            tokens.push_back((*it)->get_units());
+         }
+      }
       phrasesim_p->learn_inplexweight(tokens);
       cerr << "Done." <<endl;
    }
@@ -175,13 +175,13 @@ std::vector<std::vector<srlgraph_t> > yisiscorer_t::refsrlparse(std::vector<std:
       cerr << "Learning ref lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=refsents.begin(); it!=refsents.end(); it++){
-	for (auto jt=it->begin(); jt!=it->end(); jt++){
-	  if ((*jt)->get_type() == "word"){
-	    tokens.push_back((*jt)->get_tokens());
-	  } else {
-	    tokens.push_back((*jt)->get_units());
-	  }
-	}
+         for (auto jt=it->begin(); jt!=it->end(); jt++){
+            if ((*jt)->get_type() == "word"){
+               tokens.push_back((*jt)->get_tokens());
+            } else {
+               tokens.push_back((*jt)->get_units());
+            }
+         }
       }
       phrasesim_p->learn_reflexweight(tokens);
       cerr << "Done." <<endl;
@@ -189,7 +189,7 @@ std::vector<std::vector<srlgraph_t> > yisiscorer_t::refsrlparse(std::vector<std:
    //std::cerr << "Tokenizing/SRL-ing the references ... ";
    std::vector<std::vector<srlgraph_t> > result;
    for (size_t i=0; i<refsents.size(); i++){
-     result.push_back(refsrl_p->parse(refsents[i]));
+      result.push_back(refsrl_p->parse(refsents[i]));
    }
    //std::cerr << "Done." << std::endl;
    if (weightconfig_path_m == "") {
@@ -203,11 +203,11 @@ std::vector<srlgraph_t> yisiscorer_t::hypsrlparse(std::vector<sent_t*> hypsents)
       cerr << "Learning hyp lex weight ... ";
       vector<vector<string> > tokens;
       for (auto it=hypsents.begin(); it!=hypsents.end(); it++){
-	if ((*it)->get_type() == "word"){
-	   tokens.push_back((*it)->get_tokens());
-	} else {
-	   tokens.push_back((*it)->get_units());
-	}
+         if ((*it)->get_type() == "word"){
+            tokens.push_back((*it)->get_tokens());
+         } else {
+            tokens.push_back((*it)->get_units());
+         }
       }
       phrasesim_p->learn_hyplexweight(tokens);
       cerr << "Done." <<endl;
@@ -273,20 +273,20 @@ double yisiscorer_t::score(yisigraph_t& yg, string yisi_mode) {
    } else if (yisi_mode == "yisi+nlm"){
       // linear combination of semantic score and hyp normalized lm score weighted by gamma
       yisi = ((1.0-gamma_m) * ((precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall))) +
-             (gamma_m * yg.get_hypnormlmscore());
+         (gamma_m * yg.get_hypnormlmscore());
    } else if (yisi_mode == "yisi+lm"){
       // linear combination of semantic score and hyp normalized lm score weighted by gamma
       yisi = ((1.0-gamma_m) * ((precision * recall) / (alpha_m * precision + (1.0 - alpha_m) * recall))) +
-	     (gamma_m * yg.get_hyplmscore());
+         (gamma_m * yg.get_hyplmscore());
    } else if (yisi_mode == "yisi_lm"){
       double hyplmscore = yg.get_hyplmscore();
       double reflmscore = 1.0;
       if (yg.get_refsize() > 0) {
-	reflmscore = yg.get_reflmscore();
+         reflmscore = yg.get_reflmscore();
       }
       double inplmscore = 1.0;
       if (yg.withinp()) {
-	 inplmscore = yg.get_inplmscore();
+         inplmscore = yg.get_inplmscore();
       }
       double denom = min(reflmscore, inplmscore);
       precision = (1.0-gamma_m) * precision + gamma_m * hyplmscore;

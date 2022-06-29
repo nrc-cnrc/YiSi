@@ -56,74 +56,74 @@ namespace yisi {
          using namespace com::masaers::cmdlp;
 
          p.add(make_knob(inpsrl_name_m))
-	   .fallback("")
-	   .desc("Type of input language SRL: [read|mate]")
-	   .name("inpsrl-type")
-	   ;
+            .fallback("")
+            .desc("Type of input language SRL: [read|mate]")
+            .name("inpsrl-type")
+            ;
          p.add(make_knob(inpsrl_path_m))
-	   .fallback("")
-	   .desc("[read: path to assert formated parse of input sentences "
-	         "| mate: full path and filename of <srclang>.mplsconfig]")
-	   .name("inpsrl-path")
-	   ;
+            .fallback("")
+            .desc("[read: path to assert formated parse of input sentences "
+                  "| mate: full path and filename of <srclang>.mplsconfig]")
+            .name("inpsrl-path")
+            ;
          p.add(make_knob(hypsrl_name_m))
-	   .fallback("")
-	   .desc("Type of output language SRL: [read|mate]")
-	   .name("outsrl-type")
-	   .name("hypsrl-type")
-	   .name("srl-type")
-	   ;
+            .fallback("")
+            .desc("Type of output language SRL: [read|mate]")
+            .name("outsrl-type")
+            .name("hypsrl-type")
+            .name("srl-type")
+            ;
          p.add(make_knob(hypsrl_path_m))
-	   .fallback("")
-	   .desc("[read: path to assert formatted parse output "
-	         "| mate: full path and filename of <tgtlang>.mplsconfig]")
-	   .name("outsrl-path")
-	   .name("hypsrl-path")
-	   .name("srl-path")
-    ;
+            .fallback("")
+            .desc("[read: path to assert formatted parse output "
+                  "| mate: full path and filename of <tgtlang>.mplsconfig]")
+            .name("outsrl-path")
+            .name("hypsrl-path")
+            .name("srl-path")
+            ;
          p.add(make_knob(refsrl_name_m))
-           .fallback("")
-           .desc("Type of reference SRL (specify only if it is different from "
-                 "the hypothesis SRL): [read|mate]")
-           .name("refsrl-type")
-           ;
+            .fallback("")
+            .desc("Type of reference SRL (specify only if it is different from "
+                  "the hypothesis SRL): [read|mate]")
+            .name("refsrl-type")
+            ;
          p.add(make_knob(refsrl_path_m))
-           .fallback("")
-           .desc("[read: path to assert formatted parse reference "
-                 "| mate: full path and filename of <tgtlang>.mplsconfig]")
-           .name("refsrl-path")
-           ;
+            .fallback("")
+            .desc("[read: path to assert formatted parse reference "
+                  "| mate: full path and filename of <tgtlang>.mplsconfig]")
+            .name("refsrl-path")
+            ;
          p.add(make_knob(labelconfig_path_m))
-	   .fallback("")
-	   .desc("Path to YiSi SRL role label config file")
-	   .name("labelconfig-path")
-	   ;
+            .fallback("")
+            .desc("Path to YiSi SRL role label config file")
+            .name("labelconfig-path")
+            ;
          p.add(make_knob(weightconfig_path_m))
-	   .fallback("")
-	   .desc("Path to YiSi SRL role label config file (default: "
-	         "<empty string> to use YiSi unsupervised estimation of weight")
-	   .name("weightconfig-path")
-	   ;
+            .fallback("")
+            .desc("Path to YiSi SRL role label config file (default: "
+                  "<empty string> to use YiSi unsupervised estimation of weight")
+            .name("weightconfig-path")
+            ;
          p.add(make_knob(frameweight_name_m))
-	   .fallback(DEFAULT_FRAMEWEIGHT_NAME)
-	   .desc("Type of frame weight function: [uniform|coverage(default)]")
-	   .name("frameweight-type")
-	   ;
+            .fallback(DEFAULT_FRAMEWEIGHT_NAME)
+            .desc("Type of frame weight function: [uniform|coverage(default)]")
+            .name("frameweight-type")
+            ;
          p.add(make_knob(beta_m))
-	   .fallback(DEFAULT_BETA)
-	   .desc("Beta value of YiSi [0.0(default)]")
-	   .name("beta")
-	   ;
+            .fallback(DEFAULT_BETA)
+            .desc("Beta value of YiSi [0.0(default)]")
+            .name("beta")
+            ;
          p.add(make_knob(alpha_m))
-	   .fallback(DEFAULT_ALPHA)
-	   .desc("Ratio of precision & recall in YiSi")
-	   .name("alpha")
-	   ;
-	 p.add(make_knob(gamma_m))
-	   .fallback(DEFAULT_GAMMA)
-	   .desc("Ratio of semantic similarity and LM [0.0 (default)]")
-	   .name("gamma")
-	   ;
+            .fallback(DEFAULT_ALPHA)
+            .desc("Ratio of precision & recall in YiSi")
+            .name("alpha")
+            ;
+         p.add(make_knob(gamma_m))
+            .fallback(DEFAULT_GAMMA)
+            .desc("Ratio of semantic similarity and LM [0.0 (default)]")
+            .name("gamma")
+            ;
       }
    }; // struct yisi_options
 

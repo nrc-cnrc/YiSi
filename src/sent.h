@@ -30,8 +30,8 @@
 
 namespace yisi {
 
-   class sent_t {
-   public:
+  class sent_t {
+    public:
       typedef std::pair<size_t, size_t> span_type;
       sent_t();
       sent_t(std::string sent_type);
@@ -55,7 +55,7 @@ namespace yisi {
       span_type tspan2uspan(span_type tspan);
       span_type uspan2tspan(span_type uspan);
       size_t get_token_size();
-   private:
+    private:
       std::string sent_type_m;
       std::vector<std::string> token_m;
       std::vector<std::string> unit_m;
@@ -63,11 +63,11 @@ namespace yisi {
       std::vector<span_type> tid2uspan_m;
       std::vector<size_t> uid2tid_m;
       double lmscore_m=0.0;
-   }; // class sent_t
+  }; // class sent_t
 
 
-//   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
-   std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##u", std::string idemb_path="", std::string bert_config="", contextual_t* c=NULL, int mode=yisi::HYP_MODE);
+  //   std::vector<sent_t*> read_sent(std::string sent_type, std::string token_path, std::string unit_path="", std::string idemb_path="");
+  std::vector<sent_t*> read_sent(std::string sent_type, std::string file_path, std::string unit_delim="##u", std::string idemb_path="", std::string bert_config="", contextual_t* c=NULL, int mode=yisi::HYP_MODE);
 
 } // yisi
 

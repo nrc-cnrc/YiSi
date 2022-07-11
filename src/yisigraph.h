@@ -29,8 +29,8 @@
 
 namespace yisi {
 
-   class yisigraph_t {
-   public:
+  class yisigraph_t {
+    public:
       typedef srlgraph_t::span_type span_type;
       typedef srlgraph_t::label_type label_type;
       typedef srlgraph_t::srlnode_type srlnode_type;
@@ -69,7 +69,7 @@ namespace yisi {
 
       void print(std::ostream& os);
 
-   private:
+    private:
       double spanlength(span_type span);
       std::vector<srlgraph_t> refsrlgraph_m;
       srlgraph_t hypsrlgraph_m;
@@ -82,7 +82,7 @@ namespace yisi {
   }; // class yisigraph_t
 
 
-   std::ostream& operator<<(std::ostream& os, const yisi::yisigraph_t& m);
+  std::ostream& operator<<(std::ostream& os, const yisi::yisigraph_t& m);
 
 } // yisi
 

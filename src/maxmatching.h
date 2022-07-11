@@ -23,8 +23,8 @@
 
 namespace yisi {
 
-   class maxmatching_t {
-   public:
+  class maxmatching_t {
+    public:
       typedef size_t id_type;
       typedef double weight_type;
 
@@ -34,7 +34,7 @@ namespace yisi {
 
       std::vector<std::pair<std::pair<id_type, id_type>, weight_type> > run();
 
-   private:
+    private:
       std::vector< std::vector<double> > c_m; // cost matrix
       std::vector<bool> row_covered;
       std::vector<bool> col_covered;
@@ -64,7 +64,7 @@ namespace yisi {
       int find_star_in_row(int row);
       int find_star_in_col(int col);
       int find_prime_in_row(int row);
-   }; //class maxmatching_t
+  }; //class maxmatching_t
 
 } // yisi
 

@@ -20,24 +20,24 @@ using namespace yisi;
 
 int main(int argc, char* argv[])
 {
-   lexsim_t w2vtxt("biw2v", argv[1], argv[2]);
+  lexsim_t w2vtxt("biw2v", argv[1], argv[2]);
 
-   string s1;
-   string s2;
+  string s1;
+  string s2;
 
-   if (argc > 4) {
-      s1 = argv[3];
-      s2 = argv[4];
+  if (argc > 4) {
+    s1 = argv[3];
+    s2 = argv[4];
+    cout << "Sim = " << w2vtxt.get_sim(s1, s2, yisi::INP_MODE) << endl;
+
+  } else {
+    while (true) {
+      cout << "Input two strings:" << endl;
+      cin >> s1;
+      cin >> s2;
       cout << "Sim = " << w2vtxt.get_sim(s1, s2, yisi::INP_MODE) << endl;
+    }
+  }
 
-   } else {
-      while (true) {
-         cout << "Input two strings:" << endl;
-         cin >> s1;
-         cin >> s2;
-         cout << "Sim = " << w2vtxt.get_sim(s1, s2, yisi::INP_MODE) << endl;
-      }
-   }
-
-   return 0;
+  return 0;
 }

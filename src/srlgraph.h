@@ -28,8 +28,8 @@
 
 namespace yisi {
 
-   class srlgraph_t {
-   public:
+  class srlgraph_t {
+    public:
       typedef sent_t::span_type span_type;
       typedef std::string label_type;
       typedef graph_t<span_type, label_type>::node_type srlnode_type;
@@ -77,15 +77,15 @@ namespace yisi {
 
       void delete_sent();
 
-   private:
+    private:
       graph_t<span_type, label_type> srl_m;
       sent_t* sent_p;
       // std::vector<std::string> tokens_m;
       srlnid_type root_m;
       std::map<srlnid_type, srlnid_type> predof_m;
-   }; // class srlgraph_t
-   
-   std::ostream& operator<<(std::ostream& os, srlgraph_t& srl);
+  }; // class srlgraph_t
+
+  std::ostream& operator<<(std::ostream& os, srlgraph_t& srl);
 
 } // yisi
 

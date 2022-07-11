@@ -24,13 +24,13 @@
 #include <vector>
 
 namespace yisi {
-   struct contextualfeatures_t{
-     double lmscore_m;
-     std::vector<std::string> units_m;
-     std::vector<std::vector <double> > embeddings_m;
-   };
-   class contextual_t {
-   public:
+  struct contextualfeatures_t{
+    double lmscore_m;
+    std::vector<std::string> units_m;
+    std::vector<std::vector <double> > embeddings_m;
+  };
+  class contextual_t {
+    public:
       contextual_t() {}
       /// Contructor with config info provided
       contextual_t(std::string config_str);
@@ -39,14 +39,14 @@ namespace yisi {
       /// @return contextual feature object
       contextualfeatures_t get_features(std::string sent);
       contextualfeatures_t get_proj_features(std::string sent);
-   private:
+    private:
       /// Has Python been initialized?
       static bool is_python_init_m;
       /// Number of contextual_t instances created.
       static int obj_cnt_m;
       /// Python Contextual model object
       PyObject *p_contextual_model_object_m;
-   };
+  };
 
 } // yisi
 

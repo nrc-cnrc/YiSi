@@ -36,32 +36,32 @@ namespace yisi {
    std::vector<srlgraph_t> read_conll09batch(std::string filename);
    std::vector<srlgraph_t> read_conll09batch(std::string filename, std::vector<sent_t*> sents);
    class srlmodel_t {
-   public:
-      srlmodel_t() {}
-      virtual ~srlmodel_t() {}
-      virtual srlgraph_t parse(sent_t* sent) {
+     public:
+       srlmodel_t() {}
+       virtual ~srlmodel_t() {}
+       virtual srlgraph_t parse(sent_t* sent) {
          std::cerr << "ERROR: Semantic role labeler type does not support "
-                   << "individual sentence parsing. Exiting..." << std::endl;
+           << "individual sentence parsing. Exiting..." << std::endl;
          exit(1);
-      }
-      virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sent)=0;
+       }
+       virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sent)=0;
    }; // srlmodel_t
 
    class srlread_t:public srlmodel_t {
-   public:
-      srlread_t() {}
-      srlread_t(std::string parsefile);
-      virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sents);
-   private:
-      std::string parsefile_m;
+     public:
+       srlread_t() {}
+       srlread_t(std::string parsefile);
+       virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sents);
+     private:
+       std::string parsefile_m;
    }; // class srlread_t
 
    class srltok_t:public srlmodel_t {
-   public:
-      srltok_t() {}
-      virtual srlgraph_t parse(sent_t* sent);
-      virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sents);
-   private:
+     public:
+       srltok_t() {}
+       virtual srlgraph_t parse(sent_t* sent);
+       virtual std::vector<srlgraph_t> parse(std::vector<sent_t*> sents);
+     private:
    }; //class srltok_t
 
 } // yisi

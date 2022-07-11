@@ -25,36 +25,36 @@ using namespace yisi;
 using namespace std;
 
 srl_t::srl_t() {
-   srl_p = new srlread_t();
+  srl_p = new srlread_t();
 }
 
 srl_t::srl_t(const string name, const string path) {
-   if (name == "read") {
-      srl_p = new srlread_t(path);
+  if (name == "read") {
+    srl_p = new srlread_t(path);
 #ifdef WITH_SRLMATE
-   } else if (name == "mate") {
-      srl_p = new srlmate_t(path);
+  } else if (name == "mate") {
+    srl_p = new srlmate_t(path);
 #endif
-   } else if (name == "") {
-      srl_p = new srltok_t();
-   } else {
-      cerr << "ERROR: Unknown srl model type: " << name << ". Exiting..."<< endl;
-      exit(1);
-   }
+  } else if (name == "") {
+    srl_p = new srltok_t();
+  } else {
+    cerr << "ERROR: Unknown srl model type: " << name << ". Exiting..."<< endl;
+    exit(1);
+  }
 }
 
 srl_t::~srl_t() {
-   //cerr << "Deleting srl..." << endl;
-   if (srl_p != NULL) {
-      delete srl_p;
-      srl_p = NULL;
-   }
+  //cerr << "Deleting srl..." << endl;
+  if (srl_p != NULL) {
+    delete srl_p;
+    srl_p = NULL;
+  }
 }
 
 srlgraph_t srl_t::parse(sent_t* sent) {
-   return srl_p->parse(sent);
+  return srl_p->parse(sent);
 }
 
 vector<srlgraph_t> srl_t::parse(vector<sent_t*> sents) {
-   return srl_p->parse(sents);
+  return srl_p->parse(sents);
 }

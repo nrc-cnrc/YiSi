@@ -21,15 +21,15 @@
 #include "yisiscorer.h"
 
 namespace yisi {
-   // ConfigReader wraps the yisi_options and phrasesim_options structures for use with Cython.
-   struct ConfigReader {
-      yisi::eval_options eval;
-      yisi::yisi_options yisi;
-      yisi::phrasesim_options phrasesim;
-   };
+  // ConfigReader wraps the yisi_options and phrasesim_options structures for use with Cython.
+  struct ConfigReader {
+    yisi::eval_options eval;
+    yisi::yisi_options yisi;
+    yisi::phrasesim_options phrasesim;
+  };
 
-   // read_config reads a cmdlp configuration file into a ConfigReader
-   extern "C" ConfigReader read_config(std::string path);
+  // read_config reads a cmdlp configuration file into a ConfigReader
+  extern "C" ConfigReader read_config(std::string path);
 
 }  // namespace yisi
 

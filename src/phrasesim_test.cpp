@@ -24,26 +24,25 @@ using namespace yisi;
 
 int main(const int argc, const char* argv[])
 {
-   typedef com::masaers::cmdlp::options<phrasesim_options> options_type;
+  typedef com::masaers::cmdlp::options<phrasesim_options> options_type;
 
-   options_type opt(argc,argv);
-   if (! opt) {
-      return opt.exit_code();
-   }
+  options_type opt(argc,argv);
+  if (! opt) {
+    return opt.exit_code();
+  }
 
-   phrasesim_t phrasesim(opt);
+  phrasesim_t phrasesim(opt);
 
-   vector<string> s1{"EU"};
-   vector<string> s2{"UK"};
-   vector<string> s3{"EU", "government"};
-   vector<string> s4{"UK", "government"};
+  vector<string> s1{"EU"};
+  vector<string> s2{"UK"};
+  vector<string> s3{"EU", "government"};
+  vector<string> s4{"UK", "government"};
 
-   auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
-   auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
+  auto p1 = phrasesim(s1, s2, yisi::REF_MODE);
+  auto p2 = phrasesim(s3, s4, yisi::REF_MODE);
 
-   cout << "The similarity of 'EU' and 'UK' is: ("
-        << p1.first << "," << p1.second << ")" << endl;
-   cout <<  "The similarity of 'EU government' and 'UK government' is: ("
-        << p2.first << "," << p2.second << ")" << endl;
+  cout << "The similarity of 'EU' and 'UK' is: ("
+    << p1.first << "," << p1.second << ")" << endl;
+  cout <<  "The similarity of 'EU government' and 'UK government' is: ("
+    << p2.first << "," << p2.second << ")" << endl;
 }
-

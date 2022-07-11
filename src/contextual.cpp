@@ -32,209 +32,209 @@ bool contextual_t::is_python_init_m = false;
 int contextual_t::obj_cnt_m = 0;
 
 contextual_t::contextual_t(string config_str) {
-   auto configs = tokenize(config_str, ':');
-   string modelname, layer, projection, proj_type;
-   projection="";
-   proj_type="";
-   if (configs.size()<2){
-     cerr <<"ERROR: Too few parameters for contextual model. Exiting...";
-     exit(EXIT_FAILURE);
-   } else {
-     modelname = configs[0];
-     layer = configs[1];
-     if (configs.size() >2){
-       projection = configs[2];
-     }
-     if (configs.size() == 4){
-       proj_type = configs[3];
-     }
-   }
-   
-   PyObject *pName, *pModule, *pClass, *pModelObject;
-   PyObject *pArgs, *pValue;
+  auto configs = tokenize(config_str, ':');
+  string modelname, layer, projection, proj_type;
+  projection="";
+  proj_type="";
+  if (configs.size()<2){
+    cerr <<"ERROR: Too few parameters for contextual model. Exiting...";
+    exit(EXIT_FAILURE);
+  } else {
+    modelname = configs[0];
+    layer = configs[1];
+    if (configs.size() >2){
+      projection = configs[2];
+    }
+    if (configs.size() == 4){
+      proj_type = configs[3];
+    }
+  }
 
-   cerr << "Setting up python ..." << endl;
+  PyObject *pName, *pModule, *pClass, *pModelObject;
+  PyObject *pArgs, *pValue;
 
-   // Initialize the Python Interpreter, if not already done.
-   if (! is_python_init_m) {
-      Py_SetProgramName(Py_DecodeLocale("python3", NULL));
-      Py_Initialize();
-      cerr << "Python program: " << Py_EncodeLocale(Py_GetProgramName(), NULL) << endl;
-      cerr << "Python program full path: " << Py_EncodeLocale(Py_GetProgramFullPath(), NULL) << endl;
-      cerr << "Python version: " << Py_GetVersion() << endl;
-      is_python_init_m = true;
-   }
-   ++obj_cnt_m;
-   cerr<< "Done." <<endl;
-   
-   // Initialize the contextual Model
-   const char* contextual_module_name = "HuggingFace_wrapper";
-   cerr << "Importing " << contextual_module_name <<" ... ";
-   pName = PyUnicode_FromString(contextual_module_name);
-   if (pName == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: cannot convert string: " << contextual_module_name << ". Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  cerr << "Setting up python ..." << endl;
 
-   pModule = PyImport_Import(pName);
-   Py_DECREF(pName);
-   if (pModule == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: Failed to load: " << contextual_module_name << ". Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  // Initialize the Python Interpreter, if not already done.
+  if (! is_python_init_m) {
+    Py_SetProgramName(Py_DecodeLocale("python3", NULL));
+    Py_Initialize();
+    cerr << "Python program: " << Py_EncodeLocale(Py_GetProgramName(), NULL) << endl;
+    cerr << "Python program full path: " << Py_EncodeLocale(Py_GetProgramFullPath(), NULL) << endl;
+    cerr << "Python version: " << Py_GetVersion() << endl;
+    is_python_init_m = true;
+  }
+  ++obj_cnt_m;
+  cerr<< "Done." <<endl;
 
-   pClass = PyObject_GetAttrString(pModule, "Contextual_t");
-   // pClass is a new reference 
-   if (pModule == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: Cannot find class: Contextual_t. Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  // Initialize the contextual Model
+  const char* contextual_module_name = "HuggingFace_wrapper";
+  cerr << "Importing " << contextual_module_name <<" ... ";
+  pName = PyUnicode_FromString(contextual_module_name);
+  if (pName == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: cannot convert string: " << contextual_module_name << ". Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
 
-   if (! PyCallable_Check(pClass)) {
-      cerr << "Python ERROR: Not Callable: Contextual_t. Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  pModule = PyImport_Import(pName);
+  Py_DECREF(pName);
+  if (pModule == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Failed to load: " << contextual_module_name << ". Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
 
-   auto check_and_set_pArgs =
-        [&](int idx, string type, string cvalue) {
+  pClass = PyObject_GetAttrString(pModule, "Contextual_t");
+  // pClass is a new reference 
+  if (pModule == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Cannot find class: Contextual_t. Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (! PyCallable_Check(pClass)) {
+    cerr << "Python ERROR: Not Callable: Contextual_t. Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  auto check_and_set_pArgs =
+    [&](int idx, string type, string cvalue) {
       if (pValue == NULL) {
-         PyErr_Print();
-         cerr << "Python ERROR: Cannot convert " << type << ": " << cvalue << ". Exiting..." << endl;
-         exit(EXIT_FAILURE);
+        PyErr_Print();
+        cerr << "Python ERROR: Cannot convert " << type << ": " << cvalue << ". Exiting..." << endl;
+        exit(EXIT_FAILURE);
       }
       // pValue reference stolen here: 
       PyTuple_SetItem(pArgs, idx, pValue);
-   };
+    };
 
-   pArgs = PyTuple_New(configs.size());
-   if (pArgs == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: Cannot create pArgs tuple of size 4. Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
-   cerr << "Done." << endl;
+  pArgs = PyTuple_New(configs.size());
+  if (pArgs == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Cannot create pArgs tuple of size 4. Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
+  cerr << "Done." << endl;
 
-   cerr << "Loading " << modelname;   
-   pValue = PyUnicode_FromString(modelname.c_str());
-   check_and_set_pArgs(0, "string", modelname.c_str());
-   pValue = PyUnicode_FromString(layer.c_str());
-   check_and_set_pArgs(1, "string", layer.c_str());
-   if (configs.size() > 2){
-     cerr<<" and " << projection;
-     pValue = PyUnicode_FromString(projection.c_str());
-     check_and_set_pArgs(2, "string", projection.c_str());
-   }
+  cerr << "Loading " << modelname;   
+  pValue = PyUnicode_FromString(modelname.c_str());
+  check_and_set_pArgs(0, "string", modelname.c_str());
+  pValue = PyUnicode_FromString(layer.c_str());
+  check_and_set_pArgs(1, "string", layer.c_str());
+  if (configs.size() > 2){
+    cerr<<" and " << projection;
+    pValue = PyUnicode_FromString(projection.c_str());
+    check_and_set_pArgs(2, "string", projection.c_str());
+  }
 
-   if (configs.size() == 4){
-     cerr<<" " << proj_type;
-     pValue = PyUnicode_FromString(proj_type.c_str());
-     check_and_set_pArgs(3, "string", proj_type.c_str());
-   }
+  if (configs.size() == 4){
+    cerr<<" " << proj_type;
+    pValue = PyUnicode_FromString(proj_type.c_str());
+    check_and_set_pArgs(3, "string", proj_type.c_str());
+  }
 
-   cerr << " ... ";
+  cerr << " ... ";
 
-   pModelObject = PyObject_CallObject(pClass, pArgs);
-   Py_DECREF(pArgs);
-   if (pModelObject == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: Cannot instantiate Python class: Contextual_t. Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  pModelObject = PyObject_CallObject(pClass, pArgs);
+  Py_DECREF(pArgs);
+  if (pModelObject == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Cannot instantiate Python class: Contextual_t. Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
 
-   cerr << "Done" << endl;
+  cerr << "Done" << endl;
 
-   Py_DECREF(pClass);
-   Py_DECREF(pModule);
+  Py_DECREF(pClass);
+  Py_DECREF(pModule);
 
-   p_contextual_model_object_m = pModelObject;
+  p_contextual_model_object_m = pModelObject;
 
 }  // contextual_t
 
 contextual_t::~contextual_t() {
-   --obj_cnt_m;
-   Py_DECREF(p_contextual_model_object_m);
-   p_contextual_model_object_m = NULL;
+  --obj_cnt_m;
+  Py_DECREF(p_contextual_model_object_m);
+  p_contextual_model_object_m = NULL;
 } // ~contextual_t
 
 contextualfeatures_t contextual_t::get_features(string sent) {
-   //cerr << "Calling Contextual_t.get_features ... " << endl;
-   contextualfeatures_t result;
-   PyObject *pResult = PyObject_CallMethod(p_contextual_model_object_m,
-                                           (char *)"get_features",
-                                           (char *)"(s)",
-                                           sent.c_str());
-   if (pResult == NULL) {
-      PyErr_Print();
-      cerr << "Python ERROR: Method call failed: Contextual_t.get_features."
-           << " Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
+  //cerr << "Calling Contextual_t.get_features ... " << endl;
+  contextualfeatures_t result;
+  PyObject *pResult = PyObject_CallMethod(p_contextual_model_object_m,
+      (char *)"get_features",
+      (char *)"(s)",
+      sent.c_str());
+  if (pResult == NULL) {
+    PyErr_Print();
+    cerr << "Python ERROR: Method call failed: Contextual_t.get_features."
+      << " Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
 
-   if (! PySequence_Check(pResult)) {
-      cerr << "Python ERROR: Contextual_t.get_features did not return a sequence."
-           << " Exiting..." << endl;
-      exit(EXIT_FAILURE);
-   }
-   
-   PyObject *pResultF = PySequence_Fast(pResult, "Expected result to be a sequence.");
+  if (! PySequence_Check(pResult)) {
+    cerr << "Python ERROR: Contextual_t.get_features did not return a sequence."
+      << " Exiting..." << endl;
+    exit(EXIT_FAILURE);
+  }
 
-   PyObject *pLmscore = PySequence_Fast_GET_ITEM(pResultF, 0);
-   result.lmscore_m = PyFloat_AsDouble(pLmscore);
-   
-   PyObject *pUnits = PySequence_Fast_GET_ITEM(pResultF, 1);
-   PyObject *pUnitsF = PySequence_Fast(pUnits, "Expected result to be a sequence.");
-   Py_ssize_t units_len = PySequence_Fast_GET_SIZE(pUnitsF);
-   result.units_m.reserve((size_t)units_len);
-   for (auto i=0; i < units_len; i++) {
-     PyObject *pUnit = PySequence_Fast_GET_ITEM(pUnitsF, i);
-     result.units_m.push_back(string(PyUnicode_AsUTF8(pUnit)));
-   }
+  PyObject *pResultF = PySequence_Fast(pResult, "Expected result to be a sequence.");
 
-   PyObject *pEmbeddings = PySequence_Fast_GET_ITEM(pResultF, 2);
-   PyObject *pEmbeddingsF = PySequence_Fast(pEmbeddings, "Expected embeddings to be a sequence.");
-   Py_ssize_t embeddings_len = PySequence_Fast_GET_SIZE(pEmbeddingsF);
-   result.embeddings_m.reserve((size_t)embeddings_len);
+  PyObject *pLmscore = PySequence_Fast_GET_ITEM(pResultF, 0);
+  result.lmscore_m = PyFloat_AsDouble(pLmscore);
 
-   for (auto i=0; i< embeddings_len; i++){
-     vector<double> unit_emb;
-     PyObject *pEmbedding = PySequence_Fast_GET_ITEM(pEmbeddingsF, i);
-     PyObject *pEmbeddingF = PySequence_Fast(pEmbedding, "Expected embedding to be a sequence.");
-     Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pEmbeddingF);
-     unit_emb.reserve((size_t)unit_emb_len);
-     for (auto j=0; j<unit_emb_len; j++){
-       PyObject *pValue = PySequence_Fast_GET_ITEM(pEmbeddingF, j);
-       unit_emb.push_back(PyFloat_AsDouble(pValue));
-     }
-     result.embeddings_m.push_back(unit_emb);
-     Py_DECREF(pEmbeddingF);
-   }
-   Py_DECREF(pEmbeddingsF);
-   Py_DECREF(pUnitsF);
-   Py_DECREF(pResultF);
-   Py_DECREF(pResult);
-   return result;
+  PyObject *pUnits = PySequence_Fast_GET_ITEM(pResultF, 1);
+  PyObject *pUnitsF = PySequence_Fast(pUnits, "Expected result to be a sequence.");
+  Py_ssize_t units_len = PySequence_Fast_GET_SIZE(pUnitsF);
+  result.units_m.reserve((size_t)units_len);
+  for (auto i=0; i < units_len; i++) {
+    PyObject *pUnit = PySequence_Fast_GET_ITEM(pUnitsF, i);
+    result.units_m.push_back(string(PyUnicode_AsUTF8(pUnit)));
+  }
+
+  PyObject *pEmbeddings = PySequence_Fast_GET_ITEM(pResultF, 2);
+  PyObject *pEmbeddingsF = PySequence_Fast(pEmbeddings, "Expected embeddings to be a sequence.");
+  Py_ssize_t embeddings_len = PySequence_Fast_GET_SIZE(pEmbeddingsF);
+  result.embeddings_m.reserve((size_t)embeddings_len);
+
+  for (auto i=0; i< embeddings_len; i++){
+    vector<double> unit_emb;
+    PyObject *pEmbedding = PySequence_Fast_GET_ITEM(pEmbeddingsF, i);
+    PyObject *pEmbeddingF = PySequence_Fast(pEmbedding, "Expected embedding to be a sequence.");
+    Py_ssize_t unit_emb_len = PySequence_Fast_GET_SIZE(pEmbeddingF);
+    unit_emb.reserve((size_t)unit_emb_len);
+    for (auto j=0; j<unit_emb_len; j++){
+      PyObject *pValue = PySequence_Fast_GET_ITEM(pEmbeddingF, j);
+      unit_emb.push_back(PyFloat_AsDouble(pValue));
+    }
+    result.embeddings_m.push_back(unit_emb);
+    Py_DECREF(pEmbeddingF);
+  }
+  Py_DECREF(pEmbeddingsF);
+  Py_DECREF(pUnitsF);
+  Py_DECREF(pResultF);
+  Py_DECREF(pResult);
+  return result;
 } // get_features
 
 contextualfeatures_t contextual_t::get_proj_features(string sent) {
   //cerr << "Calling Contextual_t.get_features ... " << endl;
   contextualfeatures_t result;
   PyObject *pResult = PyObject_CallMethod(p_contextual_model_object_m,
-					  (char *)"get_proj_features",
-					  (char *)"(s)",
-					  sent.c_str());
+      (char *)"get_proj_features",
+      (char *)"(s)",
+      sent.c_str());
   if (pResult == NULL) {
     PyErr_Print();
     cerr << "Python ERROR: Method call failed: Contextual_t.get_proj_features."
-	 << " Exiting..." << endl;
+      << " Exiting..." << endl;
     exit(EXIT_FAILURE);
   }
 
   if (! PySequence_Check(pResult)) {
     cerr << "Python ERROR: Contextual_t.get_proj_features did not return a sequence."
-	 << " Exiting..." << endl;
+      << " Exiting..." << endl;
     exit(EXIT_FAILURE);
   }
 

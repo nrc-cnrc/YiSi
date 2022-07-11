@@ -25,8 +25,8 @@
 
 namespace yisi {
 
-   class bert_t {
-   public:
+  class bert_t {
+    public:
       bert_t() {}
       /// Contructor with config info provided
       bert_t(std::string config);
@@ -40,7 +40,7 @@ namespace yisi {
       std::vector<std::string> get_units(size_t results_id, size_t sent_idx, bool verbose=false);
       /// Return the embeddings for a specific sentence.
       std::vector<std::vector<double>> get_embeddings(size_t results_id, size_t sent_idx, bool verbose=false);
-   private:
+    private:
       /// Helper method used by the get_size and get_sentence query methods.
       PyObject *get_results(size_t results_id);
       /// Helper method used by the get_units and get_embeddings query methods.
@@ -53,7 +53,7 @@ namespace yisi {
       PyObject *p_bert_model_object_m;
       /// Vector of all sets of results for all files for which apply_model was called.
       std::vector<PyObject *> p_results_m;
-   };
+  };
 
 } // yisi
 

@@ -90,104 +90,104 @@ lexweightfile_t::lexweightfile_t(string path) {
     WT >> weight >> lex;
     lexweight_m[lex] = weight;
   }
-  
+
   WT.close();
   cerr << "Done." << endl;
 }
 
 lexweightlearn_t::lexweightlearn_t(vector<vector<string> > tokens) {
-   learn(tokens);
+  learn(tokens);
 }
 
 lexweightlearn_t::lexweightlearn_t(lexweightlearn_t& rhs) {
-   lexweight_m = rhs.lexweight_m;
+  lexweight_m = rhs.lexweight_m;
 }
 
 lexweightlearn_t::lexweightlearn_t(string path) {
-   vector<vector<string> > tokens;
-   auto paths = tokenize(path,':');
-   for (auto it=paths.begin(); it!=paths.end(); it++){
-     cerr << "Learning lex weight from " << *it << " ... ";
-     vector<string> rs = read_file(*it);
-     for (auto jt=rs.begin(); jt!=rs.end(); jt++){
-       auto ts = tokenize(*jt);
-       tokens.push_back(ts);
-     }
-   }
-   learn(tokens);
-   if( paths.size() > 0 ) {
-      cerr << "Done." << endl;
-   }
+  vector<vector<string> > tokens;
+  auto paths = tokenize(path,':');
+  for (auto it=paths.begin(); it!=paths.end(); it++){
+    cerr << "Learning lex weight from " << *it << " ... ";
+    vector<string> rs = read_file(*it);
+    for (auto jt=rs.begin(); jt!=rs.end(); jt++){
+      auto ts = tokenize(*jt);
+      tokens.push_back(ts);
+    }
+  }
+  learn(tokens);
+  if( paths.size() > 0 ) {
+    cerr << "Done." << endl;
+  }
 }
 
 void lexweightlearn_t::learn(vector<vector<string> > tokens) {
-   N += tokens.size();
+  N += tokens.size();
 
-   for (auto it = tokens.begin(); it != tokens.end(); it++) {
-      set<string> sent;
-      sent.insert(it->begin(), it->end());
+  for (auto it = tokens.begin(); it != tokens.end(); it++) {
+    set<string> sent;
+    sent.insert(it->begin(), it->end());
 
-      for (auto jt = sent.begin(); jt != sent.end(); jt++) {
-	auto kt=lexweight_m.find(*jt);
-         if (kt != lexweight_m.end()) {
-            kt->second += 1.0;
-         } else {
-            lexweight_m[*jt] = 1.0;
-         }
+    for (auto jt = sent.begin(); jt != sent.end(); jt++) {
+      auto kt=lexweight_m.find(*jt);
+      if (kt != lexweight_m.end()) {
+        kt->second += 1.0;
+      } else {
+        lexweight_m[*jt] = 1.0;
       }
-   }
+    }
+  }
 }
 
 lexweight_t::lexweight_t() {
-   lexweight_p = new lexweightuniform_t();
+  lexweight_p = new lexweightuniform_t();
 }
 
 lexweight_t::lexweight_t(string name, string path) {
-   if (name == "uniform") {
-      lexweight_p = new lexweightuniform_t();
-   } else if (name == "file") {
-      lexweight_p = new lexweightfile_t(path);
-   } else if (name == "learn") {
-      lexweight_p = new lexweightlearn_t(path);
-   } else {
-      cerr << "ERROR: Unknown lexweight model type " << name << endl;
-   }
-   lexweight_name_m = name;
-   lexweight_path_m = path;
+  if (name == "uniform") {
+    lexweight_p = new lexweightuniform_t();
+  } else if (name == "file") {
+    lexweight_p = new lexweightfile_t(path);
+  } else if (name == "learn") {
+    lexweight_p = new lexweightlearn_t(path);
+  } else {
+    cerr << "ERROR: Unknown lexweight model type " << name << endl;
+  }
+  lexweight_name_m = name;
+  lexweight_path_m = path;
 }
 
 lexweight_t::lexweight_t(vector<vector<string> > tokens) {
-   lexweight_p = new lexweightlearn_t(tokens);
-   lexweight_name_m = "tokens";
+  lexweight_p = new lexweightlearn_t(tokens);
+  lexweight_name_m = "tokens";
 }
 
 lexweight_t::lexweight_t(lexweight_t& rhs) {
-   if (lexweight_name_m == "uniform") {
-      lexweight_p = new lexweightuniform_t();
-   } else if (lexweight_name_m == "file") {
-      lexweight_p = new lexweightfile_t(lexweight_path_m);
-   } else if (lexweight_name_m == "learn") {
-      lexweight_p = new lexweightlearn_t(lexweight_path_m);
-   } else if (lexweight_name_m == "tokens") {
-      lexweight_p = new lexweightlearn_t((lexweightlearn_t&)rhs);
-   }
-   lexweight_name_m = rhs.lexweight_name_m;
-   lexweight_path_m = rhs.lexweight_path_m;
+  if (lexweight_name_m == "uniform") {
+    lexweight_p = new lexweightuniform_t();
+  } else if (lexweight_name_m == "file") {
+    lexweight_p = new lexweightfile_t(lexweight_path_m);
+  } else if (lexweight_name_m == "learn") {
+    lexweight_p = new lexweightlearn_t(lexweight_path_m);
+  } else if (lexweight_name_m == "tokens") {
+    lexweight_p = new lexweightlearn_t((lexweightlearn_t&)rhs);
+  }
+  lexweight_name_m = rhs.lexweight_name_m;
+  lexweight_path_m = rhs.lexweight_path_m;
 }
 
 
 lexweight_t::~lexweight_t() {
-   if (lexweight_p != NULL) {
-      delete lexweight_p;
-   }
+  if (lexweight_p != NULL) {
+    delete lexweight_p;
+  }
 }
 
 double lexweight_t::operator()(string lex) {
-   double w = lexweight_p->get_weight(lex);
-   //cerr << "Lexweight of " << lex << "=" << w << endl;
-   return w;
+  double w = lexweight_p->get_weight(lex);
+  //cerr << "Lexweight of " << lex << "=" << w << endl;
+  return w;
 }
 
 void lexweight_t::write(ostream& os) {
-   lexweight_p->write(os);
+  lexweight_p->write(os);
 }

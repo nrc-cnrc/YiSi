@@ -20,133 +20,133 @@ using namespace yisi;
 using namespace std;
 
 maxmatching_t::maxmatching_t(){
-   n=0;
-   z0_r=0;
-   z0_c=0;
-   original_length = 0;
-   original_width = 0;
+  n=0;
+  z0_r=0;
+  z0_c=0;
+  original_length = 0;
+  original_width = 0;
 }
 
 void maxmatching_t::add_weight(id_type srcid, id_type tgtid, weight_type weight) {
-   id_type hid, tid;
+  id_type hid, tid;
 
-   if (src_idx.count(srcid) > 0) {
-      hid = src_idx[srcid];
-   } else {
-      hid = src_idx.size();
-      src_idx[srcid] = hid;
-      src_rev[hid] = srcid;
-      vector<weight_type> v;
-      vector<weight_type> e;
-      for (id_type i = 0; i < tgt_idx.size(); i++) {
-         v.push_back(0.0);
-         e.push_back(0.0);
-      }
-      c_m.push_back(v);
-      edge_w.push_back(e);
-   }
+  if (src_idx.count(srcid) > 0) {
+    hid = src_idx[srcid];
+  } else {
+    hid = src_idx.size();
+    src_idx[srcid] = hid;
+    src_rev[hid] = srcid;
+    vector<weight_type> v;
+    vector<weight_type> e;
+    for (id_type i = 0; i < tgt_idx.size(); i++) {
+      v.push_back(0.0);
+      e.push_back(0.0);
+    }
+    c_m.push_back(v);
+    edge_w.push_back(e);
+  }
 
-   if (tgt_idx.count(tgtid) > 0) {
-      tid = tgt_idx[tgtid];
-   } else {
-      tid = tgt_idx.size();
-      tgt_idx[tgtid] = tid;
-      tgt_rev[tid] = tgtid;
-      for (id_type i = 0; i < src_idx.size(); i++) {
-         c_m[i].push_back(0.0);
-         edge_w[i].push_back(0.0);
-      }
-   }
-   edge_w[hid][tid] = weight;
-   c_m[hid][tid] = 1.0 - weight;
+  if (tgt_idx.count(tgtid) > 0) {
+    tid = tgt_idx[tgtid];
+  } else {
+    tid = tgt_idx.size();
+    tgt_idx[tgtid] = tid;
+    tgt_rev[tid] = tgtid;
+    for (id_type i = 0; i < src_idx.size(); i++) {
+      c_m[i].push_back(0.0);
+      edge_w[i].push_back(0.0);
+    }
+  }
+  edge_w[hid][tid] = weight;
+  c_m[hid][tid] = 1.0 - weight;
 }
 
 vector<pair<pair<maxmatching_t::id_type, maxmatching_t::id_type>,
-      maxmatching_t::weight_type> > maxmatching_t::run() {
+  maxmatching_t::weight_type> > maxmatching_t::run() {
 
-   //patch zero if the cost matrix is not square
-   original_length = src_idx.size();
-   original_width = tgt_idx.size();
-   int ssize = original_length;
-   int tsize = original_width;
-   while (ssize < tsize) {
+    //patch zero if the cost matrix is not square
+    original_length = src_idx.size();
+    original_width = tgt_idx.size();
+    int ssize = original_length;
+    int tsize = original_width;
+    while (ssize < tsize) {
       vector<weight_type> v;
       c_m.push_back(v);
       for (int i = 0; i < tsize; i++) {
-         c_m[ssize].push_back(0.0);
+        c_m[ssize].push_back(0.0);
       }
       ssize++;
-   }
-   while (tsize < ssize) {
+    }
+    while (tsize < ssize) {
       for (int i = 0; i < ssize; i++) {
-         c_m[i].push_back(0.0);
+        c_m[i].push_back(0.0);
       }
       tsize++;
-   }
-   n = ssize;
+    }
+    n = ssize;
 
-   // run the Munkres algorithm
-   for (int i = 0; i < n; i++) {
+    // run the Munkres algorithm
+    for (int i = 0; i < n; i++) {
       row_covered.push_back(false);
       col_covered.push_back(false);
       vector<int> v;
       marked.push_back(v);
       for (int j = 0; j < n; j++) {
-         marked[i].push_back(0);
+        marked[i].push_back(0);
       }
-   }
+    }
 
-   z0_r = 0;
-   z0_c = 0;
-   for (int i = 0; i < 2 * n; i++) {
+    z0_r = 0;
+    z0_c = 0;
+    for (int i = 0; i < 2 * n; i++) {
       vector<int> v;
       path.push_back(v);
       for (int j = 0; j < 2 * n; j++) {
-         path[i].push_back(0);
+        path[i].push_back(0);
       }
-   }
+    }
 
-   bool done = false;
-   int step = 1;
-   while (!done) {
+    bool done = false;
+    int step = 1;
+    while (!done) {
       switch (step) {
-      case 1:
-         step = step1();
-         break;
-      case 2:
-         step = step2();
-         break;
-      case 3:
-         step = step3();
-         break;
-      case 4:
-         step = step4();
-         break;
-      case 5:
-         step = step5();
-         break;
-      case 6:
-         step = step6();
-         break;
-      default:
-         done = true;
+        case 1:
+          step = step1();
+          break;
+        case 2:
+          step = step2();
+          break;
+        case 3:
+          step = step3();
+          break;
+        case 4:
+          step = step4();
+          break;
+        case 5:
+          step = step5();
+          break;
+        case 6:
+          step = step6();
+          break;
+        default:
+          done = true;
       }
-   }
+    }
 
-   vector<pair<pair<id_type, id_type>, weight_type> > result;
+    vector<pair<pair<id_type, id_type>, weight_type> > result;
 
-   for (int i = 0; i < original_length; i++) {
+    for (int i = 0; i < original_length; i++) {
       for (int j = 0; j < original_width; j++) {
-         if (marked[i][j] == 1) {
-            pair<id_type, id_type> e(src_rev[i], tgt_rev[j]);
-            pair<pair<id_type, id_type>, weight_type> r(e, edge_w[i][j]);
-            result.push_back(r);
-         }
+        if (marked[i][j] == 1) {
+          pair<id_type, id_type> e(src_rev[i], tgt_rev[j]);
+          pair<pair<id_type, id_type>, weight_type> r(e, edge_w[i][j]);
+          result.push_back(r);
+        }
       }
-   }
+    }
 
-   return result;
-} // run
+    return result;
+  } // run
 
 /*
  * Munkres algorithm step 1 helper function
@@ -155,18 +155,18 @@ vector<pair<pair<maxmatching_t::id_type, maxmatching_t::id_type>,
  *   Go to step 2 at the end.
  */
 int maxmatching_t::step1() {
-   for (int i = 0; i < n; i++) {
-      double minval = 100.0;
-      for (int j = 0; j < n; j++) {
-         if (c_m[i][j] < minval) {
-            minval = c_m[i][j];
-         }
+  for (int i = 0; i < n; i++) {
+    double minval = 100.0;
+    for (int j = 0; j < n; j++) {
+      if (c_m[i][j] < minval) {
+        minval = c_m[i][j];
       }
-      for (int j = 0; j < n; j++) {
-         c_m[i][j] -= minval;
-      }
-   }
-   return 2;
+    }
+    for (int j = 0; j < n; j++) {
+      c_m[i][j] -= minval;
+    }
+  }
+  return 2;
 }
 
 /*
@@ -177,21 +177,21 @@ int maxmatching_t::step1() {
  *   Go the step 3 at the end.
  */
 int maxmatching_t::step2() {
-   for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-         if (c_m[i][j] == 0.0 && !row_covered[i] && !col_covered[j]) {
-            marked[i][j] = 1;
-            row_covered[i] = true;
-            col_covered[j] = true;
-         }
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (c_m[i][j] == 0.0 && !row_covered[i] && !col_covered[j]) {
+        marked[i][j] = 1;
+        row_covered[i] = true;
+        col_covered[j] = true;
       }
-   }
-   //clear covers
-   for (int i = 0; i < n; i++) {
-      row_covered[i] = false;
-      col_covered[i] = false;
-   }
-   return 3;
+    }
+  }
+  //clear covers
+  for (int i = 0; i < n; i++) {
+    row_covered[i] = false;
+    col_covered[i] = false;
+  }
+  return 3;
 }
 
 /*
@@ -202,20 +202,20 @@ int maxmatching_t::step2() {
  *   In this case, go to DONE, otherwise, go to step 4 at the end.
  */
 int maxmatching_t::step3() {
-   int count = 0;
-   for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-         if (marked[i][j] == 1) {
-            col_covered[j] = true;
-            count += 1;
-         }
+  int count = 0;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (marked[i][j] == 1) {
+        col_covered[j] = true;
+        count += 1;
       }
-   }
-   if (count >= n) {
-      return 7;
-   } else {
-      return 4;
-   }
+    }
+  }
+  if (count >= n) {
+    return 7;
+  } else {
+    return 4;
+  }
 }
 
 /*
@@ -229,32 +229,32 @@ int maxmatching_t::step3() {
  *   Save the smallest uncovered vallue and go to step 6.
  */
 int maxmatching_t::step4() {
-   int step = 0;
-   bool done = false;
-   int row = -1;
-   int col = -1;
-   int star_col = -1;
-   while (!done) {
-      find_a_zero(row, col);
-      if (row < 0) {
-         done = true;
-         step = 6;
+  int step = 0;
+  bool done = false;
+  int row = -1;
+  int col = -1;
+  int star_col = -1;
+  while (!done) {
+    find_a_zero(row, col);
+    if (row < 0) {
+      done = true;
+      step = 6;
+    } else {
+      marked[row][col] = 2;
+      star_col = find_star_in_row(row);
+      if (star_col >= 0) {
+        col = star_col;
+        row_covered[row] = true;
+        col_covered[col] = false;
       } else {
-         marked[row][col] = 2;
-         star_col = find_star_in_row(row);
-         if (star_col >= 0) {
-            col = star_col;
-            row_covered[row] = true;
-            col_covered[col] = false;
-         } else {
-            done = true;
-            z0_r = row;
-            z0_c = col;
-            step = 5;
-         }
+        done = true;
+        z0_r = row;
+        z0_c = col;
+        step = 5;
       }
-   }
-   return step;
+    }
+  }
+  return step;
 }
 
 /*
@@ -271,46 +271,46 @@ int maxmatching_t::step4() {
  *   Go to step 3.
  */
 int maxmatching_t::step5() {
-   int count = 0;
-   path[count][0] = z0_r;
-   path[count][1] = z0_c;
-   bool done = false;
-   while (!done) {
-      int row = find_star_in_col(path[count][1]);
-      if (row >= 0) {
-         count += 1;
-         path[count][0] = row;
-         path[count][1] = path[count - 1][1];
-      } else {
-         done = true;
-      }
-      if (!done) {
-         int col = find_prime_in_row(path[count][0]);
-         count += 1;
-         path[count][0] = path[count - 1][0];
-         path[count][1] = col;
-      }
-   }
+  int count = 0;
+  path[count][0] = z0_r;
+  path[count][1] = z0_c;
+  bool done = false;
+  while (!done) {
+    int row = find_star_in_col(path[count][1]);
+    if (row >= 0) {
+      count += 1;
+      path[count][0] = row;
+      path[count][1] = path[count - 1][1];
+    } else {
+      done = true;
+    }
+    if (!done) {
+      int col = find_prime_in_row(path[count][0]);
+      count += 1;
+      path[count][0] = path[count - 1][0];
+      path[count][1] = col;
+    }
+  }
 
-   //convert path
-   for (int i = 0; i < count + 1; i++) {
-      if (marked[path[i][0]][path[i][1]] == 1) {
-         marked[path[i][0]][path[i][1]] = 0;
-      } else {
-         marked[path[i][0]][path[i][1]] = 1;
+  //convert path
+  for (int i = 0; i < count + 1; i++) {
+    if (marked[path[i][0]][path[i][1]] == 1) {
+      marked[path[i][0]][path[i][1]] = 0;
+    } else {
+      marked[path[i][0]][path[i][1]] = 1;
+    }
+  }
+  //clear covers & erase primes
+  for (int i = 0; i < n; i++) {
+    row_covered[i] = false;
+    col_covered[i] = false;
+    for (int j = 0; j < n; j++) {
+      if (marked[i][j] == 2) {
+        marked[i][j] = 0;
       }
-   }
-   //clear covers & erase primes
-   for (int i = 0; i < n; i++) {
-      row_covered[i] = false;
-      col_covered[i] = false;
-      for (int j = 0; j < n; j++) {
-         if (marked[i][j] == 2) {
-            marked[i][j] = 0;
-         }
-      }
-   }
-   return 3;
+    }
+  }
+  return 3;
 }
 
 /*
@@ -320,18 +320,18 @@ int maxmatching_t::step5() {
  *   Go to step 4 without altering any stars, primes, or covered lines.
  */
 int maxmatching_t::step6() {
-   double minval = find_smallest();
-   for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-         if (row_covered[i]) {
-            c_m[i][j] += minval;
-         }
-         if (!col_covered[j]) {
-            c_m[i][j] -= minval;
-         }
+  double minval = find_smallest();
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (row_covered[i]) {
+        c_m[i][j] += minval;
       }
-   }
-   return 4;
+      if (!col_covered[j]) {
+        c_m[i][j] -= minval;
+      }
+    }
+  }
+  return 4;
 }
 
 /*
@@ -339,17 +339,17 @@ int maxmatching_t::step6() {
  *   Find the smallest uncovered value in the matrix.
  */
 double maxmatching_t::find_smallest() {
-   double minval = 1.0;
-   for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-         if (!row_covered[i] && !col_covered[j]) {
-            if (minval > c_m[i][j]) {
-               minval = c_m[i][j];
-            }
-         }
+  double minval = 1.0;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      if (!row_covered[i] && !col_covered[j]) {
+        if (minval > c_m[i][j]) {
+          minval = c_m[i][j];
+        }
       }
-   }
-   return minval;
+    }
+  }
+  return minval;
 }
 
 /*
@@ -357,16 +357,16 @@ double maxmatching_t::find_smallest() {
  *   Find the first uncovered element with value 0.
  */
 void maxmatching_t::find_a_zero(int& r, int& c) {
-   r = -1;
-   c = -1;
-   for (int i = 0; i < n && r == -1; i++) {
-      for (int j = 0; j < n; j++) {
-         if (c_m[i][j] == 0 && !row_covered[i] && !col_covered[j]) {
-            r = i;
-            c = j;
-         }
+  r = -1;
+  c = -1;
+  for (int i = 0; i < n && r == -1; i++) {
+    for (int j = 0; j < n; j++) {
+      if (c_m[i][j] == 0 && !row_covered[i] && !col_covered[j]) {
+        r = i;
+        c = j;
       }
-   }
+    }
+  }
 }
 
 /*
@@ -375,13 +375,13 @@ void maxmatching_t::find_a_zero(int& r, int& c) {
  *   Returns the column index, or -1 if no starred element was found.
  */
 int maxmatching_t::find_star_in_row(int row) {
-   int col = -1;
-   for (int j = 0; j < n && col == -1; j++) {
-      if (marked[row][j] == 1) {
-         col = j;
-      }
-   }
-   return col;
+  int col = -1;
+  for (int j = 0; j < n && col == -1; j++) {
+    if (marked[row][j] == 1) {
+      col = j;
+    }
+  }
+  return col;
 }
 
 /*
@@ -390,13 +390,13 @@ int maxmatching_t::find_star_in_row(int row) {
  *   Returns the row index, or -1 if no starred element was found.
  */
 int maxmatching_t::find_star_in_col(int col) {
-   int row = -1;
-   for (int i = 0; i < n && row == -1; i++) {
-      if (marked[i][col] == 1) {
-         row = i;
-      }
-   }
-   return row;
+  int row = -1;
+  for (int i = 0; i < n && row == -1; i++) {
+    if (marked[i][col] == 1) {
+      row = i;
+    }
+  }
+  return row;
 }
 
 /*
@@ -405,11 +405,11 @@ int maxmatching_t::find_star_in_col(int col) {
  *   Returns the column index, or -1 if no prime element was found.
  */
 int maxmatching_t::find_prime_in_row(int row) {
-   int col = -1;
-   for (int j = 0; j < n && col == -1; j++) {
-      if (marked[row][j] == 2) {
-         col = j;
-      }
-   }
-   return col;
+  int col = -1;
+  for (int j = 0; j < n && col == -1; j++) {
+    if (marked[row][j] == 2) {
+      col = j;
+    }
+  }
+  return col;
 }

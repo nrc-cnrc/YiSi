@@ -24,21 +24,21 @@ using namespace yisi;
 
 // read_config wraps the cmdlp construction for use with the yisi python extension.
 extern "C" ConfigReader read_config(std::string path) {
-   typedef com::masaers::cmdlp::options< eval_options, yisi_options, phrasesim_options > options_type;
-   const char* argv[]{
-       "",
-       "--config",
-       path.c_str(),
-   };
+  typedef com::masaers::cmdlp::options< eval_options, yisi_options, phrasesim_options > options_type;
+  const char* argv[]{
+    "",
+      "--config",
+      path.c_str(),
+  };
 
-   options_type opt(3, argv);
-   if (!opt) {
-      throw std::runtime_error("error reading config file");
-   }
+  options_type opt(3, argv);
+  if (!opt) {
+    throw std::runtime_error("error reading config file");
+  }
 
-   ConfigReader config;
-   config.yisi = opt;
-   config.phrasesim = opt;
-   config.eval = opt;
-   return config;
+  ConfigReader config;
+  config.yisi = opt;
+  config.phrasesim = opt;
+  config.eval = opt;
+  return config;
 }

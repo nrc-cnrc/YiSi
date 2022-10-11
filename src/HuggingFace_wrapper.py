@@ -19,21 +19,24 @@ import sys
 import torch
 
 from transformers import AutoConfig
+from transformers import AutoTokenizer
 from transformers import AutoModel
 from transformers import AutoModelForCausalLM
 from transformers import AutoModelForMaskedLM
 from transformers import AutoModelForSeq2SeqLM
-from transformers import AutoTokenizer
 
 from torch.nn import CrossEntropyLoss
 
+#TODO: to be deprecated after we move to use mlm_scoring
 clm=["openai-gpt", "gpt2", "ctrl", "transfo-xl", "xlnet", "reformer"]
 mlm=["bert", "distilbert", "longformer", "roberta", "bert", "flaubert", "xlm", "xlm-roberta", "electra", "camembert", "albert", "mobilebert", "reformer"]
 s2s=["t5", "bart", "marian", "encoder-decoder", "mbart"]
 
+#where the [CLS] token located 
 head=["bert",  "xlm-roberta", "roberta", "albert", "bart"]
 tail=["xlnet"]
 class Contextual_t:
+    
     def __init__(self, modelname_str, layer_str, projection_str=None, proj_type="clp"):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         if (modelname_str[0:8] == "nrc-xlm-"):
@@ -65,6 +68,8 @@ class Contextual_t:
             modelname_str=modelname_str[13:]+"/pytorch_model.bin"
         elif (modelname_str[0:4] == "nrc-"):
             modelname_str=modelname_str[4:]+"/pytorch_model.bin"
+
+        #TODO: to be deprecated, using AutoModel instead
         if (cd["model_type"] in clm):
             print ("as clm")
             self.model = AutoModelForCausalLM.from_pretrained(modelname_str, config=config).to(self.device)
@@ -77,7 +82,9 @@ class Contextual_t:
         else:
             print("WARNING:",cd["model_type"],"is not any kind of LM, application may not be supported.")
             self.model = AutoModel.from_pretrained(modelname_str, config=config).to(self.device)
-            
+        #/TODO
+
+        
         if (cd ["model_type"] in head):
             self.lmtype = "head"
         elif (cd ["model_type"] in tail):
@@ -87,8 +94,8 @@ class Contextual_t:
         # print (self.layer)
         # self.max_seq = config.to_dict()["max_position_embeddings"]
 
-        # extract features (left-to-right LM scores at the last layer
-        # and the intermediate states at any given layer) from loaded model for one sentence at a time
+    # extract features (left-to-right LM scores at the last layer
+    # and the intermediate states at any given layer) from loaded model for one sentence at a time
     def get_features(self, sentence):
         # Encode text
         # Add special tokens takes care of adding [CLS], [SEP], <s>... tokens in the right way for each model.
@@ -111,6 +118,7 @@ class Contextual_t:
             embeddings, *intermediate_states = hidden_states
             # get back the subword units
 
+            #TODO: compute mlm_scoring
             if not self.lmtype is None:
                 # compute lm_loss
                 # (copy from BERTModel because some ModelwithLMHead (e.g. RoBERTa, XLM) do not implement left-to-right LM score)
@@ -118,6 +126,7 @@ class Contextual_t:
                 pred_scores = pred_scores[:, :-1, :].contiguous()
                 loss_fct=CrossEntropyLoss()
                 lm_loss = loss_fct(pred_scores.view(-1, self.model.config.vocab_size), lm_labels.view(-1))
+            #/TODO
 
         if self.lmtype is None:
             return 0.0, tokens[1:-1], intermediate_states[self.layer][0].tolist()[1:-1]

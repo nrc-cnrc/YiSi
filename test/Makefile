@@ -102,6 +102,7 @@ BL_SUB := "s/\.\/tmp[a-z0-9_]\+/.\/tmp00000000/g; \
            s/[0-9]\+-[0-9]\+-[0-9]\+ [0-9:.]\+/2020-01-01 00:00:00.000000/g; \
            s/Python version: 3.*/Python version: 3./g; \
            s/CPU Frequency: 2[0-9]\+ Hz/CPU Frequency: 2300000000 Hz/g; \
+           s/totalMemory: 15.[0-9][0-9]GiB \+freeMemory: 15.[0-9][0-9]GiB/totalMemory: 15.00GiB freeMemory: 15.00GiB/g; \
            s/with [0-9][0-9][0-9][0-9][0-9] MB memory/with 10780 MB memory/g; \
            s/pciBusID: 0000:[0-9a-f][0-9a-f]:00.0/pciBusID: 0000:00:00.0/g; \
            s/pci bus id: 0000:[0-9a-f][0-9a-f]:00.0/pciBusID: 0000:00:00.0/g; \

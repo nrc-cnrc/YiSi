@@ -30,7 +30,9 @@ class Tokenizer_t:
     def get_units(self, sentence):
         # Encode text
         # Add special tokens takes care of adding [CLS], [SEP], <s>... tokens in the right way for each model.
-        tids = self.tokenizer.encode(sentence, add_special_tokens=True, max_length=self.tokenizer.max_len)
+        #tids = self.tokenizer.encode(sentence, add_special_tokens=True, max_length=self.tokenizer.max_len)
+        tids = self.tokenizer.encode(sentence, add_special_tokens=True)
+        
         input_ids = torch.tensor([tids]).to(self.device)
         
         with torch.no_grad():

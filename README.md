@@ -1,5 +1,7 @@
 # YiSi: A Semantic Machine Translation Evaluation Metric for Evaluating Languages with Different Levels of Available Resources
+
 ## Introduction
+
 YiSi<sup>[a]</sup> is a family of semantic machine translation (MT) evaluation metrics
 with a flexible architecture for evaluating MT output in languages of different
 resource levels. Inspired by MEANT 2.0 (Lo, 2017), YiSi-1 measures the similarity
@@ -14,7 +16,7 @@ and MT output.
 
 YiSi-1 achieved the highest average correlation with human direct assessment (DA)
 judgment across all language pairs at system-level and the highest median correlation
- with DA relative ranking across all language pairs at segment-level in the WMT2018
+with DA relative ranking across all language pairs at segment-level in the WMT2018
 metrics task (Ma et al., 2018). YiSi-1 also successfully served in WMT2018 parallel
 corpus filtering task while YiSi-2 showed comparable accuracy in the same task.
 
@@ -30,22 +32,25 @@ role labeler for both the input and output language.
 ## Installation
 
 ### Prerequisites
+
 #### Base requirements
+
 - YiSi was developed to run on Linux.
 - YiSi is written in C++ and requires a version of `g++` that supports C++11; we're now using GCC 5.4.
-(Note: GCC 4.9.3 cannot compile the current version of the cmdlp library we use.)
+  (Note: GCC 4.9.3 cannot compile the current version of the cmdlp library we use.)
 - YiSi requires `make`; we're using GNU Make 3.81.
 - YiSi requires `bash`; we're using GNU bash, version 4.1.2.
 - YiSi requires `xsltproc`; we're using xsltproc, version 10128.
 
 #### Additional requirements to use SRL
+
 - YiSi interfaces to a Java SRL library (mateplus), thus requires Java JDK 1.8 to build `srlmate.jar`.
 - Define the `JAVA_HOME` environment variable:
   ```bash
   export JAVA_HOME=/path/to/jdk_install_directory
   ```
 - YiSi depends on mateplus, an extended version of the mate-tools semantic role labeler.
-You can download and install mateplus from:
+  You can download and install mateplus from:
   https://github.com/microth/mateplus
 - Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions.
 - Define the `MATEPLUS_HOME` environment variable:
@@ -57,22 +62,26 @@ You can download and install mateplus from:
 - Put the models you download for mateplus in `$MATEPLUS_HOME/models`.
 
 ### Building YiSi
+
 If building YiSi with SRLMATE in order to use SRL, then either define the `JAVE_HOME`
 and `MATEPLUS_HOME` environment variables as instructed above, or edit the default
 values defined in the YiSi `src/Makefile` and `test/Makefile`.
 
 You may also want to define:
+
 ```bash
 export YISI_HOME=/path/to/YiSi_git
 ```
 
 To build YiSi, run the following commands:
+
 ```bash
 cd $YISI_HOME/src
 make all -j 4
 ```
 
 To run the YiSi tests, either from `$YISI_HOME/src/` or `$YISI_HOME/test/`, run:
+
 ```bash
 make test
 ```
@@ -86,13 +95,17 @@ all the YiSi programs in `$YISI_HOME/bin/`.
 The path to SRLMATE, if it was built, is: `$YISI_HOME/obj/srlmate.jar`
 
 ## Running YiSi
+
 Although probably not required, we recommend adding the YiSi bin directory to `$PATH`:
+
 ```bash
 export PATH=$YISI_HOME/bin:$PATH
 ```
+
 YiSi has a lot of command line options (see `yisi --help`.
 It's easiest to drive YiSi using a config file.
 For example:
+
 ```bash
 > cd $YISI_HOME/test
 
@@ -129,12 +142,15 @@ Evaluating line 8
 Evaluating line 9
 Evaluating line 10
 ```
+
 `$YISI_HOME/test/` contains sample config files for running various YiSi scenarios on toy data:
+
 ```bash
 > cd $YISI_HOME/test
 > ls yisi-*.config
 yisi-0.config  yisi-1.config  yisi-1_srl.config  yisi-2.config  yisi-2_srl.config
 ```
+
 Please note: YiSi-2_srl is not ready for release yet, so don't try running `yisi yisi-2_srl.config`.
 
 `$YISI_HOME/bin/` contains also contains many test programs (`*_test`),
@@ -142,13 +158,16 @@ which are used primarily for unit-testing.
 See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if interested.
 
 ## Pretrained word embeddings for YiSi-1
+
 Unit vectors built by word2vec trained on the latest WMT translation task monolingual data are available for download at:
 http://chikiu-jackie-lo.org/home/index.php/yisi
 
 ## References
+
 [In progress]
 
 ## Acknowledgements
+
 I would like to give special thanks to the following people:
 
 Darlene Stewart, for her major efforts in defense coding and packaging the software. This release would be in a much worse shape without her covering up the potholes lying everywhere.

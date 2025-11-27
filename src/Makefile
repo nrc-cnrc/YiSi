@@ -45,14 +45,24 @@ LDFLAGS += -Lcmdlp/build/lib
 LIBRARIES += -Wl,-Bstatic -lcmdlp -Wl,-Bdynamic
 
 # Flags for embedding Python code
-PYTHON_CONFIG ?= python3-config --embed
-EMBED_EXIST := $(shell ${PYTHON_CONFIG} > /dev/null ; echo $$?)
-ifneq ($(EMBED_EXIST),0)
-   PYTHON_CONFIG = python3-config
+# NOTE: When using a `uv` environment, we have to find the canonical location
+# of `python` to get its `python3-config` as `uv` doesn't link it in the user
+# created environment.
+PYTHON = $(shell command -v python)
+PYTHON_CANONICAL = $(shell readlink -f ${PYTHON})
+PYTHON_BIN_DIR = $(shell dirname ${PYTHON_CANONICAL})
+PYTHON_CONFIG = ${PYTHON_BIN_DIR}/python3-config
+EMBED_EXIST := $(shell ${PYTHON_CONFIG} --embed > /dev/null ; echo $$?)
+ifeq ($(EMBED_EXIST),0)
+   PYTHON_CONFIG += --embed
 endif
 CXXFLAGS += $(shell ${PYTHON_CONFIG} --cflags)
 LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFIG} --ldflags))
+# Add dynamic dependencies.
 LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)
+# Add rpath dependencies.
+# -Wl,-rpath,/<EXAMPLE>/cpython-3.12.7-linux-x86_64-gnu/lib/ -lpython3.12
+LIBRARIES += -Wl,-rpath,$(shell ${PYTHON_CONFIG} --prefix)/lib $(firstword $(shell ${PYTHON_CONFIG} --libs))
 
 PROG_NAMES := yisi
 TEST_NAMES := \
@@ -184,6 +194,14 @@ test:
 ../dep ../obj ../bin ../lib/python:
 	mkdir -p $@
 
+.PHONY: install install_bin install_lib
+install: install_bin install_lib
+install_bin: $(PROG_NAMES:%=../bin/%)
+	install --mode=ug=rx $+ $$(dirname $$(command -v python))
+install_lib:  | python_scripts
+	# Find python's site-packages directory to install YiSi's python libraries.
+	install --mode=ug=rx ../lib/python/*.py --target-directory=$$(python -c 'import sys; print(*filter(lambda p: "site-packages" in p, sys.path))')
+
 .PHONY: clean cleaner clean.mplsconfig clean.cmdlp cleaner.cmdlp clean.test
 clean: clean.mplsconfig clean.cmdlp
 	$(RM) -r ../bin ../lib
@@ -205,3 +223,11 @@ cleaner: clean cleaner.cmdlp clean.test
 	$(RM) -r ../dep ../obj
 
 -include $(wildcard ../dep/*.d)
+
+debug:
+	@echo PYTHON=${PYTHON}
+	@echo PYTHON_DIR=${PYTHON_DIR}
+	@echo PYTHON_CONFIG=${PYTHON_CONFIG}
+	@echo CXXFLAGS=${CXXFLAGS}
+	@echo LDFLAGS=${LDFLAGS}
+	@echo LIBRARIES=${LIBRARIES}

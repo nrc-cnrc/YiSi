@@ -153,7 +153,7 @@ yisi-0.config  yisi-1.config  yisi-1_srl.config  yisi-2.config  yisi-2_srl.confi
 
 Please note: YiSi-2_srl is not ready for release yet, so don't try running `yisi yisi-2_srl.config`.
 
-`$YISI_HOME/bin/` contains also contains many test programs (`*_test`),
+`$YISI_HOME/bin/` also contains many test programs (`*_test`),
 which are used primarily for unit-testing.
 See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if interested.
 

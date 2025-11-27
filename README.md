@@ -46,7 +46,7 @@ role labeler for both the input and output language.
 
 - YiSi interfaces to a Java SRL library (mateplus), thus requires Java JDK 1.8 to build `srlmate.jar`.
 - Define the `JAVA_HOME` environment variable:
-  ```bash
+  ```sh
   export JAVA_HOME=/path/to/jdk_install_directory
   ```
 - YiSi depends on mateplus, an extended version of the mate-tools semantic role labeler.
@@ -54,7 +54,7 @@ role labeler for both the input and output language.
   https://github.com/microth/mateplus
 - Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions.
 - Define the `MATEPLUS_HOME` environment variable:
-  ```bash
+  ```sh
   export MATEPLUS_HOME=/path/to/mateplus_install_directory
   ```
   Thus, the location of `mateplus.jar` is `$MATEPLUS_HOME/mateplus.jar`
@@ -69,20 +69,20 @@ values defined in the YiSi `src/Makefile` and `test/Makefile`.
 
 You may also want to define:
 
-```bash
+```sh
 export YISI_HOME=/path/to/YiSi_git
 ```
 
 To build YiSi, run the following commands:
 
-```bash
+```sh
 cd $YISI_HOME/src
 make all -j 4
 ```
 
 To run the YiSi tests, either from `$YISI_HOME/src/` or `$YISI_HOME/test/`, run:
 
-```bash
+```sh
 make test
 ```
 
@@ -98,7 +98,7 @@ The path to SRLMATE, if it was built, is: `$YISI_HOME/obj/srlmate.jar`
 
 Although probably not required, we recommend adding the YiSi bin directory to `$PATH`:
 
-```bash
+```sh
 export PATH=$YISI_HOME/bin:$PATH
 ```
 
@@ -106,7 +106,7 @@ YiSi has a lot of command line options (see `yisi --help`.
 It's easiest to drive YiSi using a config file.
 For example:
 
-```bash
+```sh
 > cd $YISI_HOME/test
 
 > cat yisi-1.config
@@ -145,7 +145,7 @@ Evaluating line 10
 
 `$YISI_HOME/test/` contains sample config files for running various YiSi scenarios on toy data:
 
-```bash
+```sh
 > cd $YISI_HOME/test
 > ls yisi-*.config
 yisi-0.config  yisi-1.config  yisi-1_srl.config  yisi-2.config  yisi-2_srl.config

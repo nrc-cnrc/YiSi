@@ -51,7 +51,7 @@ role labeler for both the input and output language.
   ```
 - YiSi depends on mateplus, an extended version of the mate-tools semantic role labeler.
   You can download and install mateplus from:
-  https://github.com/microth/mateplus
+  [mateplus](https://github.com/microth/mateplus)
 - Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions.
 - Define the `MATEPLUS_HOME` environment variable:
   ```sh
@@ -200,7 +200,7 @@ See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if in
 ## Pretrained word embeddings for YiSi-1
 
 Unit vectors built by word2vec trained on the latest WMT translation task monolingual data are available for download at:
-http://chikiu-jackie-lo.org/home/index.php/yisi
+[YiSi Unit Vectors](http://chikiu-jackie-lo.org/home/index.php/yisi)
 
 ## References
 

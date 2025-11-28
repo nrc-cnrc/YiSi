@@ -146,7 +146,7 @@ class Contextual_t:
         tids = self.tgttokenizer.encode(
             sentence,
             add_special_tokens=True,
-            max_length=self.tgttokenizer.max_len,
+            # max_length=self.tgttokenizer.max_len,
             truncation=True,
         )
         input_ids = torch.tensor([tids]).to(self.device)
@@ -199,7 +199,7 @@ class Contextual_t:
         tids = self.srctokenizer.encode(
             sentence,
             add_special_tokens=True,
-            max_length=self.srctokenizer.max_len,
+            # max_length=self.srctokenizer.max_len,
             truncation=True,
         )
         input_ids = torch.tensor([tids]).to(self.device)

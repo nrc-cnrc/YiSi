@@ -61,6 +61,46 @@ role labeler for both the input and output language.
 - Put the JAR files for the dependencies you install for mateplus in `$MATEPLUS_HOME/lib`.
 - Put the models you download for mateplus in `$MATEPLUS_HOME/models`.
 
+### Create an Environment
+
+YiSi uses HuggingFace thus it needs access to HuggingFace's libraries.
+You need to create a virtual environment for this purpose.
+
+The following command creates the environment in which we will install the required dependencies.
+Note this is required only once.
+
+#### `uv`
+
+```sh
+uv venv \
+  --python-preference=only-managed \
+  --python=3.12 \
+  --relocatable \
+  --prompt=YiSi \
+  venv
+```
+
+Activate the environment.
+
+```sh
+source YiSi/bin/activate ""
+```
+
+Install the dependencies.
+Note this is required only once.
+
+```sh
+uv pip install transformers==4-49.0 torch==2.6
+```
+
+#### `conda`
+
+```sh
+conda create --prefix YiSi python==3.12
+conda activate YiSi
+python -m pip install transformers==4.49.0  pytorch==2.6
+```
+
 ### Building YiSi
 
 If building YiSi with SRLMATE in order to use SRL, then either define the `JAVE_HOME`

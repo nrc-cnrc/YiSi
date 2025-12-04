@@ -51,7 +51,7 @@ role labeler for both the input and output language.
   ```
 - YiSi depends on mateplus, an extended version of the mate-tools semantic role labeler.
   You can download and install mateplus from:
-  https://github.com/microth/mateplus
+  [mateplus](https://github.com/microth/mateplus)
 - Make sure to install all the mateplus basic dependencies listed in its README, i.e. without FrameNet and ParZu extensions.
 - Define the `MATEPLUS_HOME` environment variable:
   ```sh
@@ -60,6 +60,46 @@ role labeler for both the input and output language.
   Thus, the location of `mateplus.jar` is `$MATEPLUS_HOME/mateplus.jar`
 - Put the JAR files for the dependencies you install for mateplus in `$MATEPLUS_HOME/lib`.
 - Put the models you download for mateplus in `$MATEPLUS_HOME/models`.
+
+### Create an Environment
+
+YiSi uses HuggingFace thus it needs access to HuggingFace's libraries.
+You need to create a virtual environment for this purpose.
+
+The following command creates the environment in which we will install the required dependencies.
+Note this is required only once.
+
+#### `uv`
+
+```sh
+uv venv \
+  --python-preference=only-managed \
+  --python=3.12 \
+  --relocatable \
+  --prompt=YiSi \
+  venv
+```
+
+Activate the environment.
+
+```sh
+source YiSi/bin/activate ""
+```
+
+Install the dependencies.
+Note this is required only once.
+
+```sh
+uv pip install transformers==4-49.0 torch==2.6
+```
+
+#### `conda`
+
+```sh
+conda create --prefix YiSi python==3.12
+conda activate YiSi
+python -m pip install transformers==4.49.0  pytorch==2.6
+```
 
 ### Building YiSi
 
@@ -160,7 +200,7 @@ See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if in
 ## Pretrained word embeddings for YiSi-1
 
 Unit vectors built by word2vec trained on the latest WMT translation task monolingual data are available for download at:
-http://chikiu-jackie-lo.org/home/index.php/yisi
+[YiSi Unit Vectors](http://chikiu-jackie-lo.org/home/index.php/yisi)
 
 ## References
 

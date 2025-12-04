@@ -18,8 +18,9 @@
 #define MAXMATCHING_H
 
 #include <utility>
-#include <vector> 
+#include <vector>
 #include <map>
+#include <cstddef>
 
 namespace yisi {
 

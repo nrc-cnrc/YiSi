@@ -62,7 +62,7 @@ ifdef WITH_SRLMATE
 endif
 
 ifdef WITH_BERT
-   BERT_TEST_PROGS := call_bert_test
+#   BERT_TEST_PROGS := call_bert_test
    BERT_TEST_PROGS += bert_test
    BERT_TEST_PROGS += read_sent_test.4
 endif

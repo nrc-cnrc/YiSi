@@ -41,8 +41,8 @@ class Contextual_t:
             tgt=modelname_str[10:12]
             self.srctokenizer = AutoTokenizer.from_pretrained(modelname_str[13:], merges_file=modelname_str[13:]+"/merges."+src+".txt", do_lowercase_and_remove_accent=False)
             self.tgttokenizer = AutoTokenizer.from_pretrained(modelname_str[13:], merges_file=modelname_str[13:]+"/merges."+tgt+".txt", do_lowercase_and_remove_accent=False)
-        elif (modelname_str[0:4] == "nrc-"):
-            self.srctokenizer = AutoTokenizer.from_pretrained(modelname_str[4:])
+        elif (modelname_str[0:10] == "nrc-labse-"):
+            self.srctokenizer = AutoTokenizer.from_pretrained("sentence-transformers/LaBSE")
             self.tgttokenizer = self.srctokenizer
         else:
             self.srctokenizer = AutoTokenizer.from_pretrained(modelname_str)
@@ -54,29 +54,40 @@ class Contextual_t:
         #NOTE: we use `output_hidden_states=True` to get the intermediate layers' output.
         if (modelname_str[0:8] == "nrc-xlm-"):
             config = AutoConfig.from_pretrained(modelname_str[13:]+"/config.json", output_hidden_states=True)
-        elif (modelname_str[0:4] == "nrc-"):
-            config = AutoConfig.from_pretrained(modelname_str[4:]+"/config.json", output_hidden_states=True)
+        elif (modelname_str[0:14] == "nrc-labse-avg-"):
+            config = AutoConfig.from_pretrained(modelname_str[14:]+"/config.json", output_hidden_states=True)
+        elif (modelname_str[0:10] == "nrc-labse-"):
+            config = AutoConfig.from_pretrained(modelname_str[10:]+"/config.json", output_hidden_states=True)
         else:
             config = AutoConfig.from_pretrained(modelname_str, output_hidden_states=True)
         cd = config.to_dict()
         self.lmtype=None
         self.model=None
+        self.avg=False
+        tf = False
         if (modelname_str[0:8] == "nrc-xlm-"):
             modelname_str=modelname_str[13:]+"/pytorch_model.bin"
+        elif (modelname_str[0:14] == "nrc-labse-avg-"):
+            self.avg = True
+            modelname_str=modelname_str[14:]
+        elif (modelname_str[0:10] == "nrc-labse-"):
+            modelname_str=modelname_str[10:]
         elif (modelname_str[0:4] == "nrc-"):
             modelname_str=modelname_str[4:]+"/pytorch_model.bin"
+            tf=True
+            
         if (cd["model_type"] in clm):
             print ("as clm")
-            self.model = AutoModelForCausalLM.from_pretrained(modelname_str, config=config).to(self.device)
+            self.model = AutoModelForCausalLM.from_pretrained(modelname_str, config=config, from_tf=tf).to(self.device)
         elif (cd["model_type"] in mlm):
             print ("as mlm")
-            self.model = AutoModelForMaskedLM.from_pretrained(modelname_str, config=config).to(self.device)
+            self.model = AutoModelForMaskedLM.from_pretrained(modelname_str, config=config, from_tf=tf).to(self.device)
         elif (cd["model_type"] in s2s):
             print ("as seq2seq clm")
-            self.model = AutoModelForSeq2SeqLM.from_pretrained(modelname_str, config=config).to(self.device)
+            self.model = AutoModelForSeq2SeqLM.from_pretrained(modelname_str, config=config, from_tf=tf).to(self.device)
         else:
             print("WARNING:",cd["model_type"],"is not any kind of LM, application may not be supported.")
-            self.model = AutoModel.from_pretrained(modelname_str, config=config).to(self.device)
+            self.model = AutoModel.from_pretrained(modelname_str, config=config, from_tf=tf).to(self.device)
             
         if (cd ["model_type"] in head):
             self.lmtype = "head"
@@ -92,7 +103,7 @@ class Contextual_t:
     def get_features(self, sentence):
         # Encode text
         # Add special tokens takes care of adding [CLS], [SEP], <s>... tokens in the right way for each model.
-        tids = self.tgttokenizer.encode(sentence, add_special_tokens=True, max_length=self.tgttokenizer.max_len, truncation=True)
+        tids = self.tgttokenizer.encode(sentence, add_special_tokens=True, truncation=True)
         input_ids = torch.tensor([tids]).to(self.device)
         tokens=self.tgttokenizer.convert_ids_to_tokens(input_ids[0])
         tokens=[t.replace("</w>","##") for t in tokens]
@@ -124,10 +135,22 @@ class Contextual_t:
         elif (self.lmtype == "tail"):
             return lm_loss.tolist(), tokens[0:-2], intermediate_states[self.layer][0].tolist()[0:-2]
         else:
-            return lm_loss.tolist(), tokens[1:-1], intermediate_states[self.layer][0].tolist()[1:-1]
+            if self.avg:
+                layer1 = intermediate_states[self.layer-1][0].tolist()[1:-1]
+                layer2 = intermediate_states[self.layer][0].tolist()[1:-1]
+                layer3 = intermediate_states[self.layer+1][0].tolist()[1:-1]
+                result = []
+                for i in range(len(layer1)):
+                    t = []
+                    for x,y,z in zip(layer1[i], layer2[i], layer3[i]):
+                        t.append((x+y+z)/3.0)
+                    result.append(t)
+                return lm_loss.tolist(), tokens[1:-1], result
+            else:
+                return lm_loss.tolist(), tokens[1:-1], intermediate_states[self.layer][0].tolist()[1:-1]
 
     def get_proj_features(self, sentence):
-        tids = self.srctokenizer.encode(sentence, add_special_tokens=True, max_length=self.srctokenizer.max_len, truncation=True)
+        tids = self.srctokenizer.encode(sentence, add_special_tokens=True, truncation=True)
         input_ids = torch.tensor([tids]).to(self.device)
         tokens=self.tgttokenizer.convert_ids_to_tokens(input_ids[0])
         tokens=[t.replace("</w>","##") for t in tokens]

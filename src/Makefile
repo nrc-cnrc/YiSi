@@ -52,6 +52,7 @@ ifneq ($(EMBED_EXIST),0)
 endif
 CXXFLAGS += $(shell ${PYTHON_CONFIG} --cflags)
 LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFIG} --ldflags))
+LDFLAGS += -lpython3.9 -lrt -Xlinker -export-dynamic
 LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)
 
 PROG_NAMES := yisi
@@ -76,6 +77,7 @@ TEST_NAMES := \
    util_test \
    w2v_test \
    yisiscorer_test
+
 CMDLP_TEST_NAMES := cmdlp_test
 
 ifdef WITH_SRLMATE

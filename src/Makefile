@@ -13,6 +13,7 @@
 # consider defining MATEPLUS_HOME in your .profile, for example:
 #   export MATEPLUS_HOME=~/u/sandboxes/mateplus
 
+PYTHON_VERSION := $(shell python -c 'import sysconfig; print(sysconfig.get_python_version(), end="")')
 MATEPLUS_HOME ?=
 MATETOOLS_HOME ?= $(MATEPLUS_HOME)
 
@@ -58,7 +59,7 @@ ifeq ($(EMBED_EXIST),0)
 endif
 CXXFLAGS += $(shell ${PYTHON_CONFIG} --cflags)
 LDFLAGS += $(filter-out $(shell ${PYTHON_CONFIG} --libs), $(shell ${PYTHON_CONFIG} --ldflags))
-LDFLAGS += -lpython3.9 -lrt -Xlinker -export-dynamic
+LDFLAGS += -lpython${PYTHON_VERSION} -lrt -Xlinker -export-dynamic
 # Add dynamic dependencies.
 LIBRARIES += $(shell ${PYTHON_CONFIG} --libs)
 # Add rpath dependencies.

@@ -83,14 +83,14 @@ uv venv \
 Activate the environment.
 
 ```sh
-source YiSi/bin/activate ""
+source venv/bin/activate ""
 ```
 
 Install the dependencies.
 Note this is required only once.
 
 ```sh
-uv pip install transformers==4-49.0 torch==2.6
+uv pip install transformers==4.49.0 torch==2.6
 ```
 
 #### `conda`

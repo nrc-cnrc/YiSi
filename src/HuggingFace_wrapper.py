@@ -185,7 +185,7 @@ class Contextual_t:
         with torch.no_grad():
             # Calling model(), i.e. model.forward(), returns the last layer prediction scores and all hidden states
             states = self.model(input_ids)
-            print(input_ids)
+            # print(input_ids)
             pred_scores = states[0]
             hidden_states = states[1]
             # hidden states include the input embeddings and all intermediate states

@@ -118,6 +118,7 @@ To build YiSi, run the following commands:
 ```sh
 cd $YISI_HOME/src
 make all -j 4
+export PYTHONPATH=$YISI_HOME/lib/python:$PYTHONPATH
 ```
 
 To run the YiSi tests, either from `$YISI_HOME/src/` or `$YISI_HOME/test/`, run:
@@ -152,25 +153,31 @@ For example:
 > cat yisi-1.config
 srclang=de
 tgtlang=en
-lexsim-type=w2v
-outlexsim-path=mini.d300.en
+lexsim-type=emb
 reflexweight-type=learn
 phrasesim-type=nwpr
-ngram-size=3
+n=1
 mode=yisi
-alpha=0.8
+alpha=0.7
+ref-type=contextual
+hyp-type=contextual
+context-config=roberta-large:-6
+ref-unit-delim=Ġw
+hyp-unit-delim=Ġw
 ref-file=test_ref.en
 hyp-file=test_hyp.en
 sntscore-file=test_hyp.sntyisi1
 docscore-file=test_hyp.docyisi1
 
 > yisi --config yisi-1.config
-Reading w2v text model from mini.d300.en
-Size of voc: 500 Dimension: 300
-Finished reading w2v model.
 Learning lex weight from test_ref.en ... Done.
-Tokenizing/SRL-ing hyp ... Done.
-Tokenizing/SRL-ing ref ... Done.
+Setting up python ... Done.
+Importing HuggingFace_wrapper ... Done.
+Loading roberta-large ... Done
+Reading hyp sents... Done.
+Reading ref sents... Done.
+Creating ref srlgraphs... Done.
+Creating hyp srlgraphs... Done.
 Evaluating line 1
 Evaluating line 2
 Evaluating line 3
@@ -197,20 +204,44 @@ Please note: YiSi-2_srl is not ready for release yet, so don't try running `yisi
 which are used primarily for unit-testing.
 See `$YISI_HOME/test/Makefile` for examples of how to call these programs, if interested.
 
-## Pretrained word embeddings for YiSi-1
-
-Unit vectors built by word2vec trained on the latest WMT translation task monolingual data are available for download at:
-[YiSi Unit Vectors](http://chikiu-jackie-lo.org/home/index.php/yisi)
-
-## References
-
-[In progress]
+## Citations
+```
+@inproceedings{lo-2019-yisi,
+    title = "{Y}i{S}i - a Unified Semantic {MT} Quality Evaluation and Estimation Metric for Languages with Different Levels of Available Resources",
+    author = "Lo, Chi-kiu",
+    editor = "Bojar, Ond{\v{r}}ej  and
+      Chatterjee, Rajen  and
+      Federmann, Christian  and
+      Fishel, Mark  and
+      Graham, Yvette  and
+      Haddow, Barry  and
+      Huck, Matthias  and
+      Yepes, Antonio Jimeno  and
+      Koehn, Philipp  and
+      Martins, Andr{\'e}  and
+      Monz, Christof  and
+      Negri, Matteo  and
+      N{\'e}v{\'e}ol, Aur{\'e}lie  and
+      Neves, Mariana  and
+      Post, Matt  and
+      Turchi, Marco  and
+      Verspoor, Karin",
+    booktitle = "Proceedings of the Fourth Conference on Machine Translation (Volume 2: Shared Task Papers, Day 1)",
+    month = aug,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/W19-5358/",
+    doi = "10.18653/v1/W19-5358",
+    pages = "507--513"
+}
+```
 
 ## Acknowledgements
 
 I would like to give special thanks to the following people:
 
-Darlene Stewart, for her major efforts in defense coding and packaging the software. This release would be in a much worse shape without her covering up the potholes lying everywhere.
+Samuel Larkin and Darlene Stewart, for their major efforts in defense coding and packaging the software. This release would be in a much worse shape without her covering up the potholes lying everywhere.
 
 Markus Saers, for his accomodations in licensing the command line parser and fulfilling wishlist items in it.
 
